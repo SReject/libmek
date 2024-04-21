@@ -1,5 +1,6 @@
 return {
     factory = function (cacheNamespace, realName, propName)
+
         local capacityFnc = function (self, force)
             local cacheName = propName .. 'Capacity';
             if (force or self.__cache[cacheNamespace][cacheName] == nil) then
@@ -8,15 +9,13 @@ return {
             return self.__cache[cacheNamespace][cacheName];
         end;
 
-        local contentsFnc = function (self)
-            return self:call('get' .. realName);
-        end;
-
         return {
             [propName .. 'Tank'] = {
                 capacity = capacityFnc,
 
-                contents = contentsFnc,
+                contents = function (self)
+                    return self:call('get' .. realName);
+                end,
 
                 needed = function (self)
                     return self:call('get' .. realName .. 'Needed');
@@ -34,7 +33,7 @@ return {
 
                 status = function(self, force)
                     local capacity = capacityFnc(self, force == true);
-                    local contents = contentsFnc(self);
+                    local contents = self:call('get' .. realName);
                     return {
                         capacity = capacity,
                         contents = contents,
