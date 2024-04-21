@@ -150,8 +150,9 @@ end
 ---
 ---If the cache does not contain a given value it is retrieved from the
 ---connecting peripheral.
+---@param force boolean? ignored
 ---@return MultiblockStatus
-function Multiblock:status()
+function Multiblock:status(force)
 
     local status = self.__super.status(self);
 
