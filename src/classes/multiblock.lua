@@ -9,7 +9,7 @@ local
     Multiblock = class.create(
 
         ---Constructor
-        ---@param super fun(...: ...):nil
+        ---@param super fun(name: string):nil
         ---@param self Multiblock
         ---@param name string
         function (super, self, name)
@@ -101,8 +101,10 @@ function Multiblock:getSize(force)
 end
 
 ---@class MultiblockInfoEntry
+---@field valid boolean
 ---@field position MultiblockPosition?
 ---@field size MultiblockSize?
+
 
 ---@class MultiblockInfo: PeripheralInfo
 ---@field multiblock MultiblockInfoEntry
