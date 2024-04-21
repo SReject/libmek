@@ -1,6 +1,7 @@
 local class = require('common.class');
 local Multiblock = require('classes.multiblock');
 
+local energybuffer = require('mixins.energybuffer');
 local tank = require('mixins.tank');
 
 local new, Turbine = class.create(
@@ -15,6 +16,7 @@ local new, Turbine = class.create(
     Multiblock,
 
     -- Mixins
+    energybuffer.factory('turbine'),
     tank.factory('turbine', 'Steam', 'steam')
 );
 
@@ -58,13 +60,6 @@ function Turbine:getVents(force)
     return self.__cache.turbine.vents;
 end
 
-function Turbine:getMaxEnergy(force)
-    if (force == true or self.__cache.turbine.maxEnergy == nil) then
-        self.__cache.turbine.maxEnergy = self:call('getMaxEnergy');
-    end
-    return self.__cache.turbine.maxEnergy;
-end
-
 function Turbine:getMaxFlowRate(force)
     if (force == true or self.__cache.turbine.maxFlowRate == nil) then
         self.__cache.turbine.maxFlowRate = self:call('getMaxFlowRate');
@@ -84,11 +79,6 @@ function Turbine:getMaxWaterOutput(force)
         self.__cache.turbine.maxWaterOutput = self:call('getMaxWaterOutput');
     end
     return self.__cache.turbine.maxWaterOutput;
-end
-
-
-function Turbine:getEnergy()
-    return self:call('getEnergy');
 end
 
 function Turbine:getFlowRate()
@@ -128,12 +118,13 @@ function Turbine:info(force)
             coils = self:getCoils(force),
             condensers = self:getCondensers(force),
             despersers = self:getDispersers(force),
-            vents = self:getVents(force),
-            maxEnergy = self:getMaxEnergy(force),
+            energy = self.energy.info(self, force),
             maxFlowRate = self:getMaxFlowRate(force),
             maxProduction = self:getMaxProduction(force),
             maxWaterOutput = self:getMaxWaterOutput(force),
-            steamTank = self.steamTank.info(self, force)
+            steamTank = self.steamTank.info(self, force),
+            vents = self:getVents(force),
+
         };
     end
     return info;
@@ -147,7 +138,7 @@ function Turbine:status(force)
         status.turbine = {};
     else
         status.turbine = {
-            energy = self:getEnergy(),
+            energy = self.energy.status(self, force),
             flowRate = self:getFlowRate(),
             lastSeenSteamInputRate = self:getLastSeenSteamInputRate(),
             productionRate = self:getProductionRate(),
