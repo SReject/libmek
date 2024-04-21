@@ -90,21 +90,23 @@ function Boiler:info(force)
     return info;
 end
 
-function Boiler:status()
+function Boiler:status(force)
+    force = force == true;
+
     local status = self.__super.status(self);
     if (status.multiblock ~= true) then
         status.boiler = {};
     else
         status.boiler = {
             boilRate = self:getBoilRate(),
-            cooledCoolantTank = self.cooledCoolantTank.status(self),
+            cooledCoolantTank = self.cooledCoolantTank.status(self, force),
             environmentalLoss = self:getEnvironmentalLoss(),
-            heatedCoolantTank = self.heatedCoolantTank.status(self),
+            heatedCoolantTank = self.heatedCoolantTank.status(self, force),
             maxSeenBoilRate = self:getMaxSeenBoilRate(),
-            steamTank = self.steamTank.status(self),
+            steamTank = self.steamTank.status(self, force),
             temperature = self:getTemperature(),
             valveMode = self:getValveMode(),
-            waterTank = self.waterTank.status(self)
+            waterTank = self.waterTank.status(self, force)
         }
     end
     return status;

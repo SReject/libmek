@@ -26,14 +26,14 @@ return {
                     return self:call('get' .. realName .. 'FilledPercentage');
                 end,
 
-                info = function(self)
+                info = function(self, force)
                     return {
-                        capacity = capacityFnc(self)
+                        capacity = capacityFnc(self, force == true)
                     };
                 end,
 
-                status = function(self)
-                    local capacity = capacityFnc(self);
+                status = function(self, force)
+                    local capacity = capacityFnc(self, force == true);
                     local contents = contentsFnc(self);
                     return {
                         capacity = capacity,
