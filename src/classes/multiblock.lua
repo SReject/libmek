@@ -64,16 +64,18 @@ function Multiblock:getSize(force)
     };
 end
 
-function Multiblock:info()
-    local info = self.__super.info(self);
+function Multiblock:info(force)
+    force = force == true;
+
+    local info = self.__super.info(self, force);
 
     local multiblockInfo = {
         valid = self:isValid()
     };
 
     if (multiblockInfo.valid) then
-        multiblockInfo.position = self:getPosition();
-        multiblockInfo.size = self:getSize();
+        multiblockInfo.position = self:getPosition(force);
+        multiblockInfo.size = self:getSize(force);
     end
 
     info.multiblock = multiblockInfo;

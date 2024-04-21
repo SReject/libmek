@@ -71,18 +71,20 @@ function Boiler:incrementValveMode()
     return self:call('incrementValveMode');
 end
 
-function Boiler:info()
-    local info = self.__super.info(self);
+function Boiler:info(force)
+    force = force == true
+
+    local info = self.__super.info(self, force);
     if (info.multiblock.valid ~= true) then
         info.boiler = {}
     else
         info.boiler = {
-            superHeaters = self:getSuperHeaters(),
-            maxBoilRate = self:getMaxBoilRate(),
-            steamTank = self.steamTank.info(self),
-            waterTank = self.waterTank.info(self),
-            cooledCoolantTank = self.cooledCoolantTank.info(self),
-            heatedCoolantTank = self.heatedCoolantTank.info(self)
+            superHeaters = self:getSuperHeaters(force),
+            maxBoilRate = self:getMaxBoilRate(force),
+            steamTank = self.steamTank.info(self, force),
+            waterTank = self.waterTank.info(self, force),
+            cooledCoolantTank = self.cooledCoolantTank.info(self, force),
+            heatedCoolantTank = self.heatedCoolantTank.info(self, force)
         }
     end
     return info;
