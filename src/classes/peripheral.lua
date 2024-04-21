@@ -119,7 +119,7 @@ end
 return {
     class = Peripheral,
 
-    ---Creates a new peripheral instance
+    ---Creates a new Peripheral class instance
     ---@type fun(peripheralName: string): Peripheral
     create = new
 };
