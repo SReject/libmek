@@ -1,17 +1,16 @@
 return {
-    factory = function (realName, propName)
+    factory = function (cacheNamespace, realName, propName)
         local capacityFnc = function (self, force)
             local cacheName = propName .. 'Capacity';
-            if (force or self.__cache.boiler[cacheName] == nil) then
-                self.__cache.boiler[cacheName] = self:call('get' .. realName .. 'Capacity');
+            if (force or self.__cache[cacheNamespace][cacheName] == nil) then
+                self.__cache[cacheNamespace][cacheName] = self:call('get' .. realName .. 'Capacity');
             end
-            return self.__cache.boiler[cacheName];
+            return self.__cache[cacheNamespace][cacheName];
         end;
 
         local contentsFnc = function (self)
             return self:call('get' .. realName);
         end;
-
 
         return {
             [propName .. 'Tank'] = {

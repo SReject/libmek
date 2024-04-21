@@ -15,11 +15,16 @@ local new, Boiler = class.create(
     Multiblock,
 
     -- Mixins
-    tank.factory('Steam', 'steam'),
-    tank.factory('Water', 'water'),
-    tank.factory('CooledCoolant', 'cooledCoolant'),
-    tank.factory('HeatedCoolant', 'heatedCoolant')
+    tank.factory('boiler', 'Steam', 'steam'),
+    tank.factory('boiler', 'Water', 'water'),
+    tank.factory('boiler', 'CooledCoolant', 'cooledCoolant'),
+    tank.factory('boiler', 'HeatedCoolant', 'heatedCoolant')
 );
+
+function Boiler:clearCache()
+    self.__super.clearCache(self);
+    self.__cache.boiler = {};
+end
 
 function Boiler:getMaxBoilRate(force)
     if (force == true or self.__cache.boiler.maxBoilRate == nil) then
