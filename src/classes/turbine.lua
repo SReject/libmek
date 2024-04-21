@@ -8,7 +8,7 @@ local new, Turbine = class.create(
 
     -- constructor
     function (super, self, name)
-        super(self);
+        super(name);
         self.__cache.turbine = {};
     end,
 
