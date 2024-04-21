@@ -1,9 +1,10 @@
 local class = require('common.class');
 local utils = require('common.utilities');
 
-local
-    new,
-    Peripheral = class.create(function (super, self, name)
+local new, Peripheral = class.create(
+
+    -- constructor
+    function (super, self, name)
         if type(name) ~= "string" or name == "" then
             error('invalid peripheral name');
         end
@@ -24,7 +25,8 @@ local
                 end
             end
         end)
-    end);
+    end
+);
 
 function Peripheral:call(method, ...)
     return peripheral.call(method, table.unpack(...));

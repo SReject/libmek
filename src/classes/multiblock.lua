@@ -1,13 +1,20 @@
 local class = require('common.class');
 local Peripheral = require('classes.peripheral');
 
-local new, Multiblock = class.create(function (super, self, name)
-    super(name);
-    if (self:call('isFormed') ~= true) then
-        error("multiblock is not formed");
-    end
-    self.__cache.multiblock = {};
-end, Peripheral.class);
+local new, Multiblock = class.create(
+
+    -- constructor
+    function (super, self, name)
+        super(name);
+        if (self:call('isFormed') ~= true) then
+            error("multiblock is not formed");
+        end
+        self.__cache.multiblock = {};
+    end,
+
+    -- super class
+    Peripheral.class
+);
 
 function Multiblock:clearCache()
     self.__super.clearCache(self);
