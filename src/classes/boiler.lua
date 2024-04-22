@@ -100,34 +100,6 @@ function Boiler:getTemperature()
     return self:call('getTemperature');
 end
 
----@alias BoilerValveMode
----| "INPUT"
----| "OUTPUT_STEAM"
----| "OUTPUT_COOLANT"
-
----Gets the current valve mode of the boiler
----@return BoilerValveMode|nil
-function Boiler:getValveMode()
-    return self:call('getMode');
-end
-
----Sets the mode of the boiler valve that the underlaying peripheral is attached to
----@param mode BoilerValveMode
-function Boiler:setValveMode(mode)
-    return self:call('setMode', mode);
-end
-
----Decrements the underlaying peripheral's valve mode
-function Boiler:decrementValveMode()
-    return self:call('decrementValveMode');
-end
-
----Increments the underlaying peripheral's valve mode
-function Boiler:incrementValveMode()
-    return self:call('incrementValveMode');
-end
-
-
 ---@class BoilerInfo: MultiblockInfo
 ---@field boiler BoilerInfoEntry
 
@@ -179,7 +151,6 @@ end
 ---@field maxSeenBoilRate integer|nil
 ---@field temperature integer|nil
 ---@field steamTank TankStatus|nil
----@field valveMode BoilerValveMode|nil
 ---@field waterTank TankStatus|nil
 
 ---Retrieves dynamic information pertaining to the boiler
@@ -206,7 +177,6 @@ function Boiler:status(force)
             maxSeenBoilRate = self:getMaxSeenBoilRate(),
             steamTank = self.steamTank.status(self, force),
             temperature = self:getTemperature(),
-            valveMode = self:getValveMode(),
             waterTank = self.waterTank.status(self, force)
         }
     end
