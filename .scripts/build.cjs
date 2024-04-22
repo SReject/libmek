@@ -1,6 +1,8 @@
 const { mkdirSync, readFileSync, writeFileSync } = require('fs');
 const { join, resolve } = require('path');
 
+const minify = require('./minify.cjs');
+
 const processedModules = new Map();
 const processModule = (name, nowrap) => {
     name = name.toLowerCase();
@@ -77,4 +79,4 @@ output = `local libmek = {};\n${output}`;
 
 mkdirSync(resolve(join( __dirname, '../dist/')), { recursive: true });
 writeFileSync(resolve(join(__dirname, '../dist/libmek.lua')), output, 'utf-8');
-
+writeFileSync(resolve(join(__dirname, '../dist/libmek.mini.lua')), minify(output), 'utf-8');
