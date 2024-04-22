@@ -22,7 +22,7 @@ local
             self.__cache.turbine = {};
         end,
 
-        -- super class
+        -- Super class
         Multiblock,
 
         -- Mixins
@@ -274,5 +274,8 @@ end
 
 return {
     class = Turbine,
+
+    ---Creates a new Turbine class instance
+    ---@type fun(peripheralName: string): Turbine
     create = new
 };

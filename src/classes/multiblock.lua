@@ -20,7 +20,7 @@ local
             self.__cache.multiblock = {};
         end,
 
-        -- super class
+        -- Super class
         Peripheral.class
     );
 
@@ -173,6 +173,6 @@ return {
     class = Multiblock,
 
     ---Creates a new Multiblock class instance
-    ---@type fun(peripheralName: string): Peripheral
+    ---@type fun(peripheralName: string): Multiblock
     create = new
 };
