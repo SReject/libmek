@@ -166,9 +166,7 @@ function Boiler:status(force)
 
     ---@cast status BoilerStatus
 
-    if (status.multiblock ~= true) then
-        status.boiler = {};
-    else
+    if (status.multiblock == true) then
         status.boiler = {
             boilRate = self:getBoilRate(),
             cooledCoolantTank = self.cooledCoolantTank.status(self, force),
@@ -178,7 +176,9 @@ function Boiler:status(force)
             steamTank = self.steamTank.status(self, force),
             temperature = self:getTemperature(),
             waterTank = self.waterTank.status(self, force)
-        }
+        };
+    else
+        status.boiler = {};
     end
     return status;
 end
