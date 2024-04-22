@@ -173,9 +173,20 @@ function Turbine:getProductionRate()
     return self:call('getProductionRate');
 end
 
+---@alias GasDumpingMode
+---| "IDLE"
+---| "DUMPING_EXCESS"
+---| "DUMPING"
+
 ---Gets the turbine's current dumping mode
+---@return GasDumpingMode
 function Turbine:getDumpingMode()
     return self:call('getDumpingMode');
+end
+
+---Sets the turbine's excess steam dumping mode
+---@return GasDumpingMode|nil
+function Turbine:setDumpingMode(mode)
 end
 
 ---Decreases the turbine's dumping mode
@@ -239,6 +250,7 @@ end
 ---@field turbine TurbineStatusEntry
 
 ---@class TurbineStatusEntry
+---@field dumpingMode GasDumpingMode|nil
 ---@field energy EnergyBufferStatus|nil
 ---@field flowRate integer|nil
 ---@field lastSeenSteamInputRate integer|nil
@@ -262,6 +274,7 @@ function Turbine:status(force)
         status.turbine = {};
     else
         status.turbine = {
+            dumpingMode = self.getDumpingMode(self),
             energy = self.energy.status(self, force),
             flowRate = self:getFlowRate(),
             lastSeenSteamInputRate = self:getLastSeenSteamInputRate(),
