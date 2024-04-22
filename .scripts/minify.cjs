@@ -1,3 +1,11 @@
+/*TODO:
+while statements
+repeat statements
+goto statements
+
+??
+*/
+
 const luaparse = require('luaparse');
 
 
