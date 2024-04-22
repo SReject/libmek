@@ -6,12 +6,44 @@ class Scope {
     constructor(parent) {
         if (parent) {
             this.parent = parent;
+            this.renamed = new Map(parent.remap);
+            this.renameIndex = parent.renameIndex;
         } else {
             this.parent = null;
+            this.renamed = new Map();
+            this.renameIndex = 0;
         }
     }
     createChild() {
         return new Scope(this);
+    }
+    getName(name) {
+        if (this.renamed.has(name)) {
+            return this.renamed.get(name);
+        }
+        return name;
+    }
+    getNameOf(entity) {
+        if (entity.type !== 'Identifier') {
+            return entity.name;
+        }
+        return this.getName(entity.name);
+    }
+
+    // Allows for 2703 vars to be renamed at any given scope
+    rename(name) {
+        const chars = 'abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let newName = '';
+        if (this.renameIndex < chars.length) {
+            newName = chars[this.renameIndex];
+        } else {
+            const c1 = Math.floor(this.renameIndex / 56);
+            const c2 = this.renameIndex - (c1 * 56);
+            newName = `${chars[c1 - 1]}${chars[c2]}`;
+        }
+        this.renamed.set(name, newName);
+        this.renameIndex += 1;
+        return newName
     }
 }
 
