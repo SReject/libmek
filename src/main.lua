@@ -6,7 +6,8 @@ return {
     classes = {
         Peripheral = require('classes.peripheral'),
         Multiblock = require('classes.multiblock'),
-        Boiler = require('classes.boiler')
+        Boiler = require('classes.boiler'),
+        Turbine = require('classes.turbine')
     },
     mixins = {
         tank = require('mixins.tank')
