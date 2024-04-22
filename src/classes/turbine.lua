@@ -227,9 +227,7 @@ function Turbine:info(force)
 
     ---@cast info TurbineInfo
 
-    if (info.multiblock.valid ~= true) then
-        info.turbine = {};
-    else
+    if (info.multiblock.valid == true) then
         info.turbine = {
             blades = self:getBlades(force),
             coils = self:getCoils(force),
@@ -242,6 +240,8 @@ function Turbine:info(force)
             steamTank = self.steamTank.info(self, force),
             vents = self:getVents(force)
         };
+    else
+        info.turbine = {};
     end
     return info;
 end
@@ -271,8 +271,6 @@ function Turbine:status(force)
     ---@cast status TurbineStatus
 
     if (status.multiblock.valid ~= true) then
-        status.turbine = {};
-    else
         status.turbine = {
             dumpingMode = self.getDumpingMode(self),
             energy = self.energy.status(self, force),
@@ -281,6 +279,8 @@ function Turbine:status(force)
             productionRate = self:getProductionRate(),
             steam = self.steamTank.status(self, force)
         };
+    else
+        status.turbine = {};
     end
     return status;
 end
