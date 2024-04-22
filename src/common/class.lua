@@ -38,7 +38,7 @@ function class.create(constructor, BaseClass, ...)
         local instance = setmetatable({}, BaseClass);
         if #mixins then
             for _,mixin in ipairs(mixins) do
-                for key,property in pairs(mixins) do
+                for key,property in pairs(mixin) do
                     instance[key] = property;
                 end
             end
