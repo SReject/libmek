@@ -125,9 +125,7 @@ function Boiler:info(force)
 
     ---@cast info BoilerInfo
 
-    if (info.multiblock.valid ~= true) then
-        info.boiler = {}
-    else
+    if (info.multiblock.valid == true) then
         info.boiler = {
             superHeaters = self:getSuperHeaters(force),
             maxBoilRate = self:getMaxBoilRate(force),
@@ -135,7 +133,9 @@ function Boiler:info(force)
             waterTank = self.waterTank.info(self, force),
             cooledCoolantTank = self.cooledCoolantTank.info(self, force),
             heatedCoolantTank = self.heatedCoolantTank.info(self, force)
-        }
+        };
+    else
+        info.boiler = {};
     end
     return info;
 end
