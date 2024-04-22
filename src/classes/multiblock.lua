@@ -157,14 +157,14 @@ function Multiblock:status(force)
     local status = self.__super.status(self);
 
     ---@cast status MultiblockStatus
-    if (status.peripheral.valid ~= true) then
-        status.multiblock = {
-            valid = false
-        };
-    else
+    if (status.peripheral.valid == true) then
         status.multiblock = {
             valid = self:call('isFormed') == true
         }
+    else
+        status.multiblock = {
+            valid = false
+        };
     end
     return status;
 end
