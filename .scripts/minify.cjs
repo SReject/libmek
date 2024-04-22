@@ -1,11 +1,4 @@
-/*TODO:
-while statements
-repeat statements
-goto statements
-do ... end block
-
-variable renaming for parameters and local vars
-*/
+//TODO: variable renaming for parameters and local vars
 
 const luaparse = require('luaparse');
 
@@ -21,7 +14,6 @@ class Scope {
         return new Scope(this);
     }
 }
-
 
 const handlers = {
     'NilLiteral': (scope, entity) => {
@@ -45,17 +37,9 @@ const handlers = {
     },
 
     'AssignmentStatement': (scope, entity) => {
-        const nameParts = [];
-        for (const part of entity.variables) {
-            nameParts.push(processEntity(scope, part));
-        }
-
-        const valueParts = [];
-        for (const part of entity.init) {
-            valueParts.push(processEntity(scope, part));
-        }
-
-        return `${nameParts.join(',')}=${valueParts.join(',')}`
+        const variables = processEntityList(scope, entity.variables);
+        const init = processEntityList(scope, entity.init);
+        return `${variables.join(',')}=${init.join(',')}`
     },
 
     'BinaryExpression': (scope, entity) => {
@@ -64,103 +48,75 @@ const handlers = {
         return `${left}${entity.operator}${right}`;
     },
 
+    'BreakStatement': (scope, entity) => {
+        return 'break';
+    },
+
     'CallExpression': (scope, entity) => {
         const expression = processEntity(scope, entity.base, true);
-        const parts = [];
-        for (const part of entity.arguments) {
-            parts.push(processEntity(scope, part));
-        }
-
-        return `${expression}(${parts.join(',')})`;
+        const parameters = processEntityList(scope, entity.arguments);
+        return `${expression}(${parameters.join(',')})`;
     },
 
     'CallStatement': (scope, entity) => {
         return processEntity(scope, entity.expression);
     },
 
-    'ElseClause': (scope, entity) => {
-
-        scope = scope.createChild();
-
-        const parts = [];
-        for (const part of entity.body) {
-            parts.push(processEntity(scope, part));
+    'DoStatement': (scope, entity) => {
+        if (entity.body) {
+            const body = processEntityList(scope, entity.body);
+            return `do\n${body}\end`;
         }
-        if (parts.length) {
-            return `else\n${parts.join('\n')}`;
+        return 'do end';
+    },
+
+    'ElseClause': (scope, entity) => {
+        if (entity.body.length) {
+            const body = processEntityList(scope.createChild(), entity.body);
+            return `else\n${body.join('\n')}`;
         }
         return 'else';
     },
 
     'ElseifClause': (scope, entity) => {
-        let condition = processEntity(scope, entity.condition);
-
-        scope = scope.createChild();
-
-        const parts = [];
-        for (const part of entity.body) {
-            parts.push(processEntity(scope, part));
-        }
-        if (parts.length) {
-            return `elseif ${condition} then\n${parts.join('\n')}`
+        const condition = processEntity(scope, entity.condition);
+        if (entity.body.length) {
+            const body = processEntityList(scope.createChild(), entity.body);
+            return `elseif ${condition} then\n${body.join('\n')}`
         }
         return `elseif ${condition} then`
     },
 
     'ForGenericStatement': (scope, entity) => {
         scope = scope.createChild();
-
-        const varList = [];
-        for (const part of entity.variables) {
-            varList.push(processEntity(scope, part));
-        }
-
-        const iterList = [];
-        for (const part of entity.iterators) {
-            iterList.push(processEntity(scope, part));
-        }
-
-        const body = [];
-        for (const part of entity.body) {
-            body.push(processEntity(scope, part));
-        }
-
-        return `for ${varList.join(',')} in ${iterList.join(',')} do\n${body.join('\n')}\nend`;
+        const variables = processEntityList(scope, entity.variables);
+        const iterators = processEntityList(scope, entity.iterators);
+        const body = processEntityList(scope, entity.body);
+        return `for ${variables.join(',')} in ${iterators.join(',')} do\n${body.join('\n')}\nend`;
     },
 
     'FunctionDeclaration': (scope, entity, wrap) => {
         const name = entity.identifier ? processEntity(scope, entity.identifier) : '';
 
         scope = scope.createChild();
+        const params = processEntityList(scope, entity.parameters);
+        const body = processEntityList(scope, entity.body);
 
-        const params = [];
-        for (const part of entity.parameters) {
-            params.push(processEntity(scope, part));
-        }
-
-        const body = []
-        for (const part of entity.body) {
-            body.push(processEntity(scope, part));
-        }
-
-        let res = ""
-        if (entity.isLocal) {
-            res += "local ";
-        }
-        res += "function "
-
-        res += `${name}(${params.join(',')})`;
-
+        let res = `${entity.isLocal ? 'local ' : ''}function ${name}(${params.join(',')})`;
         if (body.length) {
-            res += `\n${body.join('\n')}\n`;
+            res += `\n${body.join('\n')}\nend`;
         } else {
-            res += ' '
+            res += ' end'
         }
-        res += 'end';
         if (wrap) {
             return `(${res})`;
         }
         return res;
+    },
+
+    'GotoStatement': (scope, entity) => {
+        const label = processEntity(scope, entity.label);
+        return `goto ${label}`;
     },
 
     'Identifier': (scope, entity) => {
@@ -168,29 +124,17 @@ const handlers = {
     },
 
     'IfClause': (scope, entity) => {
-        let condition = processEntity(scope, entity.condition);
-
-        scope = scope.createChild();
-
-        const parts = [];
-        for (const part of entity.body) {
-            parts.push(processEntity(scope, part));
+        const condition = processEntity(scope, entity.condition);
+        if (entity.body.length) {
+            const body = processEntityList(scope.createChild(), entity.body);
+            return `if ${condition} then\n${body.join('\n')}`
         }
-
-        if (parts.length) {
-            return `if ${condition} then\n${parts.join('\n')}`
-        }
-
         return `if ${condition} then`
     },
 
     'IfStatement': (scope, entity) => {
-        const parts = [];
-        for (const part of entity.clauses) {
-            parts.push(processEntity(scope, part));
-        }
-
-        return `${parts.join('\n')}\nend`;
+        const clauses = processEntityList(scope, entity.clauses);
+        return `${clauses.join('\n')}\nend`;
     },
 
     'IndexExpression': (scope, entity) => {
@@ -199,29 +143,25 @@ const handlers = {
         return `${name}[${value}]`
     },
 
+    'LabelStatement': (scope, entity) => {
+        const label = processEntity(scope, entity.label);
+        return `::${label}::`
+    },
+
     'LogicalExpression': (scope, entity) => {
         const left = processEntity(scope, entity.left);
         const right = processEntity(scope, entity.right);
-
         return `(${left} ${entity.operator} ${right})`;
     },
 
     'LocalStatement': (scope, entity) => {
-        const nameParts = [];
-        for (const part of entity.variables) {
-            nameParts.push(processEntity(scope, part));
-        }
-
+        const variables = processEntityList(scope, entity.variables);
         if (!entity.init || !entity.init.length) {
-            return `local ${nameParts.join(',')};`
+            return `local ${variables.join(',')}`
         }
 
-        const initParts = [];
-        for (const part of entity.init) {
-            initParts.push(processEntity(scope, part));
-        }
-
-        return `local ${nameParts.join(',')}=${initParts.join(',')}`
+        const init = processEntityList(scope, entity.init);
+        return `local ${variables.join(',')}=${init.join(',')}`
     },
 
     'MemberExpression': (scope, entity) => {
@@ -230,20 +170,29 @@ const handlers = {
         return `${subject}${entity.indexer}${member}`;
     },
 
-    'ReturnStatement': (scope, entity) => {
-        const parts = [];
-        for (const part of entity.arguments) {
-            parts.push(processEntity(scope, part));
+    'RepeatStatement': (scope, entity) => {
+        const condition = processEntity(scope, entity.condition);
+        if (entity.body.length) {
+            const body = processEntityList(scope.createChild, entity.body);
+            return `repeat\n${body}\nuntil ${condition}`;
         }
-        return `return ${parts.join(',')}`;
+        return `repeat until ${condition}`;
+    },
+
+    'ReturnStatement': (scope, entity) => {
+        const parameters = processEntityList(scope, entity.arguments);
+        return `return ${parameters.join(',')}`;
+    },
+
+    'StringCallExpression': (scope, entity) => {
+        const base = processEntity(scope, entity.base);
+        const arg = processEntity(scope, entity.argument);
+        return `${base} ${arg}`;
     },
 
     'TableConstructorExpression': (scope, entity) => {
-        const parts = [];
-        for (const part of entity.fields) {
-            parts.push(processEntity(scope, part))
-        }
-        return `{${parts.join(',')}}`;
+        const fields = processEntityList(scope, entity.fields);
+        return `{${fields.join(',')}}`;
     },
 
     'TableKey': (scope, entity) => {
@@ -263,7 +212,16 @@ const handlers = {
 
     'UnaryExpression': (scope, entity) => {
         return `${entity.operator}${processEntity(scope, entity.argument)}`;
-    }
+    },
+
+    'WhileStatement': (scope, entity) => {
+        const condition = processEntity(scope, entity.condition);
+        if (entity.body.length) {
+            const body = processEntityList(scope.createChild(), entity.body);
+            return `while ${condition} do\n${body}\nend`
+        }
+        return `while ${condition} do end`;
+    },
 }
 
 const processEntity = (scope, entity, ...args) => {
@@ -277,11 +235,11 @@ const processEntity = (scope, entity, ...args) => {
     return result;
 };
 
-module.exports = (content) => {
-    const scope = new Scope();
-    return luaparse
-        .parse(content)
-        .body
-        .map(entry => processEntity(scope, entry))
-        .join('\n');
-};
+const processEntityList = (scope, entities, cb, ...args) => {
+    if (cb == null) {
+        cb = (scope, entity, ...args) => processEntity(scope, entity, ...args);
+    }
+    return entities.map(entity => cb(scope, entity, ...args));
+}
+
+module.exports = (content) => processEntityList(new Scope(), luaparse.parse(content).body).join('\n');
