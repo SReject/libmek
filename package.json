@@ -1,0 +1,6 @@
+{
+    "private": true,
+    "devDependencies": {
+        "luaparse": "^0.3.1"
+    }
+}
