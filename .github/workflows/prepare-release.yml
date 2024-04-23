@@ -9,7 +9,7 @@ on:
 jobs:
     checkVersion:
         name: Check that current package.json#version is not tagged
-        runs-on: ubuntu
+        runs-on: ubuntu-latest
         outputs:
             version: ${{ steps.version.outputs.version }}
             commits: ${{ steps.commits.outputs.commits }}
@@ -48,7 +48,7 @@ jobs:
         name: Draft github release
         needs: [checkVersion]
         if: needs.checkVersion.outputs.dobuild == 1
-        runs-on: ubuntu
+        runs-on: ubuntu-latest
 
         steps:
             - name: Checkout repo
