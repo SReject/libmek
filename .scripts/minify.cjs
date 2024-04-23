@@ -6,7 +6,7 @@ class Scope {
     constructor(parent) {
         if (parent) {
             this.parent = parent;
-            this.renamed = new Map(parent.remap);
+            this.renamed = new Map(parent.renamed);
             this.renameIndex = parent.renameIndex;
         } else {
             this.parent = null;
@@ -23,15 +23,20 @@ class Scope {
         }
         return name;
     }
-    getNameOf(entity) {
-        if (entity.type !== 'Identifier') {
-            return entity.name;
+
+    getEntity(entity, ...args) {
+        if (entity.type === 'Identifier') {
+            return this.getName(entity.name);
         }
-        return this.getName(entity.name);
+        return processEntity(this, entity, ...args);
     }
 
     // Allows for 2703 vars to be renamed at any given scope
     rename(name) {
+        if (name === 'self' || name === '...') {
+            return name;
+        }
+
         const chars = 'abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         let newName = '';
         if (this.renameIndex < chars.length) {
@@ -72,23 +77,24 @@ const handlers = {
         return entity.name;
     },
     'TableKey': (scope, entity) => {
-        const key = processEntity(scope, entity.key);
-        const table = processEntity(scope, entity.value);
+        const table = scope.getEntity(entity.value);
+        const key = scope.getEntity(entity.key);
         return `${table}[${key}]`;
     },
     'TableKeyString': (scope, entity) => {
-        const value = processEntity(scope, entity.value);
+        const key = scope.getEntity(entity.key);
+        const value = scope.getEntity(entity.value);
         return `${entity.key.name}=${value}`;
     },
     'TableValue': (scope, entity) => {
-        return processEntity(scope, entity.value);
+        return scope.getEntity(entity.value);
     },
 
 
     // General Statement Tokens
     'AssignmentStatement': (scope, entity) => {
-        const variables = processEntityList(scope, entity.variables);
-        const init = processEntityList(scope, entity.init);
+        const variables = processEntityList(scope, entity.variables, (scope, entity) => scope.getEntity(entity));
+        const init = processEntityList(scope, entity.init, (scope, entity) => scope.getEntity(entity));
         return `${variables.join(',')}=${init.join(',')}`
     },
     'BreakStatement': (scope, entity) => {
@@ -105,33 +111,54 @@ const handlers = {
         const label = processEntity(scope, entity.label);
         return `::${label}::`
     },
+    'LocalStatement': (scope, entity) => {
+        const variables = processEntityList(scope, entity.variables, (scope, entity) => scope.rename(entity.name));
+        if (!entity.init || !entity.init.length) {
+            return `local ${variables.join(',')}`
+        }
+        const init = processEntityList(scope, entity.init, (scope, entity) => scope.getEntity(entity));
+        return `local ${variables.join(',')}=${init.join(',')}`
+    },
     'ReturnStatement': (scope, entity) => {
-        const parameters = processEntityList(scope, entity.arguments);
+        const parameters = processEntityList(scope, entity.arguments, (scope, entity) => scope.getEntity(entity));
         return `return ${parameters.join(',')}`;
     },
 
     // Block Statement Tokens
     'IfStatement': (scope, entity) => {
         const clauses = entity.clauses.map(entity => {
+
             if (entity.type === 'IfClause') {
-                const condition = processEntity(scope, entity.condition);
+                const condition = scope.getEntity(entity.condition);
                 if (entity.body.length) {
-                    const body = processEntityList(scope.createChild(), entity.body);
+                    const body = processEntityList(
+                        scope.createChild(),
+                        entity.body,
+                        (scope, entity) => scope.getEntity(entity)
+                    );
                     return `if ${condition} then\n${body.join('\n')}`
                 }
                 return `if ${condition} then`
 
             } else if (entity.type === 'ElseifClause') {
-                const condition = processEntity(scope, entity.condition);
+                const condition = scope.getEntity(entity.condition);
                 if (entity.body.length) {
-                    const body = processEntityList(scope.createChild(), entity.body);
+                    const body = processEntityList(
+                        scope.createChild(),
+                        entity.body,
+                        (scope, entity) => scope.getEntity(entity)
+                    );
                     return `elseif ${condition} then\n${body.join('\n')}`
                 }
                 return `elseif ${condition} then`;
 
             } else {
                 if (entity.body.length) {
-                    const body = processEntityList(scope.createChild(), entity.body);
+                    const body = processEntityList(
+                        scope.createChild(),
+                        entity.body,
+                        (scope, entity) => scope.getEntity(entity)
+                    );
                     return `else\n${body.join('\n')}`;
                 }
                 return 'else';
@@ -141,24 +168,57 @@ const handlers = {
     },
     'DoStatement': (scope, entity) => {
         if (entity.body) {
-            const body = processEntityList(scope.createChild(), entity.body);
+            const body = processEntityList(
+                scope.createChild(),
+                entity.body,
+                (scope, entity) => scope.getEntity(entity)
+            );
             return `do\n${body}\end`;
         }
         return 'do end';
     },
     'ForGenericStatement': (scope, entity) => {
         scope = scope.createChild();
-        const variables = processEntityList(scope, entity.variables);
-        const iterators = processEntityList(scope, entity.iterators);
+        const variables = processEntityList(
+            scope,
+            entity.variables,
+            (scope, entity) => {
+                if (entity.type === 'Identifier') {
+                    return scope.rename(entity.name);
+                }
+                return processEntity(scope, entity)
+            }
+        );
+        const iterators = processEntityList(
+            scope,
+            entity.iterators,
+            (scope, entity) => scope.getEntity(entity)
+        );
         const body = processEntityList(scope, entity.body);
         return `for ${variables.join(',')} in ${iterators.join(',')} do\n${body.join('\n')}\nend`;
     },
     'FunctionDeclaration': (scope, entity, wrap) => {
-        const name = entity.identifier ? processEntity(scope, entity.identifier) : '';
-
+        let name = '';
+        if (entity.identifier) {
+            console.log(entity.identifier);
+            name = scope.getEntity(entity.identifier);
+        }
         scope = scope.createChild();
-        const params = processEntityList(scope, entity.parameters);
-        const body = processEntityList(scope, entity.body);
+        const params = processEntityList(
+            scope,
+            entity.parameters,
+            (scope, entity) => {
+                if (entity.type === 'Identifier') {
+                    return scope.rename(entity.name)
+                }
+                return processEntity(scope, entity)
+            }
+        );
+        const body = processEntityList(
+            scope,
+            entity.body,
+            (scope, entity) => scope.getEntity(entity)
+        );
 
         let res = `${entity.isLocal ? 'local ' : ''}function ${name}(${params.join(',')})`;
         if (body.length) {
@@ -171,27 +231,26 @@ const handlers = {
         }
         return res;
     },
-    'LocalStatement': (scope, entity) => {
-        const variables = processEntityList(scope, entity.variables);
-        if (!entity.init || !entity.init.length) {
-            return `local ${variables.join(',')}`
-        }
-
-        const init = processEntityList(scope, entity.init);
-        return `local ${variables.join(',')}=${init.join(',')}`
-    },
     'RepeatStatement': (scope, entity) => {
-        const condition = processEntity(scope, entity.condition);
+        const condition = scope.getEntity(scope, entity.condition);
         if (entity.body.length) {
-            const body = processEntityList(scope.createChild, entity.body);
+            const body = processEntityList(
+                scope.createChild(),
+                entity.body,
+                (scope, entity) => scope.getEntity(entity)
+            );
             return `repeat\n${body}\nuntil ${condition}`;
         }
         return `repeat until ${condition}`;
     },
     'WhileStatement': (scope, entity) => {
-        const condition = processEntity(scope, entity.condition);
+        const condition = scope.getEntity(entity.condition);
         if (entity.body.length) {
-            const body = processEntityList(scope.createChild(), entity.body);
+            const body = processEntityList(
+                scope.createChild(),
+                entity.body,
+                (scope, entity) => scope.getEntity(entity)
+            );
             return `while ${condition} do\n${body}\nend`
         }
         return `while ${condition} do end`;
@@ -200,27 +259,31 @@ const handlers = {
 
     // Expression Tokens
     'BinaryExpression': (scope, entity) => {
-        const left = processEntity(scope, entity.left);
-        const right = processEntity(scope, entity.right);
+        const left = scope.getEntity(entity.left);
+        const right = scope.getEntity(entity.right);
         return `${left}${entity.operator}${right}`;
     },
     'CallExpression': (scope, entity) => {
-        const expression = processEntity(scope, entity.base, true);
-        const parameters = processEntityList(scope, entity.arguments);
+        const expression = scope.getEntity(entity.base, true);
+        const parameters = processEntityList(
+            scope,
+            entity.arguments,
+            (scope, entity) => scope.getEntity(entity)
+        );
         return `${expression}(${parameters.join(',')})`;
     },
     'IndexExpression': (scope, entity) => {
-        const name = processEntity(scope, entity.base);
-        const value = processEntity(scope, entity.index);
+        const name = scope.getEntity(entity.base);
+        const value = scope.getEntity(entity.index);
         return `${name}[${value}]`
     },
     'LogicalExpression': (scope, entity) => {
-        const left = processEntity(scope, entity.left);
-        const right = processEntity(scope, entity.right);
+        const left = scope.getEntity(entity.left);
+        const right = scope.getEntity(entity.right);
         return `(${left} ${entity.operator} ${right})`;
     },
     'MemberExpression': (scope, entity) => {
-        const subject = processEntity(scope, entity.base);
+        const subject = scope.getEntity(entity.base);
         const member = processEntity(scope, entity.identifier);
         return `${subject}${entity.indexer}${member}`;
     },
@@ -234,7 +297,7 @@ const handlers = {
         return `{${fields.join(',')}}`;
     },
     'UnaryExpression': (scope, entity) => {
-        return `${entity.operator}${processEntity(scope, entity.argument)}`;
+        return `${entity.operator}${scope.getEntity(entity.argument)}`;
     }
 };
 
