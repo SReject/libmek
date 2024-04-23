@@ -77,6 +77,12 @@ let addModule = (name, output) => {
 let output = addModule('main', "");
 output = `local libmek = {};\n${output}`;
 
+const header = `-- License: ISC(https://opensource.org/license/isc-license-txt) (c) 2024 SReject
+-- Version: ${require('../package.json').version}
+`;
+
 mkdirSync(resolve(join( __dirname, '../.dist/')), { recursive: true });
-writeFileSync(resolve(join(__dirname, '../.dist/libmek.lua')), output, 'utf-8');
-writeFileSync(resolve(join(__dirname, '../.dist/libmek.min.lua')), minify(output), 'utf-8');
+writeFileSync(resolve(join(__dirname, '../.dist/libmek.lua')), header + output, 'utf-8');
+
+
+writeFileSync(resolve(join(__dirname, '../.dist/libmek.min.lua')), header + minify(output), 'utf-8');
