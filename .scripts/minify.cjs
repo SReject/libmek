@@ -1,4 +1,4 @@
-//TODO: variable renaming for parameters and local vars
+//TODO: Rename local singleton functions
 
 const luaparse = require('luaparse');
 
@@ -200,7 +200,6 @@ const handlers = {
     'FunctionDeclaration': (scope, entity, wrap) => {
         let name = '';
         if (entity.identifier) {
-            console.log(entity.identifier);
             name = scope.getEntity(entity.identifier);
         }
         scope = scope.createChild();
