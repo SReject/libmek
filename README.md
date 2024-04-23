@@ -10,15 +10,13 @@ libmek comes in two flavors:
 ### Full
 Downloads the full variant of the script and saves it as `libmek.lua` in the current working directory
 ```
-...todo: pastebin ...
-libmekinst
+pastebin run bnB5nPMr
 ```
 
 ### Minified
 Downloads the minified variant of the script and saves it as `libmek.lua` in the current working directory
 ```
-...todo: pastebin ...
-libmekinst mini
+pastebin run bnB5nPMr min
 ```
 
 ### Usage
