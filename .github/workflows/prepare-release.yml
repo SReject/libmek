@@ -12,7 +12,6 @@ jobs:
         runs-on: ubuntu-latest
         outputs:
             version: ${{ steps.version.outputs.version }}
-            commits: ${{ steps.commits.outputs.commits }}
             dobuild: ${{ steps.dobuild.outputs.dobuild }}
 
         steps:
@@ -28,16 +27,6 @@ jobs:
             - name: Extract version of package.json
               id: version
               run: echo "version=${{ steps.package.outputs.version }}" >> $GITHUB_OUTPUT
-
-            - name: Get commit messages
-              id: commits
-              shell: bash
-              run: |
-                EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-                RES=$(git log --pretty=format:'- %s' --branches=origin/v5 $(git describe --tags `git rev-list --tags --max-count=1`)..HEAD)
-                echo "commits<<${EOF}" >> $GITHUB_OUTPUT
-                echo "${RES}" >> $GITHUB_OUTPUT
-                echo "${EOF}" >> $GITHUB_OUTPUT
 
             - name: 'Check: package version does not have a corrosponding git tag'
               id: dobuild
@@ -74,11 +63,10 @@ jobs:
                 token: ${{ env.GITHUB_TOKEN }}
                 draft: true
                 prerelease: false
-                generate_release_notes: false
+                generate_release_notes: true
 
                 tag_name: v${{ needs.checkVersion.outputs.version }}
                 name: libmek v${{ needs.checkVersion.outputs.version }}
-                body: ${{ needs.checkVersion.outputs.commits }}
                 files: |
                     ./.dist/libmek.lua
                     ./.dist/libmek.min.lua
