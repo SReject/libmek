@@ -77,6 +77,6 @@ let addModule = (name, output) => {
 let output = addModule('main', "");
 output = `local libmek = {};\n${output}`;
 
-mkdirSync(resolve(join( __dirname, '../dist/')), { recursive: true });
-writeFileSync(resolve(join(__dirname, '../dist/libmek.lua')), output, 'utf-8');
-writeFileSync(resolve(join(__dirname, '../dist/libmek.mini.lua')), minify(output), 'utf-8');
+mkdirSync(resolve(join( __dirname, '../.dist/')), { recursive: true });
+writeFileSync(resolve(join(__dirname, '../.dist/libmek.lua')), output, 'utf-8');
+writeFileSync(resolve(join(__dirname, '../.dist/libmek.mini.lua')), minify(output), 'utf-8');
