@@ -7,32 +7,32 @@ libmek comes in two flavors:
 - Full: Contains code-doc comments that 3rd party IDEs/editors can leverage
 - Minified: Removes comments and shortens internal variables to reduce overall file size
 
-### Full
+## Full
 Downloads the full variant of the script and saves it as `libmek.lua` in the current working directory
 ```
 pastebin run bnB5nPMr
 ```
 
-### Minified
+## Minified
 Downloads the minified variant of the script and saves it as `libmek.lua` in the current working directory
 ```
 pastebin run bnB5nPMr min
 ```
 
-### Usage
+## Usage
 ```
 local libmek = require('libmek');
 -- use library
 ```
 
-### Documentation
+# Documentation
 All src files are code-documented using luaCATS
 
 TODO: User-friendly documentation
 
 # Development
 
-### Build
+## Build
 Requires [Nodejs](https://nodejs.org/en)
 
 Install dependencies
@@ -45,9 +45,9 @@ Run Build script
 npm run build
 ```
 
-### Contribute
+## Contribute
 
-#### Versioning
+### Versioning
 
 [Semver](https://semver.org/) dictates the library's versioning format:
 
@@ -76,7 +76,7 @@ When comparing version `Major` superceeds `Minor` superceeds `Build` superceeds 
 - `v1.0.0` is assumed to be a later version than `v1.0.0-alpha`
 - `v1.0.0-alpha0` is assumed to be a later version than `v1.0.0-alpha`
 
-#### Branches
+### Branches
 
 **Pre v1.0.0 Release**
 - `master`: The dev branch; its package.json#version should only be altered when a new release is to be created
