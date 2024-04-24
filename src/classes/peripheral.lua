@@ -5,7 +5,7 @@ local
     new,
 
     ---Underlaying peripheral connecting a CC:Tweaked computer to a Mekanism structure or block
-    ---@class Peripheral
+    ---@class Peripheral: Class
     ---@field peripheralName string
     ---@field __cache table<string, table<string, any>>
     Peripheral = class.create(
