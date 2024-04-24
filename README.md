@@ -47,7 +47,7 @@ npm run build
 
 ### Contribute
 
-### Versioning
+#### Versioning
 
 [Semver](https://semver.org/) dictates the library's versioning format:
 
@@ -65,7 +65,6 @@ Until the first stable is produced the current versioning rules apply
 There will be no `-alpha`, `-beta`, `-rc` tagging as it is assumed that the project is still in alpha development.
 
 **Post v1.0.0 Release**
-
 - `Major`: Increases when breaking changes are to be released; resets `Minor` and `Build` portions of the version
 - `Minor`: Increased when new features are to be released; resets the `Build` portion of the version
 - `Build`: Increased when changes that do not constitute a major or minor version change are to be released
@@ -78,6 +77,12 @@ When comparing version `Major` superceeds `Minor` superceeds `Build` superceeds 
 - `v1.0.0-alpha0` is assumed to be a later version than `v1.0.0-alpha`
 
 #### Branches
+
+**Pre v1.0.0 Release**
+- `master`: The dev branch; its package.json#version should only be altered when a new release is to be created
+- `feat/<name>`: Branch of changes not ready to be included in the dev branch
+
+**Post v1.0.0 Release**
 `Master`: The current latest stable release
 `v<version>`: The dev branch for the give version
 `v<version>/<name>`: Branch of changes not ready to be included in the version's dev branch
