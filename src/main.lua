@@ -8,7 +8,8 @@ return {
         Multiblock = require('classes.multiblock'),
         ThermoelectricBoiler = require('classes.thermoelectric-boiler'),
         IndustrialTurbine = require('classes.industrial-turbine'),
-        FissionReactor = require('classes.fission-reactor')
+        FissionReactor = require('classes.fission-reactor'),
+        InductionMatrix = require('classes.induction-matrix')
     },
     mixins = {
         tank = require('mixins.tank')
