@@ -2,6 +2,9 @@ local class = require('common.class');
 local utils = require('common.utilities');
 
 local
+
+    ---Creates a new Peripheral instance
+    ---@type fun(peripheralName: string): Peripheral
     new,
 
     ---Underlaying peripheral connecting a CC:Tweaked computer to a Mekanism structure or block
@@ -123,8 +126,5 @@ end
 
 return {
     class = Peripheral,
-
-    ---Creates a new Peripheral class instance
-    ---@type fun(peripheralName: string): Peripheral
     create = new
 };

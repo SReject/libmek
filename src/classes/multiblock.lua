@@ -2,6 +2,8 @@ local class = require('common.class');
 local Peripheral = require('classes.peripheral');
 
 local
+    ---Creates a new Multiblock instance
+    ---@type fun(peripheralName: string): Multiblock
     new,
 
     ---Multiblock structure
@@ -176,8 +178,5 @@ end
 
 return {
     class = Multiblock,
-
-    ---Creates a new Multiblock class instance
-    ---@type fun(peripheralName: string): Multiblock
     create = new
 };

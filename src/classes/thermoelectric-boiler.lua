@@ -6,21 +6,21 @@ local tank = require('mixins.tank');
 local
 
     ---Creates an new Boiler instance
-    ---@type fun(peripheralName: string): Boiler
+    ---@type fun(peripheralName: string): ThermoelectricBoiler
     new,
 
     ---Boiler multiblock structure
-    ---@class Boiler: Multiblock
+    ---@class ThermoelectricBoiler: Multiblock
     ---@field __super Multiblock
     ---@field heatedCoolantTank Tank
     ---@field waterTank Tank
     ---@field cooledCoolantTank Tank
     ---@field steamTank Tank
-    Boiler = class.create(
+    ThermoelectricBoiler = class.create(
 
         ---Constructor
         ---@param super fun(pipheralName: string):nil
-        ---@param self Boiler
+        ---@param self ThermoelectricBoiler
         ---@param name string
         function (super, self, name)
             super(name);
@@ -38,7 +38,7 @@ local
     );
 
 --- Clears the instance's cache
-function Boiler:clearCache()
+function ThermoelectricBoiler:clearCache()
     self.__super.clearCache(self);
     self.__cache.boiler = {};
 end
@@ -51,7 +51,7 @@ end
 ---Units: millibuckets/tick
 ---@param force boolean? When true the cache is forced to update
 ---@return integer|nil
-function Boiler:getMaxBoilRate(force)
+function ThermoelectricBoiler:getMaxBoilRate(force)
     if (force == true or self.__cache.boiler.maxBoilRate == nil) then
         self.__cache.boiler.maxBoilRate = self:call('getBoilCapacity');
     end
@@ -65,7 +65,7 @@ end
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
 ---@return integer|nil
-function Boiler:getSuperHeaters(force)
+function ThermoelectricBoiler:getSuperHeaters(force)
     if (force == true or self.__cache.boiler.superHeaters == nil) then
         self.__cache.boiler.superHeaters = self:call('getSuperHeaters');
     end
@@ -76,7 +76,7 @@ end
 ---
 ---Units: millibuckets/tick
 ---@return integer|nil
-function Boiler:getBoilRate()
+function ThermoelectricBoiler:getBoilRate()
     return self:call('getBoilRate');
 end
 
@@ -84,7 +84,7 @@ end
 ---
 ---Units: kelvins/tick
 ---@return integer|nil
-function Boiler:getEnvironmentalLoss()
+function ThermoelectricBoiler:getEnvironmentalLoss()
     return self:call('getEnvironmentalLoss');
 end
 
@@ -92,7 +92,7 @@ end
 ---
 ---Units: millibuckets/tick
 ---@return integer|nil
-function Boiler:getMaxSeenBoilRate()
+function ThermoelectricBoiler:getMaxSeenBoilRate()
     return self:call('getMaxBoilRate');
 end
 
@@ -100,16 +100,16 @@ end
 ---
 ---Units: kelvins
 ---@return integer|nil
-function Boiler:getTemperature()
+function ThermoelectricBoiler:getTemperature()
     return self:call('getTemperature');
 end
 
 ---Entry in :info() results table specific to Boiler
----@class BoilerInfo: MultiblockInfo
----@field boiler BoilerInfoEntry
+---@class ThermoelectricBoilerInfo: MultiblockInfo
+---@field thermoelectricBoiler ThermoelectricBoilerInfoEntry
 
 ---Boiler :info() details
----@class BoilerInfoEntry
+---@class ThermoelectricBoilerInfoEntry
 ---@field superHeaters integer|nil
 ---@field maxBoilRate integer|nil
 ---@field steamTank TankInfo|nil
@@ -123,16 +123,16 @@ end
 ---If the cache does not contain a given value it is retrieved from the
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
----@return BoilerInfo
-function Boiler:info(force)
+---@return ThermoelectricBoilerInfo
+function ThermoelectricBoiler:info(force)
     force = force == true
 
     local info = self.__super.info(self, force);
 
-    ---@cast info BoilerInfo
+    ---@cast info ThermoelectricBoilerInfo
 
     if (info.multiblock.valid == true) then
-        info.boiler = {
+        info.thermoelectricBoiler = {
             superHeaters = self:getSuperHeaters(force),
             maxBoilRate = self:getMaxBoilRate(force),
             steamTank = self.steamTank.info(self, force),
@@ -141,17 +141,17 @@ function Boiler:info(force)
             heatedCoolantTank = self.heatedCoolantTank.info(self, force)
         };
     else
-        info.boiler = {};
+        info.thermoelectricBoiler = {};
     end
     return info;
 end
 
 ---Entry in :status() results table specific to Boiler
----@class BoilerStatus : MultiblockStatus
----@field boiler BoilerStatusEntry
+---@class ThermoelectricBoilerStatus : MultiblockStatus
+---@field thermoelectricBoiler ThermoelectricBoilerStatusEntry
 
 ---Boiler :status() details
----@class BoilerStatusEntry
+---@class ThermoelectricBoilerStatusEntry
 ---@field boilRate integer|nil
 ---@field cooledCoolantTank TankStatus|nil
 ---@field environmentalLoss integer|nil
@@ -166,16 +166,16 @@ end
 ---If the cache does not contain a given value it is retrieved from the
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
----@return BoilerStatus
-function Boiler:status(force)
+---@return ThermoelectricBoilerStatus
+function ThermoelectricBoiler:status(force)
     force = force == true;
 
     local status = self.__super.status(self);
 
-    ---@cast status BoilerStatus
+    ---@cast status ThermoelectricBoilerStatus
 
     if (status.multiblock == true) then
-        status.boiler = {
+        status.thermoelectricBoiler = {
             boilRate = self:getBoilRate(),
             cooledCoolantTank = self.cooledCoolantTank.status(self, force),
             environmentalLoss = self:getEnvironmentalLoss(),
@@ -186,12 +186,12 @@ function Boiler:status(force)
             waterTank = self.waterTank.status(self, force)
         };
     else
-        status.boiler = {};
+        status.thermoelectricBoiler = {};
     end
     return status;
 end
 
 return {
-    class = Boiler,
+    class = ThermoelectricBoiler,
     create = new
 };

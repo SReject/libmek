@@ -4,6 +4,9 @@ local tank  = require('mixins.tank')
 local Multiblock = require('classes.multiblock');
 
 local
+
+    ---Creates a new Fission Reactor class instance
+    ---@type fun(peripheralName: string): FissionReactor
     new,
 
     ---Fission Reactor multiblock structure
@@ -266,8 +269,5 @@ end
 
 return {
     class = FissionReactor,
-
-    ---Creates a new Fission Reactor class instance
-    ---@type fun(peripheralName: string): FissionReactor
     create = new
 };

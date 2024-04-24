@@ -5,18 +5,21 @@ local energybuffer = require('mixins.energybuffer');
 local tank = require('mixins.tank');
 
 local
+
+    ---Creates a new IndustrialTurbine instance
+    ---@type fun(peripheralName: string): IndustrialTurbine
     new,
 
     ---Turbine multiblock structure
-    ---@class Turbine: Multiblock
+    ---@class IndustrialTurbine: Multiblock
     ---@field __super Multiblock
     ---@field energy EnergyBuffer
     ---@field steamTank Tank
-    Turbine = class.create(
+    IndustrialTurbine = class.create(
 
         ---Constructor
         ---@param super fun(name: string):nil
-        ---@param self Turbine
+        ---@param self IndustrialTurbine
         ---@param name string
         function (super, self, name)
             super(name);
@@ -32,7 +35,7 @@ local
     );
 
 --- Clears the instance's cache
-function Turbine:clearCache()
+function IndustrialTurbine:clearCache()
     self.__super.clearCache(self);
     self.__cache.turbine = {};
 end
@@ -43,7 +46,7 @@ end
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
 ---@return integer|nil
-function Turbine:getBlades(force)
+function IndustrialTurbine:getBlades(force)
     if (force == true or self.__cache.turbine.blades == nil) then
         self.__cache.turbine.blades = self:call('getBlades');
     end
@@ -57,7 +60,7 @@ end
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
 ---@return integer|nil
-function Turbine:getCoils(force)
+function IndustrialTurbine:getCoils(force)
     if (force == true or self.__cache.turbine.coils == nil) then
         self.__cache.turbine.coils = self:call('getCoils');
     end
@@ -71,7 +74,7 @@ end
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
 ---@return integer|nil
-function Turbine:getCondensers(force)
+function IndustrialTurbine:getCondensers(force)
     if (force == true or self.__cache.turbine.condensers == nil) then
         self.__cache.turbine.condensers = self:call('getCondensers');
     end
@@ -85,7 +88,7 @@ end
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
 ---@return integer|nil
-function Turbine:getDispersers(force)
+function IndustrialTurbine:getDispersers(force)
     if (force == true or self.__cache.turbine.dispersers == nil) then
         self.__cache.turbine.dispersers = self:call('getDispersers');
     end
@@ -98,7 +101,7 @@ end
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
 ---@return integer|nil
-function Turbine:getVents(force)
+function IndustrialTurbine:getVents(force)
     if (force == true or self.__cache.turbine.vents == nil) then
         self.__cache.turbine.vents = self:call('getVents');
     end
@@ -113,7 +116,7 @@ end
 ---Units: millibuckets/tick
 ---@param force boolean? When true the cache is forced to update
 ---@return number|nil
-function Turbine:getMaxFlowRate(force)
+function IndustrialTurbine:getMaxFlowRate(force)
     if (force == true or self.__cache.turbine.maxFlowRate == nil) then
         self.__cache.turbine.maxFlowRate = self:call('getMaxFlowRate');
     end
@@ -128,7 +131,7 @@ end
 ---Units: joules/tick
 ---@param force boolean? When true the cache is forced to update
 ---@return number|nil
-function Turbine:getMaxProduction(force)
+function IndustrialTurbine:getMaxProduction(force)
     if (force == true or self.__cache.turbine.maxProduction == nil) then
         self.__cache.turbine.maxProduction = self:call('getMaxProduction');
     end
@@ -143,7 +146,7 @@ end
 ---Units: millibuckets/tick
 ---@param force boolean? When true the cache is forced to update
 ---@return number|nil
-function Turbine:getMaxWaterOutput(force)
+function IndustrialTurbine:getMaxWaterOutput(force)
     if (force == true or self.__cache.turbine.maxWaterOutput == nil) then
         self.__cache.turbine.maxWaterOutput = self:call('getMaxWaterOutput');
     end
@@ -154,7 +157,7 @@ end
 ---
 ---Units: millibuckets/tick
 ---@return number|nil
-function Turbine:getFlowRate()
+function IndustrialTurbine:getFlowRate()
     return self:call('getFlowRate');
 end
 
@@ -162,7 +165,7 @@ end
 ---
 ---Units: millibuckets/tick
 ---@return number|nil
-function Turbine:getLastSeenSteamInputRate()
+function IndustrialTurbine:getLastSeenSteamInputRate()
     return self:call('getLastSteamInputRate');
 end
 
@@ -170,7 +173,7 @@ end
 ---
 ---Units: joules/tick
 ---@return number|nil
-function Turbine:getProductionRate()
+function IndustrialTurbine:getProductionRate()
     return self:call('getProductionRate');
 end
 
@@ -181,31 +184,31 @@ end
 
 ---Gets the turbine's current dumping mode
 ---@return GasDumpingMode
-function Turbine:getDumpingMode()
+function IndustrialTurbine:getDumpingMode()
     return self:call('getDumpingMode');
 end
 
 ---Sets the turbine's excess steam dumping mode
 ---@return GasDumpingMode|nil
-function Turbine:setDumpingMode(mode)
+function IndustrialTurbine:setDumpingMode(mode)
 end
 
 ---Decreases the turbine's dumping mode
-function Turbine:decrementDumpingMode()
+function IndustrialTurbine:decrementDumpingMode()
     return self:call('decrementDumpingMode');
 end
 
 ---Increases the turbine's dumping mode
-function Turbine:incrementDumpingMode()
+function IndustrialTurbine:incrementDumpingMode()
     return self:call('incrementDumpingMode')
 end
 
 ---Entry in the :info() result table specific to Turbine
----@class TurbineInfo: MultiblockInfo
----@field turbine TurbineInfoEntry
+---@class IndustrialTurbineInfo: MultiblockInfo
+---@field industrialTurbine IndustrialTurbineInfoEntry
 
 ---Turbine :info() details
----@class TurbineInfoEntry
+---@class IndustrialTurbineInfoEntry
 ---@field blades integer? The number of blades associated with the turbine
 ---@field coils integer? The number of electromagnet coils associated with the turbine
 ---@field condensers integer? The number of saturating condensers associated with the turbine
@@ -222,16 +225,16 @@ end
 ---If the cache does not contain a given value it is retrieved from the
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
----@return TurbineInfo
-function Turbine:info(force)
+---@return IndustrialTurbineInfo
+function IndustrialTurbine:info(force)
     force = force == true;
 
     local info = self.__super.info(self, force);
 
-    ---@cast info TurbineInfo
+    ---@cast info IndustrialTurbineInfo
 
     if (info.multiblock.valid == true) then
-        info.turbine = {
+        info.industrialTurbine = {
             blades = self:getBlades(force),
             coils = self:getCoils(force),
             condensers = self:getCondensers(force),
@@ -244,17 +247,17 @@ function Turbine:info(force)
             vents = self:getVents(force)
         };
     else
-        info.turbine = {};
+        info.industrialTurbine = {};
     end
     return info;
 end
 
 ---Entry in the :status() result table specific to Turbine
----@class TurbineStatus: MultiblockStatus
----@field turbine TurbineStatusEntry
+---@class IndustrialTurbineStatus: MultiblockStatus
+---@field industrialTurbine IndustrialTurbineStatusEntry
 
 ---Turbine :status() details
----@class TurbineStatusEntry
+---@class IndustrialTurbineStatusEntry
 ---@field dumpingMode GasDumpingMode|nil
 ---@field energy EnergyBufferStatus|nil
 ---@field flowRate integer|nil
@@ -267,16 +270,16 @@ end
 ---If the cache does not contain a given value it is retrieved from the
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
----@return TurbineStatus
-function Turbine:status(force)
+---@return IndustrialTurbineStatus
+function IndustrialTurbine:status(force)
     force = force == true;
 
     local status = self.__super.status(self, force);
 
-    ---@cast status TurbineStatus
+    ---@cast status IndustrialTurbineStatus
 
     if (status.multiblock.valid ~= true) then
-        status.turbine = {
+        status.industrialTurbine = {
             dumpingMode = self.getDumpingMode(self),
             energy = self.energy.status(self, force),
             flowRate = self:getFlowRate(),
@@ -285,15 +288,12 @@ function Turbine:status(force)
             steam = self.steamTank.status(self, force)
         };
     else
-        status.turbine = {};
+        status.industrialTurbine = {};
     end
     return status;
 end
 
 return {
-    class = Turbine,
-
-    ---Creates a new Turbine class instance
-    ---@type fun(peripheralName: string): Turbine
+    class = IndustrialTurbine,
     create = new
 };
