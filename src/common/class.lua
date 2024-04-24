@@ -8,6 +8,9 @@ function class.create(constructor, BaseClass, ...)
 
     local mixins = {...};
 
+    ---Class definition
+    ---@class Class
+    ---@field private __index Class
     local Class = {};
     Class.__index = Class;
 
@@ -16,6 +19,10 @@ function class.create(constructor, BaseClass, ...)
         setmetatable(Class, baseMetatable);
     end
 
+    ---Initializes a given instance against the class
+    ---@protected
+    ---@param self any The instance being initialized
+    ---@param ... any Arguments to pass to the constructor function
     function Class.__construct(self, ...)
         if (constructor) then
             if (BaseClass and BaseClass.__construct) then
@@ -39,6 +46,7 @@ function class.create(constructor, BaseClass, ...)
     end
 
     ---Creates a new instance of the class
+    ---@param ... any Arguments to be passed to the class' constructor
     local function new(...)
         local instance = setmetatable({}, BaseClass);
         if #mixins then
@@ -56,7 +64,10 @@ function class.create(constructor, BaseClass, ...)
     return new,Class;
 end
 
-function class.extend(BaseClass, ...)
+---Adds mixins to the given class
+---@param BaseClass any The targeted class
+---@param ... table<string,any> Mixins to apply to to the targeted class
+function class.mixin(BaseClass, ...)
     local mixins = {...};
     for _,mixin in ipairs(mixins) do
         for key,value in pairs(mixin) do
