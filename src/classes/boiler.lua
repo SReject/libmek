@@ -4,8 +4,12 @@ local Multiblock = require('classes.multiblock');
 local tank = require('mixins.tank');
 
 local
+
+    ---Creates an new Boiler instance
+    ---@type fun(peripheralName: string): Boiler
     new,
 
+    ---Boiler multiblock structure
     ---@class Boiler: Multiblock
     ---@field __super Multiblock
     ---@field heatedCoolantTank Tank
@@ -100,9 +104,11 @@ function Boiler:getTemperature()
     return self:call('getTemperature');
 end
 
+---Entry in :info() results table specific to Boiler
 ---@class BoilerInfo: MultiblockInfo
 ---@field boiler BoilerInfoEntry
 
+---Boiler :info() details
 ---@class BoilerInfoEntry
 ---@field superHeaters integer|nil
 ---@field maxBoilRate integer|nil
@@ -140,9 +146,11 @@ function Boiler:info(force)
     return info;
 end
 
+---Entry in :status() results table specific to Boiler
 ---@class BoilerStatus : MultiblockStatus
 ---@field boiler BoilerStatusEntry
 
+---Boiler :status() details
 ---@class BoilerStatusEntry
 ---@field boilRate integer|nil
 ---@field cooledCoolantTank TankStatus|nil
@@ -185,8 +193,5 @@ end
 
 return {
     class = Boiler,
-
-    ---Creates a new Boiler class instance
-    ---@type fun(peripheralName: string): Boiler
     create = new
 };

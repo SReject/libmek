@@ -4,6 +4,7 @@ local utils = require('common.utilities');
 local
     new,
 
+    ---Underlaying peripheral connecting a CC:Tweaked computer to a Mekanism structure or block
     ---@class Peripheral
     ---@field peripheralName string
     ---@field __cache table<string, table<string, any>>
@@ -80,9 +81,11 @@ function Peripheral:isValid()
     return false;
 end
 
+---Entry in the :info() result table specific to Peripheral
 ---@class PeripheralInfo
 ---@field peripheral PeripheralInfoEntry
 
+---Peripheral :info() details
 ---@class PeripheralInfoEntry
 ---@field name string The identifying name of the peripheral
 ---@field valid boolean True if the peripheral is valid
@@ -99,9 +102,11 @@ function Peripheral:info(force)
     };
 end
 
+---Entry in the :status() result table specific to Peripheral
 ---@class PeripheralStatus
 ---@field peripheral PeripheralStatusEntry
 
+---Peripheral :status() details
 ---@class PeripheralStatusEntry
 ---@field valid boolean True if the peripheral is valid
 

@@ -4,6 +4,7 @@ local Peripheral = require('classes.peripheral');
 local
     new,
 
+    ---Multiblock structure
     ---@class Multiblock: Peripheral
     ---@field __super Peripheral
     Multiblock = class.create(
@@ -100,14 +101,15 @@ function Multiblock:getSize(force)
     };
 end
 
+---Entry in the :info() results table specific to multiblock information
+---@class MultiblockInfo: PeripheralInfo
+---@field multiblock MultiblockInfoEntry
+
+---Multiblock :info() details
 ---@class MultiblockInfoEntry
 ---@field valid boolean
 ---@field position MultiblockPosition?
 ---@field size MultiblockSize?
-
-
----@class MultiblockInfo: PeripheralInfo
----@field multiblock MultiblockInfoEntry
 
 ---Retrieves static information pertaining to the multiblock from the
 ---instance's cache
@@ -139,11 +141,14 @@ function Multiblock:isValid()
     return self:call("isFormed") == true;
 end
 
----@class MultiblockStatusEntry
----@field valid boolean True if the multiblock is valid
 
+---Entry in the :status() results table specific to multiblock information
 ---@class MultiblockStatus: PeripheralStatus
 ---@field multiblock MultiblockStatusEntry
+
+---Multiblock :status() details
+---@class MultiblockStatusEntry
+---@field valid boolean True if the multiblock is valid
 
 ---Retrieves dynamic information pertaining to the multiblock from the
 ---instance's cache

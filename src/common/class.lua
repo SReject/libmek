@@ -1,5 +1,9 @@
 local class = {};
 
+---Creates a classing instance
+---@param constructor nil|fun(super: (fun(...: any):nil), self: any, ...: ...):nil
+---@param BaseClass nil|unknown The class the result will inherit from
+---@param ... any The mixins to copy into the class
 function class.create(constructor, BaseClass, ...)
 
     local mixins = {...};
@@ -34,6 +38,7 @@ function class.create(constructor, BaseClass, ...)
         end
     end
 
+    ---Creates a new instance of the class
     local function new(...)
         local instance = setmetatable({}, BaseClass);
         if #mixins then

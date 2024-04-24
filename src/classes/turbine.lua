@@ -7,6 +7,7 @@ local tank = require('mixins.tank');
 local
     new,
 
+    ---Turbine multiblock structure
     ---@class Turbine: Multiblock
     ---@field __super Multiblock
     ---@field energy EnergyBuffer
@@ -199,9 +200,11 @@ function Turbine:incrementDumpingMode()
     return self:call('incrementDumpingMode')
 end
 
+---Entry in the :info() result table specific to Turbine
 ---@class TurbineInfo: MultiblockInfo
 ---@field turbine TurbineInfoEntry
 
+---Turbine :info() details
 ---@class TurbineInfoEntry
 ---@field blades integer? The number of blades associated with the turbine
 ---@field coils integer? The number of electromagnet coils associated with the turbine
@@ -246,9 +249,11 @@ function Turbine:info(force)
     return info;
 end
 
+---Entry in the :status() result table specific to Turbine
 ---@class TurbineStatus: MultiblockStatus
 ---@field turbine TurbineStatusEntry
 
+---Turbine :status() details
 ---@class TurbineStatusEntry
 ---@field dumpingMode GasDumpingMode|nil
 ---@field energy EnergyBufferStatus|nil

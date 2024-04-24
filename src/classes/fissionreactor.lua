@@ -6,6 +6,7 @@ local Multiblock = require('classes.multiblock');
 local
     new,
 
+    ---Fission Reactor multiblock structure
     ---@class FissionReactor: Multiblock
     ---@field __super Multiblock
     ---@field coolantTank Tank
@@ -172,9 +173,11 @@ function FissionReactor:setBurnRate(rate)
     return self:call('setBurnRate', rate);
 end
 
+---Entry in :info() results table specific to FissionReactor
 ---@class FissionReactorInfo: MultiblockInfo
 ---@field fissionReactor FissionReactorInfoEntry
 
+---FissionReactor :info() details
 ---@class FissionReactorInfoEntry
 ---@field fuelTank TankInfo|nil
 ---@field wasteTank TankInfo|nil
@@ -211,9 +214,11 @@ function FissionReactor:info(force)
     return info;
 end
 
+---Entry in the :status() results table specific to FissionReactor
 ---@class FissionReactorStatus: MultiblockStatus
 ---@field fissionReactor FissionReactorStatusEntry
 
+---FissionReactor :status() details
 ---@class FissionReactorStatusEntry
 ---@field active boolean|nil
 ---@field actualBurnRate integer|nil
