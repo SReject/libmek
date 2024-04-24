@@ -1,7 +1,8 @@
 local class = require('common.class');
-local tank  = require('mixins.tank')
 
 local Multiblock = require('classes.multiblock');
+
+local tank  = require('mixins.tank');
 
 ---Fission Reactor multiblock structure
 ---@class FissionReactor: Multiblock

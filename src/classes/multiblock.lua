@@ -1,4 +1,5 @@
 local class = require('common.class');
+
 local Peripheral = require('classes.peripheral');
 
 ---Multiblock structure
