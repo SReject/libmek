@@ -1,5 +1,5 @@
 # WIP CC:Tweaked library for Mekanism
-Classes and utilities for us when working with [Mekanism](https://www.curseforge.com/minecraft/mc-mods/mekanism) machines
+Classes and utilities for use when working with [Mekanism](https://www.curseforge.com/minecraft/mc-mods/mekanism) machines
 
 # Install
 libmek comes in two flavors:
