@@ -1,7 +1,7 @@
 local class = {};
 
 ---Creates a classing instance
----@param constructor nil|fun(super: (fun(...: any):nil), self: any, ...: ...):nil
+---@param constructor nil|fun(super: (fun(...: any):nil), self: any, ...: ...):nil The function to call to initialize new instances
 ---@param BaseClass nil|unknown The class the result will inherit from
 ---@param ... any The mixins to copy into the class
 function class.create(constructor, BaseClass, ...)
