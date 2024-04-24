@@ -3,39 +3,33 @@ local tank  = require('mixins.tank')
 
 local Multiblock = require('classes.multiblock');
 
-local
+---Fission Reactor multiblock structure
+---@class FissionReactor: Multiblock
+---@field __super Multiblock
+---@field coolantTank Tank
+---@field fuelTank Tank
+---@field heatedCoolantTank Tank
+---@field wasteTank Tank
+local FissionReactor = class.create(
 
-    ---Creates a new Fission Reactor class instance
-    ---@type fun(peripheralName: string): FissionReactor
-    new,
+    ---Constructor
+    ---@param super fun(peripheralName: string):nil
+    ---@param self FissionReactor
+    ---@param name string
+    function (super, self, name)
+        super(name);
+        self.__cache.fissionReactor = {};
+    end,
 
-    ---Fission Reactor multiblock structure
-    ---@class FissionReactor: Multiblock
-    ---@field __super Multiblock
-    ---@field coolantTank Tank
-    ---@field fuelTank Tank
-    ---@field heatedCoolantTank Tank
-    ---@field wasteTank Tank
-    FissionReactor = class.create(
+    -- Super class
+    Multiblock,
 
-        ---Constructor
-        ---@param super fun(peripheralName: string):nil
-        ---@param self FissionReactor
-        ---@param name string
-        function (super, self, name)
-            super(name);
-            self.__cache.fissionReactor = {};
-        end,
-
-        -- Super class
-        Multiblock,
-
-        -- Mixins
-        tank.factory('fissionReactor', 'Coolant', 'coolant'),
-        tank.factory('fissionReactor', 'Fuel', 'fuel'),
-        tank.factory('fissionReactor', 'HeatedCoolant', 'heatedCoolant'),
-        tank.factory('fissionReactor', 'Waste', 'waste')
-    );
+    -- Mixins
+    tank.factory('fissionReactor', 'Coolant', 'coolant'),
+    tank.factory('fissionReactor', 'Fuel', 'fuel'),
+    tank.factory('fissionReactor', 'HeatedCoolant', 'heatedCoolant'),
+    tank.factory('fissionReactor', 'Waste', 'waste')
+);
 
 ---Activates the reactor if it is not already running
 function FissionReactor:activate()
@@ -267,7 +261,4 @@ function FissionReactor:status(force)
     return status;
 end
 
-return {
-    class = FissionReactor,
-    create = new
-};
+return { class = FissionReactor };

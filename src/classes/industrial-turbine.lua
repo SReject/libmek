@@ -4,40 +4,34 @@ local Multiblock = require('classes.multiblock');
 local energybuffer = require('mixins.energybuffer');
 local tank = require('mixins.tank');
 
-local
+---Turbine multiblock structure
+---@class IndustrialTurbine: Multiblock
+---@field __super Multiblock
+---@field energy EnergyBuffer
+---@field steamTank Tank
+local IndustrialTurbine = class.create(
 
-    ---Creates a new IndustrialTurbine instance
-    ---@type fun(peripheralName: string): IndustrialTurbine
-    new,
+    ---Constructor
+    ---@param super fun(name: string):nil
+    ---@param self IndustrialTurbine
+    ---@param name string
+    function (super, self, name)
+        super(name);
+        self.__cache.industrialTurbine = {};
+    end,
 
-    ---Turbine multiblock structure
-    ---@class IndustrialTurbine: Multiblock
-    ---@field __super Multiblock
-    ---@field energy EnergyBuffer
-    ---@field steamTank Tank
-    IndustrialTurbine = class.create(
+    -- Super class
+    Multiblock,
 
-        ---Constructor
-        ---@param super fun(name: string):nil
-        ---@param self IndustrialTurbine
-        ---@param name string
-        function (super, self, name)
-            super(name);
-            self.__cache.turbine = {};
-        end,
-
-        -- Super class
-        Multiblock,
-
-        -- Mixins
-        energybuffer.factory('turbine'),
-        tank.factory('turbine', 'Steam', 'steam')
-    );
+    -- Mixins
+    energybuffer.factory('turbine'),
+    tank.factory('turbine', 'Steam', 'steam')
+);
 
 --- Clears the instance's cache
 function IndustrialTurbine:clearCache()
     self.__super.clearCache(self);
-    self.__cache.turbine = {};
+    self.__cache.industrialTurbine = {};
 end
 
 ---Gets the number of rotor blades comprising the turbine from the cache.
@@ -47,10 +41,10 @@ end
 ---@param force boolean? When true the cache is forced to update
 ---@return integer|nil
 function IndustrialTurbine:getBlades(force)
-    if (force == true or self.__cache.turbine.blades == nil) then
-        self.__cache.turbine.blades = self:call('getBlades');
+    if (force == true or self.__cache.industrialTurbine.blades == nil) then
+        self.__cache.industrialTurbine.blades = self:call('getBlades');
     end
-    return self.__cache.turbine.blades;
+    return self.__cache.industrialTurbine.blades;
 end
 
 ---Gets the number of electromagnetic coils comprising the turbine from the
@@ -61,10 +55,10 @@ end
 ---@param force boolean? When true the cache is forced to update
 ---@return integer|nil
 function IndustrialTurbine:getCoils(force)
-    if (force == true or self.__cache.turbine.coils == nil) then
-        self.__cache.turbine.coils = self:call('getCoils');
+    if (force == true or self.__cache.industrialTurbine.coils == nil) then
+        self.__cache.industrialTurbine.coils = self:call('getCoils');
     end
-    return self.__cache.turbine.coils;
+    return self.__cache.industrialTurbine.coils;
 end
 
 ---Gets the number of saturating condensers comprising the turbine from the
@@ -75,10 +69,10 @@ end
 ---@param force boolean? When true the cache is forced to update
 ---@return integer|nil
 function IndustrialTurbine:getCondensers(force)
-    if (force == true or self.__cache.turbine.condensers == nil) then
-        self.__cache.turbine.condensers = self:call('getCondensers');
+    if (force == true or self.__cache.industrialTurbine.condensers == nil) then
+        self.__cache.industrialTurbine.condensers = self:call('getCondensers');
     end
-    return self.__cache.turbine.condensers;
+    return self.__cache.industrialTurbine.condensers;
 end
 
 ---Gets the number of pressure dispersers comprising the turbine from the
@@ -89,10 +83,10 @@ end
 ---@param force boolean? When true the cache is forced to update
 ---@return integer|nil
 function IndustrialTurbine:getDispersers(force)
-    if (force == true or self.__cache.turbine.dispersers == nil) then
-        self.__cache.turbine.dispersers = self:call('getDispersers');
+    if (force == true or self.__cache.industrialTurbine.dispersers == nil) then
+        self.__cache.industrialTurbine.dispersers = self:call('getDispersers');
     end
-    return self.__cache.turbine.dispersers;
+    return self.__cache.industrialTurbine.dispersers;
 end
 
 ---Gets the number of turbine vents comprising the turbine from the cache.
@@ -102,10 +96,10 @@ end
 ---@param force boolean? When true the cache is forced to update
 ---@return integer|nil
 function IndustrialTurbine:getVents(force)
-    if (force == true or self.__cache.turbine.vents == nil) then
-        self.__cache.turbine.vents = self:call('getVents');
+    if (force == true or self.__cache.industrialTurbine.vents == nil) then
+        self.__cache.industrialTurbine.vents = self:call('getVents');
     end
-    return self.__cache.turbine.vents;
+    return self.__cache.industrialTurbine.vents;
 end
 
 ---Gets the turbine's maximum possible flow rate from the cache.
@@ -117,10 +111,10 @@ end
 ---@param force boolean? When true the cache is forced to update
 ---@return number|nil
 function IndustrialTurbine:getMaxFlowRate(force)
-    if (force == true or self.__cache.turbine.maxFlowRate == nil) then
-        self.__cache.turbine.maxFlowRate = self:call('getMaxFlowRate');
+    if (force == true or self.__cache.industrialTurbine.maxFlowRate == nil) then
+        self.__cache.industrialTurbine.maxFlowRate = self:call('getMaxFlowRate');
     end
-    return self.__cache.turbine.maxFlowRate;
+    return self.__cache.industrialTurbine.maxFlowRate;
 end
 
 ---Gets the turbine's maximum possible energy production rate from the cache.
@@ -132,10 +126,10 @@ end
 ---@param force boolean? When true the cache is forced to update
 ---@return number|nil
 function IndustrialTurbine:getMaxProduction(force)
-    if (force == true or self.__cache.turbine.maxProduction == nil) then
-        self.__cache.turbine.maxProduction = self:call('getMaxProduction');
+    if (force == true or self.__cache.industrialTurbine.maxProduction == nil) then
+        self.__cache.industrialTurbine.maxProduction = self:call('getMaxProduction');
     end
-    return self.__cache.turbine.maxProduction;
+    return self.__cache.industrialTurbine.maxProduction;
 end
 
 ---Gets the turbine's maximum possible water output rate from the cache.
@@ -147,10 +141,10 @@ end
 ---@param force boolean? When true the cache is forced to update
 ---@return number|nil
 function IndustrialTurbine:getMaxWaterOutput(force)
-    if (force == true or self.__cache.turbine.maxWaterOutput == nil) then
-        self.__cache.turbine.maxWaterOutput = self:call('getMaxWaterOutput');
+    if (force == true or self.__cache.industrialTurbine.maxWaterOutput == nil) then
+        self.__cache.industrialTurbine.maxWaterOutput = self:call('getMaxWaterOutput');
     end
-    return self.__cache.turbine.maxWaterOutput;
+    return self.__cache.industrialTurbine.maxWaterOutput;
 end
 
 ---Gets the turbine's current flow rate
@@ -293,7 +287,4 @@ function IndustrialTurbine:status(force)
     return status;
 end
 
-return {
-    class = IndustrialTurbine,
-    create = new
-};
+return { class = IndustrialTurbine };

@@ -1,34 +1,28 @@
 local class = require('common.class');
 local utils = require('common.utilities');
 
-local
+---Underlaying peripheral connecting a CC:Tweaked computer to a Mekanism structure or block
+---@class Peripheral: Class
+---@field peripheralName string
+---@field __cache table<string, table<string, any>>
+local Peripheral = class.create(
 
-    ---Creates a new Peripheral instance
-    ---@type fun(peripheralName: string): Peripheral
-    new,
-
-    ---Underlaying peripheral connecting a CC:Tweaked computer to a Mekanism structure or block
-    ---@class Peripheral: Class
-    ---@field peripheralName string
-    ---@field __cache table<string, table<string, any>>
-    Peripheral = class.create(
-
-        ---Constructor
-        ---@param self Peripheral
-        ---@param name string
-        function (super, self, name)
-            if type(name) ~= "string" or name == "" then
-                error('invalid peripheral name');
-            end
-
-            if (self.__cache == nil) then
-                self.__cache = {}
-            end
-
-            self.__cache.peripheral = {};
-            self.peripheralName = name;
+    ---Constructor
+    ---@param self Peripheral
+    ---@param name string
+    function (super, self, name)
+        if type(name) ~= "string" or name == "" then
+            error('invalid peripheral name');
         end
-    );
+
+        if (self.__cache == nil) then
+            self.__cache = {}
+        end
+
+        self.__cache.peripheral = {};
+        self.peripheralName = name;
+    end
+);
 
 ---Calls the given method for the peripheral
 ---@param method string The method to call
@@ -124,7 +118,4 @@ function Peripheral:status(force)
     };
 end
 
-return {
-    class = Peripheral,
-    create = new
-};
+return { class = Peripheral };

@@ -3,44 +3,38 @@ local Multiblock = require('classes.multiblock');
 
 local tank = require('mixins.tank');
 
-local
+---Boiler multiblock structure
+---@class ThermoelectricBoiler: Multiblock
+---@field __super Multiblock
+---@field heatedCoolantTank Tank
+---@field waterTank Tank
+---@field cooledCoolantTank Tank
+---@field steamTank Tank
+local ThermoelectricBoiler = class.create(
 
-    ---Creates an new Boiler instance
-    ---@type fun(peripheralName: string): ThermoelectricBoiler
-    new,
+    ---Constructor
+    ---@param super fun(pipheralName: string):nil
+    ---@param self ThermoelectricBoiler
+    ---@param name string
+    function (super, self, name)
+        super(name);
+        self.__cache.thermoelectricBoiler = {};
+    end,
 
-    ---Boiler multiblock structure
-    ---@class ThermoelectricBoiler: Multiblock
-    ---@field __super Multiblock
-    ---@field heatedCoolantTank Tank
-    ---@field waterTank Tank
-    ---@field cooledCoolantTank Tank
-    ---@field steamTank Tank
-    ThermoelectricBoiler = class.create(
+    -- Super class
+    Multiblock,
 
-        ---Constructor
-        ---@param super fun(pipheralName: string):nil
-        ---@param self ThermoelectricBoiler
-        ---@param name string
-        function (super, self, name)
-            super(name);
-            self.__cache.boiler = {};
-        end,
-
-        -- Super class
-        Multiblock,
-
-        -- Mixins
-        tank.factory('boiler', 'Steam', 'steam'),
-        tank.factory('boiler', 'Water', 'water'),
-        tank.factory('boiler', 'CooledCoolant', 'cooledCoolant'),
-        tank.factory('boiler', 'HeatedCoolant', 'heatedCoolant')
-    );
+    -- Mixins
+    tank.factory('boiler', 'Steam', 'steam'),
+    tank.factory('boiler', 'Water', 'water'),
+    tank.factory('boiler', 'CooledCoolant', 'cooledCoolant'),
+    tank.factory('boiler', 'HeatedCoolant', 'heatedCoolant')
+);
 
 --- Clears the instance's cache
 function ThermoelectricBoiler:clearCache()
     self.__super.clearCache(self);
-    self.__cache.boiler = {};
+    self.__cache.thermoelectricBoiler = {};
 end
 
 ---Gets the max rate at which water is converted to steam the instance's cache
@@ -52,10 +46,10 @@ end
 ---@param force boolean? When true the cache is forced to update
 ---@return integer|nil
 function ThermoelectricBoiler:getMaxBoilRate(force)
-    if (force == true or self.__cache.boiler.maxBoilRate == nil) then
-        self.__cache.boiler.maxBoilRate = self:call('getBoilCapacity');
+    if (force == true or self.__cache.thermoelectricBoiler.maxBoilRate == nil) then
+        self.__cache.thermoelectricBoiler.maxBoilRate = self:call('getBoilCapacity');
     end
-    return self.__cache.boiler.maxBoilRate;
+    return self.__cache.thermoelectricBoiler.maxBoilRate;
 end
 
 ---Gets the number of Superheaters associated with the boiler from the
@@ -66,10 +60,10 @@ end
 ---@param force boolean? When true the cache is forced to update
 ---@return integer|nil
 function ThermoelectricBoiler:getSuperHeaters(force)
-    if (force == true or self.__cache.boiler.superHeaters == nil) then
-        self.__cache.boiler.superHeaters = self:call('getSuperHeaters');
+    if (force == true or self.__cache.thermoelectricBoiler.superHeaters == nil) then
+        self.__cache.thermoelectricBoiler.superHeaters = self:call('getSuperHeaters');
     end
-    return self.__cache.boiler.superHeaters;
+    return self.__cache.thermoelectricBoiler.superHeaters;
 end
 
 ---Gets the current rate at which water is converted to steam
@@ -191,7 +185,4 @@ function ThermoelectricBoiler:status(force)
     return status;
 end
 
-return {
-    class = ThermoelectricBoiler,
-    create = new
-};
+return { class = ThermoelectricBoiler };

@@ -42,7 +42,7 @@ function class.create(constructor, BaseClass, ...)
     if (#mixins) then
         for _,mixin in ipairs(mixins) do
             for name,value in pairs(mixin) do
-                if (name ~= '__metatable' and name ~= '__super' and name ~= '__classed' and name ~= '__construct') then
+                if (name ~= '__metatable' and name ~= '__super' and name ~= '__classed' and name ~= '__construct' and name ~= 'new') then
                     super[name] = value;
                 end
             end
@@ -77,25 +77,25 @@ function class.create(constructor, BaseClass, ...)
     end
 
     ---Class definition
-    ---@class Class
-    ---@field __construct fun(self, ...):nil Initializes a given instance against the class
+    ---@class Class: Super
     local Class = {};
     setmetatable(Class, { __index = super });
 
+
     ---Creates a new instance of the class
     ---@param ... any Arguments to be passed to the class' constructor
-    local function new(...)
+    function super.new(...)
         local instance = setmetatable({}, { __index = Class });
         super.__construct(instance, table.unpack({...}));
         return instance;
     end
 
-    return new,Class;
+    return Class;
 end
 
 ---Adds mixins to the given class
 ---
----Quietly ignores mixin properties named `__metatable`, `__super`, `__classed` and `__construct`
+---Quietly ignores mixin properties named `__metatable`, `__super`, `__classed`, `__construct` or `new`
 ---@param subject table<any,any> The subject to target. If the subject is a class properties are added to the class' super metatable otherwise properties are added directly to the subject
 ---@param ... table<string,any> Mixins to apply to to the targeted class.
 function class.mixin(subject, ...)
@@ -119,7 +119,13 @@ function class.mixin(subject, ...)
     --Apply mixins to target
     for _,mixins in ipairs(mixinsList) do
         for name,value in pairs(mixins) do
-            if (name ~= '__metatable' and name ~= '__super' and name ~= '__classed' and name ~= '__construct') then
+            if (
+                name ~= '__metatable' and
+                name ~= '__super' and
+                name ~= '__classed' and
+                name ~= '__construct' and
+                name ~= 'new'
+            ) then
                 target[name] = value;
             end
         end

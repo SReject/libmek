@@ -1,15 +1,10 @@
 local class = require('common.class');
 local Peripheral = require('classes.peripheral');
 
-local
-    ---Creates a new Multiblock instance
-    ---@type fun(peripheralName: string): Multiblock
-    new,
-
-    ---Multiblock structure
-    ---@class Multiblock: Peripheral
-    ---@field __super Peripheral
-    Multiblock = class.create(
+---Multiblock structure
+---@class Multiblock: Peripheral
+---@field __super Peripheral
+local Multiblock = class.create(
 
         ---Constructor
         ---@param super fun(name: string):nil
@@ -143,7 +138,6 @@ function Multiblock:isValid()
     return self:call("isFormed") == true;
 end
 
-
 ---Entry in the :status() results table specific to multiblock information
 ---@class MultiblockStatus: PeripheralStatus
 ---@field multiblock MultiblockStatusEntry
@@ -176,7 +170,4 @@ function Multiblock:status(force)
     return status;
 end
 
-return {
-    class = Multiblock,
-    create = new
-};
+return { class = Multiblock };
