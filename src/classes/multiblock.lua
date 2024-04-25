@@ -115,8 +115,6 @@ end
 ---@param force boolean? When true the cache is forced to update
 ---@return MultiblockInfo
 function Multiblock:info(force)
-    force = force == true;
-
     local info = self.__super.info(self, force);
 
     local multiblockInfo = {
