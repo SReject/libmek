@@ -61,8 +61,8 @@ const handlers = {
     'BooleanLiteral': (scope, entity) => {
         return entity.raw;
     },
-    'NumericalLiteral': (scope, entity) => {
-        return value.raw;
+    'NumericLiteral': (scope, entity) => {
+        return entity.raw;
     },
     'StringLiteral': (scope, entity) => {
         return entity.raw;
@@ -306,7 +306,7 @@ const processEntity = (scope, entity, ...args) => {
         result = handlers[entity.type](scope, entity, ...args)
 
     } else {
-        throw new Error('unknown entity:', entity.type);
+        throw new Error('unknown entity: ' + entity.type);
     }
     return result;
 };
