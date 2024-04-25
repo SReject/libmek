@@ -4,6 +4,7 @@ local Multiblock = require('classes.multiblock');
 
 local energyBuffer = require('mixins.energybuffer');
 
+---Induction Matrix multiblock structure
 ---@class InductionMatrix: Multiblock
 ---@field __super Multiblock
 local InductionMatrix = class.create(
@@ -108,6 +109,12 @@ end
 ---@field providers integer?
 ---@field transferLimit number?
 
+---Retrieves static information regarding the induction matrix from cache
+---
+---If the cache does not contain the given value it is retrieved from the
+---connecting peripheral.
+---@param force boolean? When true cached values are forced to update
+---@return InductionMatrixInfo
 function InductionMatrix:info(force)
     local info = self.__super.info(self, force);
 
@@ -137,6 +144,12 @@ end
 ---@field inputSlot unknown?
 ---@field outputSlot unknown?
 
+---Retrieves dynamic information regarding the induction matrix
+---
+---Where applicable, if the cache does not contain the given value it is
+---retrieved from the connecting peripheral.
+---@param force boolean? When true cached values are forced to update
+---@return InductionMatrixStatus
 function InductionMatrix:status(force)
     local status = self.__super.status(self, force)
 
@@ -150,8 +163,10 @@ function InductionMatrix:status(force)
             outputSlot = self:getOutputSlot()
         }
     else
-        status.inductionMatrix = {}
+        status.inductionMatrix = {};
     end
+
+    return status;
 end
 
 return { class = InductionMatrix }
