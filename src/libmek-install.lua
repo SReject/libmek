@@ -1,7 +1,6 @@
-local args = {...}
-
 -- Installer posted to pastebin
 
+local args = {...}
 local GH_API_URI = 'https://api.github.com/';
 local RELEASES_URI = GH_API_URI .. 'repos/SReject/libmek/releases';
 local LATEST_RELEASE_URI = RELEASES_URI .. '/latest';
@@ -23,7 +22,6 @@ local function parseBody(response, cb)
 
     return json;
 end
-
 
 -- Attempt to get latest release
 local result, errmsg = http.get(LATEST_RELEASE_URI);
