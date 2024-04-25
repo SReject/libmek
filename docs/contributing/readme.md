@@ -9,5 +9,3 @@ Information regarding to compiling the source code
 
 ### [Versioning](./versioning.md)
 Information regarding versioning of the project
-
-

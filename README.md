@@ -26,8 +26,8 @@ local libmek = require('libmek');
 ```
 
 # Documentation
-see (usage)[./docs/usage/readme.md]
+see [usage](./docs/usage/readme.md)
 
 # Contributing
-See (contributing)[./docs/contributing/readme.md]
+See [contributing](./docs/contributing/readme.md)
 
