@@ -1,25 +1,25 @@
 ---@module 'classes.peripheral'
 
----@class TankContents
+---@class LibmekTankContents
 ---@field name string The identifying name for the substance in the tank
 ---@field amount integer the amount of the substance stored in the tank represented in millibuckets
 
----@class TankInfo
+---@class LibmekTankInfo
 ---@field capacity integer|nil The maximum capacity of the tank
 
----@class TankStatus
+---@class LibmekTankStatus
 ---@field capacity integer|nil The maximum capacity of the tanke
----@field current TankContents|nil The currently stored substance in the anke
+---@field current LibmekTankContents|nil The currently stored substance in the anke
 ---@field needed integer|nil The amount of substance required to finish filling the tank represented in millibuckets
 ---@field percentage number|nil Ther percentage of the tank's capacity that is filled represented as decimal
 
 return {
     factory = function (cacheNamespace, realName, propName)
 
-        ---@class Tank
+        ---@class LibmekTank
         local tank = {}
 
-        ---@param self Peripheral
+        ---@param self LibmekPeripheral
         ---@return integer|nil
         function tank.capacity(self, force)
             local cache = self.__cache[cacheNamespace]
@@ -31,8 +31,8 @@ return {
         end
 
         ---Returns the current contents stored in the tank
-        ---@param self Peripheral
-        ---@return TankContents|nil
+        ---@param self LibmekPeripheral
+        ---@return LibmekTankContents|nil
         function tank.contents(self)
             return self:call('get' .. realName);
         end
@@ -40,14 +40,14 @@ return {
         ---Retrieves the amount of the tank's contents required to finish filling the tank
         ---
         ---Units: millibuckets
-        ---@param self Peripheral
+        ---@param self LibmekPeripheral
         ---@return integer|nil
         function tank.needed(self)
             return self:call('get' .. realName .. 'Needed');
         end
 
         ---Retrieves the current fill percentage of the tank represented as a decimal
-        ---@param self Peripheral
+        ---@param self LibmekPeripheral
         ---@return number|nil
         function tank.percentage(self)
             return self:call('get' .. realName .. 'FilledPercentage');
@@ -58,9 +58,9 @@ return {
         ---
         ---If the cache does not contain a given value it is retrieved from the
         ---connecting peripheral.
-        ---@param self Peripheral
+        ---@param self LibmekPeripheral
         ---@param force boolean? When true the cache is forced to update
-        ---@return TankInfo
+        ---@return LibmekTankInfo
         function tank.info(self, force)
             return {
                 capacity = tank.capacity(self, force)
@@ -71,8 +71,8 @@ return {
         ---
         ---If the cache does not contain a given value it is retrieved from the
         ---connecting peripheral.
-        ---@param self Peripheral
-        ---@return TankStatus
+        ---@param self LibmekPeripheral
+        ---@return LibmekTankStatus
         function tank.status(self, force)
             local capacity = tank.capacity(self, force);
             local contents = self:call('get' .. realName);

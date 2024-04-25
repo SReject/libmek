@@ -5,17 +5,17 @@ local Multiblock = require('classes.multiblock');
 local tank = require('mixins.tank');
 
 ---Boiler multiblock structure
----@class ThermoelectricBoiler: Multiblock
----@field __super Multiblock
----@field heatedCoolantTank Tank
----@field waterTank Tank
----@field cooledCoolantTank Tank
----@field steamTank Tank
+---@class LibmekThermoelectricBoiler: LibmekMultiblock
+---@field __super LibmekMultiblock
+---@field heatedCoolantTank LibmekTank
+---@field waterTank LibmekTank
+---@field cooledCoolantTank LibmekTank
+---@field steamTank LibmekTank
 local ThermoelectricBoiler = class.create(
 
     ---Constructor
     ---@param super fun(pipheralName: string):nil
-    ---@param self ThermoelectricBoiler
+    ---@param self LibmekThermoelectricBoiler
     ---@param name string
     function (super, self, name)
         super(name);
@@ -100,17 +100,17 @@ function ThermoelectricBoiler:getTemperature()
 end
 
 ---Entry in :info() results table specific to Boiler
----@class ThermoelectricBoilerInfo: MultiblockInfo
----@field thermoelectricBoiler ThermoelectricBoilerInfoEntry
+---@class LibmekThermoelectricBoilerInfo: LibmekMultiblockInfo
+---@field thermoelectricBoiler LibmekThermoelectricBoilerInfoEntry
 
 ---Boiler :info() details
----@class ThermoelectricBoilerInfoEntry
+---@class LibmekThermoelectricBoilerInfoEntry
 ---@field superHeaters integer|nil
 ---@field maxBoilRate integer|nil
----@field steamTank TankInfo|nil
----@field waterTank TankInfo|nil
----@field cooledCoolantTank TankInfo|nil
----@field heatedCoolantTank TankInfo|nil
+---@field steamTank LibmekTankInfo|nil
+---@field waterTank LibmekTankInfo|nil
+---@field cooledCoolantTank LibmekTankInfo|nil
+---@field heatedCoolantTank LibmekTankInfo|nil
 
 ---Retrieves static information pertaining to the boiler from the instance's
 ---cache
@@ -118,13 +118,13 @@ end
 ---If the cache does not contain a given value it is retrieved from the
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
----@return ThermoelectricBoilerInfo
+---@return LibmekThermoelectricBoilerInfo
 function ThermoelectricBoiler:info(force)
     force = force == true
 
     local info = self.__super.info(self, force);
 
-    ---@cast info ThermoelectricBoilerInfo
+    ---@cast info LibmekThermoelectricBoilerInfo
 
     if (info.multiblock.valid == true) then
         info.thermoelectricBoiler = {
@@ -142,32 +142,32 @@ function ThermoelectricBoiler:info(force)
 end
 
 ---Entry in :status() results table specific to Boiler
----@class ThermoelectricBoilerStatus : MultiblockStatus
----@field thermoelectricBoiler ThermoelectricBoilerStatusEntry
+---@class LibmekThermoelectricBoilerStatus : LibmekMultiblockStatus
+---@field thermoelectricBoiler LibmekThermoelectricBoilerStatusEntry
 
 ---Boiler :status() details
----@class ThermoelectricBoilerStatusEntry
+---@class LibmekThermoelectricBoilerStatusEntry
 ---@field boilRate integer|nil
----@field cooledCoolantTank TankStatus|nil
+---@field cooledCoolantTank LibmekTankStatus|nil
 ---@field environmentalLoss integer|nil
----@field heatedCoolantTank TankStatus|nil
+---@field heatedCoolantTank LibmekTankStatus|nil
 ---@field maxSeenBoilRate integer|nil
 ---@field temperature integer|nil
----@field steamTank TankStatus|nil
----@field waterTank TankStatus|nil
+---@field steamTank LibmekTankStatus|nil
+---@field waterTank LibmekTankStatus|nil
 
 ---Retrieves dynamic information pertaining to the boiler
 ---
 ---If the cache does not contain a given value it is retrieved from the
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
----@return ThermoelectricBoilerStatus
+---@return LibmekThermoelectricBoilerStatus
 function ThermoelectricBoiler:status(force)
     force = force == true;
 
     local status = self.__super.status(self);
 
-    ---@cast status ThermoelectricBoilerStatus
+    ---@cast status LibmekThermoelectricBoilerStatus
 
     if (status.multiblock == true) then
         status.thermoelectricBoiler = {

@@ -5,8 +5,8 @@ local Multiblock = require('classes.multiblock');
 local energyBuffer = require('mixins.energybuffer');
 
 ---Induction Matrix multiblock structure
----@class InductionMatrix: Multiblock
----@field __super Multiblock
+---@class InductionMatrix: LibmekMultiblock
+---@field __super LibmekMultiblock
 local InductionMatrix = class.create(
 
     ---Constructor
@@ -100,11 +100,11 @@ function InductionMatrix:getOutputSlot()
 end
 
 ---Entry in the :info() results table specific to InductionMatrix information
----@class InductionMatrixInfo: MultiblockInfo
----@field inductionMatrix InductionMatrixInfoEntry
+---@class LibmekInductionMatrixInfo: LibmekMultiblockInfo
+---@field inductionMatrix LibmekInductionMatrixInfoEntry
 
 ---InductionMatrix :info() details
----@class InductionMatrixInfoEntry
+---@class LibmekInductionMatrixInfoEntry
 ---@field cells integer?
 ---@field providers integer?
 ---@field transferLimit number?
@@ -114,11 +114,11 @@ end
 ---If the cache does not contain the given value it is retrieved from the
 ---connecting peripheral.
 ---@param force boolean? When true cached values are forced to update
----@return InductionMatrixInfo
+---@return LibmekInductionMatrixInfo
 function InductionMatrix:info(force)
     local info = self.__super.info(self, force);
 
-    ---@cast info InductionMatrixInfo
+    ---@cast info LibmekInductionMatrixInfo
 
     if (info.multiblock.valid) then
         info.inductionMatrix = {
@@ -134,11 +134,11 @@ function InductionMatrix:info(force)
 end
 
 ---Entry in the :status() results table specific to InductionMatrix information
----@class InductionMatrixStatus: MultiblockStatus
----@field inductionMatrix InductionMatrixStatusEntry
+---@class LibmekInductionMatrixStatus: LibmekMultiblockStatus
+---@field inductionMatrix LibmekInductionMatrixStatusEntry
 
 ---InductionMatrix :status() details
----@class InductionMatrixStatusEntry
+---@class LibmekInductionMatrixStatusEntry
 ---@field inputRate number?
 ---@field outputRate number?
 ---@field inputSlot unknown?
@@ -149,11 +149,11 @@ end
 ---Where applicable, if the cache does not contain the given value it is
 ---retrieved from the connecting peripheral.
 ---@param force boolean? When true cached values are forced to update
----@return InductionMatrixStatus
+---@return LibmekInductionMatrixStatus
 function InductionMatrix:status(force)
     local status = self.__super.status(self, force)
 
-    ---@cast status InductionMatrixStatus
+    ---@cast status LibmekInductionMatrixStatus
 
     if (status.multiblock.valid) then
         status.inductionMatrix = {

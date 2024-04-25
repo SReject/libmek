@@ -3,13 +3,13 @@ local class = require('common.class');
 local Peripheral = require('classes.peripheral');
 
 ---Multiblock structure
----@class Multiblock: Peripheral
----@field __super Peripheral
+---@class LibmekMultiblock: LibmekPeripheral
+---@field __super LibmekPeripheral
 local Multiblock = class.create(
 
         ---Constructor
         ---@param super fun(name: string):nil
-        ---@param self Multiblock
+        ---@param self LibmekMultiblock
         ---@param name string
         function (super, self, name)
             super(name);
@@ -65,7 +65,7 @@ function Multiblock:getPosition(force)
     };
 end
 
----@class MultiblockSize
+---@class LibmekMultiblockSize
 ---@field width number?
 ---@field length number?
 ---@field height number?
@@ -75,7 +75,7 @@ end
 ---If the cache does not contain the given value it is retrieved from the
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
----@return MultiblockSize
+---@return LibmekMultiblockSize
 function Multiblock:getSize(force)
     if (
         force == true or
@@ -100,20 +100,20 @@ function Multiblock:getSize(force)
 end
 
 ---Entry in the :info() results table specific to multiblock information
----@class MultiblockInfo: PeripheralInfo
----@field multiblock MultiblockInfoEntry
+---@class LibmekMultiblockInfo: LibmekPeripheralInfo
+---@field multiblock LibmekMultiblockInfoEntry
 
 ---Multiblock :info() details
----@class MultiblockInfoEntry
+---@class LibmekMultiblockInfoEntry
 ---@field valid boolean
 ---@field position MultiblockPosition?
----@field size MultiblockSize?
+---@field size LibmekMultiblockSize?
 
 ---Retrieves static information pertaining to the multiblock from the
 ---instance's cache
 ---comment
 ---@param force boolean? When true the cache is forced to update
----@return MultiblockInfo
+---@return LibmekMultiblockInfo
 function Multiblock:info(force)
     local info = self.__super.info(self, force);
 
@@ -126,7 +126,7 @@ function Multiblock:info(force)
         multiblockInfo.size = self:getSize(force);
     end
 
-    ---@cast info MultiblockInfo
+    ---@cast info LibmekMultiblockInfo
     info.multiblock = multiblockInfo;
     return info;
 end
@@ -138,11 +138,11 @@ function Multiblock:isValid()
 end
 
 ---Entry in the :status() results table specific to multiblock information
----@class MultiblockStatus: PeripheralStatus
----@field multiblock MultiblockStatusEntry
+---@class LibmekMultiblockStatus: LibmekPeripheralStatus
+---@field multiblock LibmekMultiblockStatusEntry
 
 ---Multiblock :status() details
----@class MultiblockStatusEntry
+---@class LibmekMultiblockStatusEntry
 ---@field valid boolean True if the multiblock is valid
 
 ---Retrieves dynamic information pertaining to the multiblock from the
@@ -151,12 +151,12 @@ end
 ---If the cache does not contain a given value it is retrieved from the
 ---connecting peripheral.
 ---@param force boolean? ignored
----@return MultiblockStatus
+---@return LibmekMultiblockStatus
 function Multiblock:status(force)
 
     local status = self.__super.status(self);
 
-    ---@cast status MultiblockStatus
+    ---@cast status LibmekMultiblockStatus
     if (status.peripheral.valid == true) then
         status.multiblock = {
             valid = self:call('isFormed') == true

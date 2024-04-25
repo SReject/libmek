@@ -5,17 +5,17 @@ local Multiblock = require('classes.multiblock');
 local tank  = require('mixins.tank');
 
 ---Fission Reactor multiblock structure
----@class FissionReactor: Multiblock
----@field __super Multiblock
----@field coolantTank Tank
----@field fuelTank Tank
----@field heatedCoolantTank Tank
----@field wasteTank Tank
+---@class LibmekFissionReactor: LibmekMultiblock
+---@field __super LibmekMultiblock
+---@field coolantTank LibmekTank
+---@field fuelTank LibmekTank
+---@field heatedCoolantTank LibmekTank
+---@field wasteTank LibmekTank
 local FissionReactor = class.create(
 
     ---Constructor
     ---@param super fun(peripheralName: string):nil
-    ---@param self FissionReactor
+    ---@param self LibmekFissionReactor
     ---@param name string
     function (super, self, name)
         super(name);
@@ -172,15 +172,15 @@ function FissionReactor:setBurnRate(rate)
 end
 
 ---Entry in :info() results table specific to FissionReactor
----@class FissionReactorInfo: MultiblockInfo
+---@class LibmekFissionReactorInfo: LibmekMultiblockInfo
 ---@field fissionReactor FissionReactorInfoEntry
 
 ---FissionReactor :info() details
 ---@class FissionReactorInfoEntry
----@field fuelTank TankInfo|nil
----@field wasteTank TankInfo|nil
----@field coolantTank TankInfo|nil
----@field heatedCoolantTank TankInfo|nil
+---@field fuelTank LibmekTankInfo|nil
+---@field wasteTank LibmekTankInfo|nil
+---@field coolantTank LibmekTankInfo|nil
+---@field heatedCoolantTank LibmekTankInfo|nil
 ---@field fuelRodAssembles integer|nil
 ---@field heatCapacity integer|nil
 ---@field maxBurnRate integer|nil
@@ -190,11 +190,11 @@ end
 ---If the cache does not contain a given value it is retrieved from the
 ---connecting peripheral.
 ---@param force boolean? When true cached values are forced to update
----@return FissionReactorInfo
+---@return LibmekFissionReactorInfo
 function FissionReactor:info(force)
     local info = self.__super.info(self, force);
 
-    ---@cast info FissionReactorInfo
+    ---@cast info LibmekFissionReactorInfo
 
     if (info.multiblock.valid) then
         info.fissionReactor = {
@@ -213,11 +213,11 @@ function FissionReactor:info(force)
 end
 
 ---Entry in the :status() results table specific to FissionReactor
----@class FissionReactorStatus: MultiblockStatus
----@field fissionReactor FissionReactorStatusEntry
+---@class LibmekFissionReactorStatus: LibmekMultiblockStatus
+---@field fissionReactor LibmekFissionReactorStatusEntry
 
 ---FissionReactor :status() details
----@class FissionReactorStatusEntry
+---@class LibmekFissionReactorStatusEntry
 ---@field active boolean|nil
 ---@field actualBurnRate integer|nil
 ---@field boilEfficency number|nil
@@ -227,18 +227,18 @@ end
 ---@field heatingRate number|nil
 ---@field temperature number|nil
 ---@field forceDisabled boolean|nil
----@field fuelTank TankStatus|nil
----@field wasteTank TankStatus|nil
----@field coolantTank TankStatus|nil
----@field heatedCoolantTank TankStatus|nil
+---@field fuelTank LibmekTankStatus|nil
+---@field wasteTank LibmekTankStatus|nil
+---@field coolantTank LibmekTankStatus|nil
+---@field heatedCoolantTank LibmekTankStatus|nil
 
 ---Retrieves dynamic information pertaining to the reactor instance
 ---@param force boolean? Applicable valves that are retrieved from cache are forced to update
----@return FissionReactorStatus
+---@return LibmekFissionReactorStatus
 function FissionReactor:status(force)
     local status = self.__super.status(self, force);
 
-    ---@cast status FissionReactorStatus
+    ---@cast status LibmekFissionReactorStatus
     if (status.multiblock.valid) then
         status.fissionReactor = {
             active = self:isActive(),

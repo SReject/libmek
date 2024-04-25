@@ -2,13 +2,13 @@ local class = require('common.class');
 local utils = require('common.utilities');
 
 ---Underlaying peripheral connecting a CC:Tweaked computer to a Mekanism structure or block
----@class Peripheral: Class
+---@class LibmekPeripheral: Class
 ---@field peripheralName string
 ---@field __cache table<string, table<string, any>>
 local Peripheral = class.create(
 
     ---Constructor
-    ---@param self Peripheral
+    ---@param self LibmekPeripheral
     ---@param name string
     function (super, self, name)
         if type(name) ~= "string" or name == "" then
@@ -79,17 +79,17 @@ function Peripheral:isValid()
 end
 
 ---Entry in the :info() result table specific to Peripheral
----@class PeripheralInfo
----@field peripheral PeripheralInfoEntry
+---@class LibmekPeripheralInfo
+---@field peripheral LibmekPeripheralInfoEntry
 
 ---Peripheral :info() details
----@class PeripheralInfoEntry
+---@class LibmekPeripheralInfoEntry
 ---@field name string The identifying name of the peripheral
 ---@field valid boolean True if the peripheral is valid
 
 ---Returns information regarding the peripheral instance
 ---@param force any? Ignored
----@return PeripheralInfo
+---@return LibmekPeripheralInfo
 function Peripheral:info(force)
     return {
         peripheral = {
@@ -100,16 +100,16 @@ function Peripheral:info(force)
 end
 
 ---Entry in the :status() result table specific to Peripheral
----@class PeripheralStatus
----@field peripheral PeripheralStatusEntry
+---@class LibmekPeripheralStatus
+---@field peripheral LibmekPeripheralStatusEntry
 
 ---Peripheral :status() details
----@class PeripheralStatusEntry
+---@class LibmekPeripheralStatusEntry
 ---@field valid boolean True if the peripheral is valid
 
 ---Returns dynamic information pertaining to the peripheral instance
 ---@param force any? Ignored
----@return PeripheralStatus
+---@return LibmekPeripheralStatus
 function Peripheral:status(force)
     return {
         peripheral = {

@@ -1,9 +1,9 @@
 ---@module 'classes.peripheral'
 
----@class EnergyBufferInfo
+---@class LibmekEnergyBufferInfo
 ---@field capacity integer? The maximum amount of energy that can be stored
 
----@class EnergyBufferStatus
+---@class LibmekEnergyBufferStatus
 ---@field capacity integer? The maximum amount of energy that can be stored
 ---@field current integer? The current amount of energy stored
 ---@field needed integer? The amount of energy needed to finish filling the buffer
@@ -12,14 +12,14 @@
 return {
     factory = function (cacheNamespace)
 
-        ---@class EnergyBuffer
+        ---@class LibmekEnergyBuffer
         local energy = {}
 
         ---Retrieves the maximum amount of energy the energy buffer can store
         ---from the instance's cache
         ---
         ---Units: joules
-        ---@param self Peripheral
+        ---@param self LibmekPeripheral
         ---@param force boolean? When true the cached value is forced to update
         ---@return number|nil
         function energy.capacity(self, force)
@@ -37,7 +37,7 @@ return {
         ---Retrieves the current amount of energy stored in the buffer
         ---
         ---Units: joules
-        ---@param self Peripheral
+        ---@param self LibmekPeripheral
         ---@return number|nil
         function energy.stored(self)
             return self:call('getEnergy')
@@ -46,7 +46,7 @@ return {
         ---Retrieves the amount of energy required to finish filling the buffer
         ---
         ---Units: joules
-        ---@param self Peripheral
+        ---@param self LibmekPeripheral
         ---@return number|nil
         function energy.needed(self)
             return self:call('getEnergyNeeded');
@@ -55,7 +55,7 @@ return {
         ---Retrieves the percentage that the buffer is filled represented as a decimal
         ---
         ---Units: joules
-        ---@param self Peripheral
+        ---@param self LibmekPeripheral
         ---@return number|nil
         function energy.percentage(self)
             return self:call('getEnergyFilledPercentage');
@@ -65,9 +65,9 @@ return {
         ---
         ---If the cache does not contain a given value it is retrieved from the
         ---connecting peripheral.
-        ---@param self Peripheral
+        ---@param self LibmekPeripheral
         ---@param force boolean? When true the cache is forced to update
-        ---@return EnergyBufferInfo
+        ---@return LibmekEnergyBufferInfo
         function energy.info(self, force)
             return {
                 capacity = energy.capacity(self, force)
@@ -78,9 +78,9 @@ return {
         ---
         ---If the cache does not contain a given value it is retrieved from the
         ---connecting peripheral.
-        ---@param self Peripheral
+        ---@param self LibmekPeripheral
         ---@param force boolean? When true the cache is forced to update
-        ---@return EnergyBufferStatus
+        ---@return LibmekEnergyBufferStatus
         function energy.status(self, force)
             local maxEnergy = energy.capacity(self, force);
             local curEnergy = self:call('getEnergy');

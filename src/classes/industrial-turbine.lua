@@ -6,15 +6,15 @@ local energybuffer = require('mixins.energybuffer');
 local tank = require('mixins.tank');
 
 ---Turbine multiblock structure
----@class IndustrialTurbine: Multiblock
----@field __super Multiblock
----@field energy EnergyBuffer
----@field steamTank Tank
+---@class LibmekIndustrialTurbine: LibmekMultiblock
+---@field __super LibmekMultiblock
+---@field energy LibmekEnergyBuffer
+---@field steamTank LibmekTank
 local IndustrialTurbine = class.create(
 
     ---Constructor
     ---@param super fun(name: string):nil
-    ---@param self IndustrialTurbine
+    ---@param self LibmekIndustrialTurbine
     ---@param name string
     function (super, self, name)
         super(name);
@@ -199,20 +199,20 @@ function IndustrialTurbine:incrementDumpingMode()
 end
 
 ---Entry in the :info() result table specific to Turbine
----@class IndustrialTurbineInfo: MultiblockInfo
----@field industrialTurbine IndustrialTurbineInfoEntry
+---@class LibmekIndustrialTurbineInfo: LibmekMultiblockInfo
+---@field industrialTurbine LibmekIndustrialTurbineInfoEntry
 
 ---Turbine :info() details
----@class IndustrialTurbineInfoEntry
+---@class LibmekIndustrialTurbineInfoEntry
 ---@field blades integer? The number of blades associated with the turbine
 ---@field coils integer? The number of electromagnet coils associated with the turbine
 ---@field condensers integer? The number of saturating condensers associated with the turbine
 ---@field dispersers integer? The number of pressure dispersers associated with the turbine
----@field energy EnergyBufferInfo? Static details pretaining to the turbine's energy buffer
+---@field energy LibmekEnergyBufferInfo? Static details pretaining to the turbine's energy buffer
 ---@field maxFlowRate integer? The maximum possible amount of steam that can be consumed per tick
 ---@field maxProduction integer? The maximum possible amount of energy that can be produced each tick
 ---@field maxWaterOutput integer? The maximum amount of water the turbine can output each tick
----@field steamTank TankInfo? Static details pertaining to the turbine's steam tank
+---@field steamTank LibmekTankInfo? Static details pertaining to the turbine's steam tank
 ---@field vents integer? The number of turbine vents associated with the turbine
 
 ---Retrieves static information pretaining to the turbine from the cache.
@@ -220,13 +220,13 @@ end
 ---If the cache does not contain a given value it is retrieved from the
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
----@return IndustrialTurbineInfo
+---@return LibmekIndustrialTurbineInfo
 function IndustrialTurbine:info(force)
     force = force == true;
 
     local info = self.__super.info(self, force);
 
-    ---@cast info IndustrialTurbineInfo
+    ---@cast info LibmekIndustrialTurbineInfo
 
     if (info.multiblock.valid == true) then
         info.industrialTurbine = {
@@ -248,30 +248,30 @@ function IndustrialTurbine:info(force)
 end
 
 ---Entry in the :status() result table specific to Turbine
----@class IndustrialTurbineStatus: MultiblockStatus
----@field industrialTurbine IndustrialTurbineStatusEntry
+---@class LibmekIndustrialTurbineStatus: LibmekMultiblockStatus
+---@field industrialTurbine LibmekIndustrialTurbineStatusEntry
 
 ---Turbine :status() details
----@class IndustrialTurbineStatusEntry
+---@class LibmekIndustrialTurbineStatusEntry
 ---@field dumpingMode GasDumpingMode|nil
----@field energy EnergyBufferStatus|nil
+---@field energy LibmekEnergyBufferStatus|nil
 ---@field flowRate integer|nil
 ---@field lastSeenSteamInputRate integer|nil
 ---@field productionRate integer|nil
----@field steam TankStatus|nil
+---@field steam LibmekTankStatus|nil
 
 ---Retrieves dynamic information pertaining to the turbine instance
 ---
 ---If the cache does not contain a given value it is retrieved from the
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
----@return IndustrialTurbineStatus
+---@return LibmekIndustrialTurbineStatus
 function IndustrialTurbine:status(force)
     force = force == true;
 
     local status = self.__super.status(self, force);
 
-    ---@cast status IndustrialTurbineStatus
+    ---@cast status LibmekIndustrialTurbineStatus
 
     if (status.multiblock.valid ~= true) then
         status.industrialTurbine = {
