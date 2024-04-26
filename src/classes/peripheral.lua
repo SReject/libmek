@@ -1,4 +1,8 @@
+--Reference to global peripheral; speeds up calls
+local peripheral = peripheral;
+
 local class = require('common.class');
+
 local utils = require('common.utilities');
 
 ---Underlaying peripheral connecting a CC:Tweaked computer to a Mekanism structure or block
