@@ -13,6 +13,7 @@ return {
         IndustrialTurbine = require('classes.industrial-turbine'),
         SupercriticalPhaseShifter = require('classes.supercritical-phase-shifter'),
         SupercriticalPhaseShifterPort = require('classes.supercritical-phase-shifter-port'),
+        ThermalEvaporationPlant = require('classes.thermal-evaporation-plant'),
         ThermoelectricBoiler = require('classes.thermoelectric-boiler'),
         ThermoelectricBoilerValve = require('classes.thermoelectric-boiler-valve'),
     },
