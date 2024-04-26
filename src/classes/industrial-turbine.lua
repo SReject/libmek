@@ -173,13 +173,13 @@ function IndustrialTurbine:getProductionRate()
 end
 
 ---Gets the turbine's current dumping mode
----@return GasDumpingMode
+---@return LibmekGasDumpingMode
 function IndustrialTurbine:getDumpingMode()
     return self:call('getDumpingMode');
 end
 
 ---Sets the turbine's excess steam dumping mode
----@return GasDumpingMode|nil
+---@return LibmekGasDumpingMode|nil
 function IndustrialTurbine:setDumpingMode(mode)
 end
 
@@ -248,7 +248,7 @@ end
 
 ---Turbine :status() details
 ---@class LibmekIndustrialTurbineStatusEntry
----@field dumpingMode GasDumpingMode|nil
+---@field dumpingMode LibmekGasDumpingMode|nil
 ---@field energy LibmekEnergyBufferStatus|nil
 ---@field flowRate integer|nil
 ---@field lastSeenSteamInputRate integer|nil

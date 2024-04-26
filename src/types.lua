@@ -1,4 +1,4 @@
----@alias GasDumpingMode
+---@alias LibmekGasDumpingMode
 ---| "IDLE"
 ---| "DUMPING_EXCESS"
 ---| "DUMPING"
