@@ -1,6 +1,6 @@
 local class = require('common.class');
 
-local ThermoelectricBoiler = require('classes.thermoelectric-boiler');
+local ThermoelectricBoiler = require('classes.thermoelectric-boiler').class;
 
 ---Thermoelectric Boiler Valve
 ---@class LibmekThermoelectricBoilerValve: LibmekThermoelectricBoiler

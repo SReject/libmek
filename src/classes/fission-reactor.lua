@@ -1,6 +1,6 @@
 local class = require('common.class');
 
-local Multiblock = require('classes.multiblock');
+local Multiblock = require('classes.multiblock').class;
 
 local tank  = require('mixins.tank');
 

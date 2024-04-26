@@ -1,6 +1,6 @@
 local class = require('common.class');
 
-local Peripheral = require('classes.peripheral');
+local Peripheral = require('classes.peripheral').class;
 
 ---Multiblock structure
 ---@class LibmekMultiblock: LibmekPeripheral
@@ -17,7 +17,7 @@ local Multiblock = class.create(
     end,
 
     -- Super class
-    Peripheral.class
+    Peripheral
 );
 
 ---Clears the instance's cache

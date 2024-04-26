@@ -2,7 +2,7 @@ local class = require('common.class');
 
 local utilities = require('common.utilities');
 
-local InductionMatrix = require('classes.induction-matrix');
+local InductionMatrix = require('classes.induction-matrix').class;
 
 ---Induction Matrix Port
 ---@class LibmekInductionMatrixPort: LibmekInductionMatrix
@@ -16,7 +16,7 @@ end
 
 ---Sets the port mode
 ---@param mode LibmekMachinePortDualState|boolean
-function InductionMatrix:setPortMode(mode)
+function InductionMatrixPort:setPortMode(mode)
     self:call('setMode', utilities.portModeFromEnum(mode));
 end
 

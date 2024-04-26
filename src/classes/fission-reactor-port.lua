@@ -1,6 +1,6 @@
 local class = require('common.class');
 
-local FissionReactor = require('classes.fission-reactor');
+local FissionReactor = require('classes.fission-reactor').class;
 
 ---Fission Reactor Port
 ---@class LibmekFissionReactorPort : LibmekFissionReactor
