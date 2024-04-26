@@ -118,7 +118,7 @@ end
 ---If the cache does not contain a given value it is retrieved from the
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
----@return LibmekThermoelectricBoilerInfo
+---@return LibmekThermoelectricBoilerInfo Info
 function ThermoelectricBoiler:info(force)
     force = force == true
 
@@ -162,7 +162,7 @@ end
 ---If the cache does not contain a given value it is retrieved from the
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
----@return LibmekThermoelectricBoilerStatus
+---@return LibmekThermoelectricBoilerStatus Status
 function ThermoelectricBoiler:status(force)
     force = force == true;
 
