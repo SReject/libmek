@@ -1,3 +1,8 @@
+---@alias GasDumpingMode
+---| "IDLE"
+---| "DUMPING_EXCESS"
+---| "DUMPING"
+
 ---@class LibmekTankContents
 ---@field name string The identifying name for the substance in the tank
 ---@field amount integer the amount of the substance stored in the tank represented in millibuckets

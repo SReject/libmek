@@ -172,11 +172,6 @@ function IndustrialTurbine:getProductionRate()
     return self:call('getProductionRate');
 end
 
----@alias GasDumpingMode
----| "IDLE"
----| "DUMPING_EXCESS"
----| "DUMPING"
-
 ---Gets the turbine's current dumping mode
 ---@return GasDumpingMode
 function IndustrialTurbine:getDumpingMode()
