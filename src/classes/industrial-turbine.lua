@@ -2,7 +2,7 @@ local class = require('common.class');
 
 local Multiblock = require('classes.multiblock').class;
 
-local energybuffer = require('mixins.energybuffer');
+local energyBuffer = require('mixins.energy-buffer');
 local tank = require('mixins.tank');
 
 ---Turbine multiblock structure
@@ -25,7 +25,7 @@ local IndustrialTurbine = class.create(
     Multiblock,
 
     -- Mixins
-    energybuffer.factory('turbine'),
+    energyBuffer.factory('turbine'),
     tank.factory('turbine', 'Steam', 'steamTank')
 );
 

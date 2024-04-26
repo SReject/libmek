@@ -2,7 +2,7 @@ local class = require('common.class');
 
 local Multiblock = require('classes.multiblock').class;
 
-local energyBuffer = require('mixins.energybuffer');
+local energyBuffer = require('mixins.energy-buffer');
 
 ---Induction Matrix multiblock structure
 ---@class LibmekInductionMatrix: LibmekMultiblock

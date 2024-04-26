@@ -18,6 +18,7 @@ return {
         ThermoelectricBoilerValve = require('classes.thermoelectric-boiler-valve'),
     },
     mixins = {
-        tank = require('mixins.tank')
+        tank = require('mixins.tank'),
+        energyBuffer = require('mixins.energy-buffer')
     }
 };
