@@ -136,6 +136,7 @@ function ThermoelectricBoiler:info(force)
             heatedCoolantTank = self.heatedCoolantTank.info(self, force)
         };
     else
+        self.__cache.thermoelectricBoiler = {};
         info.thermoelectricBoiler = {};
     end
     return info;
@@ -181,6 +182,7 @@ function ThermoelectricBoiler:status(force)
             waterTank = self.waterTank.status(self, force)
         };
     else
+        self.__cache.thermoelectricBoiler = {};
         status.thermoelectricBoiler = {};
     end
     return status;

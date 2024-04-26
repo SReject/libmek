@@ -13,9 +13,6 @@ local Multiblock = class.create(
     ---@param name string
     function (super, self, name)
         super(name);
-        if (self:call('isFormed') ~= true) then
-            error("multiblock is not formed");
-        end
         self.__cache.multiblock = {};
     end,
 
@@ -117,17 +114,19 @@ end
 function Multiblock:info(force)
     local info = self.__super.info(self, force);
 
-    local multiblockInfo = {
-        valid = self:isValid()
-    };
+    ---@cast info LibmekMultiblockInfo
 
-    if (multiblockInfo.valid) then
-        multiblockInfo.position = self:getPosition(force);
-        multiblockInfo.size = self:getSize(force);
+    if (info.peripheral.valid and self:isValid()) then
+        info.multiblock = {
+            position = self:getPosition(force),
+            size = self:getSize(force),
+            valid = true
+        };
+    else
+        self.__cache.multiblock = {};
+        info.multiblock = { valid = false };
     end
 
-    ---@cast info LibmekMultiblockInfo
-    info.multiblock = multiblockInfo;
     return info;
 end
 
@@ -157,14 +156,11 @@ function Multiblock:status(force)
     local status = self.__super.status(self, force);
 
     ---@cast status LibmekMultiblockStatus
-    if (status.peripheral.valid == true) then
-        status.multiblock = {
-            valid = self:call('isFormed') == true
-        }
+    if (status.peripheral.valid == true and self:isValid() == true) then
+        status.multiblock = { valid = true }
     else
-        status.multiblock = {
-            valid = false
-        };
+        self.__cache.multiblock = {};
+        status.multiblock = { valid = false };
     end
     return status;
 end

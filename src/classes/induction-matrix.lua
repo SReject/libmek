@@ -127,6 +127,7 @@ function InductionMatrix:info(force)
             transferLimit = self:getTransferLimit(force)
         };
     else
+        self.__cache.inductionMatrix = {};
         info.inductionMatrix = {};
     end
 
@@ -163,6 +164,7 @@ function InductionMatrix:status(force)
             outputSlot = self:getOutputSlot()
         }
     else
+        self.__cache.inductionMatrix = {};
         status.inductionMatrix = {};
     end
 

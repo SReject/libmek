@@ -207,6 +207,7 @@ function FissionReactor:info(force)
             maxBurnRate = self:getMaxBurnRate(force),
         };
     else
+        self.__cache.fissionReactor = {};
         info.fissionReactor = {};
     end
     return info;
@@ -257,6 +258,7 @@ function FissionReactor:status(force)
             heatedCoolantTank = self.heatedCoolantTank.status(self, force)
         };
     else
+        self.__cache.fissionReactor = {};
         status.fissionReactor = {};
     end
     return status;

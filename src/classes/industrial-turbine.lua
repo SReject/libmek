@@ -237,6 +237,7 @@ function IndustrialTurbine:info(force)
             vents = self:getVents(force)
         };
     else
+        self.__cache.industrialTurbine = {};
         info.industrialTurbine = {};
     end
     return info;
@@ -278,6 +279,7 @@ function IndustrialTurbine:status(force)
             steam = self.steamTank.status(self, force)
         };
     else
+        self.__cache.industrialTurbine = {};
         status.industrialTurbine = {};
     end
     return status;

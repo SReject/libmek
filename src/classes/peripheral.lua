@@ -95,12 +95,18 @@ end
 ---@param force any? Ignored
 ---@return LibmekPeripheralInfo Info
 function Peripheral:info(force)
+
+    local isValid = self:isValid() == true;
+    if (isValid == false) then
+        self.__cache.peripheral = {};
+    end
+
     return {
         peripheral = {
             name = self.peripheralName,
-            valid = self:isValid()
+            valid = isValid
         }
-    };
+    }
 end
 
 ---Entry in the :status() result table specific to Peripheral
@@ -115,11 +121,13 @@ end
 ---@param force any? Ignored
 ---@return LibmekPeripheralStatus Status
 function Peripheral:status(force)
-    return {
-        peripheral = {
-            valid = self:isValid();
-        }
-    };
+
+    local isValid = self:isValid() == true;
+    if (isValid == false) then
+        self.__cache.peripheral = {};
+    end
+
+    return { peripheral = { valid = isValid } }
 end
 
 return { class = Peripheral };
