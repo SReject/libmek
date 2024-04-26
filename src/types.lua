@@ -3,6 +3,10 @@
 ---| "DUMPING_EXCESS"
 ---| "DUMPING"
 
+---@alias LibmekMachinePortDualState
+---| "INPUT"
+---| "OUTPUT"
+
 ---@class LibmekTankContents
 ---@field name string The identifying name for the substance in the tank
 ---@field amount integer the amount of the substance stored in the tank represented in millibuckets

@@ -1,47 +1,23 @@
 local class = require('common.class');
 
+local utilities = require('common.utilities');
+
 local InductionMatrix = require('classes.induction-matrix');
 
 ---Induction Matrix Port
 ---@class LibmekInductionMatrixPort: LibmekInductionMatrix
 local InductionMatrixPort = class(nil, InductionMatrix);
 
----@alias LibmekInductionMatrixPortMode
----| "INPUT"
----| "OUTPUT"
-
----Converts the input port mode into the equivulant string value
----Its planned for mekanism to use an enum for port mode; This is planning for that future
----@param mode LibmekInductionMatrixPortMode|boolean
----@return LibmekInductionMatrixPortMode mode
-local function portToEnum(mode)
-    if (mode == true or mode == 'OUTPUT') then
-        return 'OUTPUT';
-    end
-    return 'INPUT';
-end
-
----Converts the input port mode into the equivulant boolean value
----Its planned for mekanism to use an enum for port mode; This is planning for that future
----@param mode LibmekInductionMatrixPortMode|boolean
----@return boolean mode
-local function portFromEnum(mode)
-    if (mode == true or mode == 'OUTPUT') then
-        return true;
-    end
-    return false;
-end
-
 ---Retrieves the port's current mode
----@return LibmekInductionMatrixPortMode
+---@return LibmekMachinePortDualState mode
 function InductionMatrixPort:getPortMode()
-    return portToEnum(self:call('getMode'));
+    return utilities.portModeToEnum(self:call('getMode'));
 end
 
 ---Sets the port mode
----@param mode LibmekInductionMatrixPortMode|boolean
+---@param mode LibmekMachinePortDualState|boolean
 function InductionMatrix:setPortMode(mode)
-    self:call('setMode', portFromEnum(mode));
+    self:call('setMode', utilities.portModeFromEnum(mode));
 end
 
 ---Induction Matrix Port's :info() result
@@ -65,7 +41,7 @@ end
 
 ---Induction Matrix Port's :status() entry
 ---@class LibmekInductionMatrixPortEntry
----@field mode LibmekInductionMatrixPortMode
+---@field mode LibmekMachinePortDualState
 
 ---Retrieves dynamic data pertaining to the Induction Matrix Port
 ---
