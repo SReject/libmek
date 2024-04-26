@@ -11,6 +11,7 @@ return {
         InductionMatrix = require('classes.induction-matrix'),
         InductionMatrixPort = require('classes.induction-matrix-port'),
         IndustrialTurbine = require('classes.industrial-turbine'),
+        SupercriticalPhaseShifter = require('classes.supercritical-phase-shifter'),
         ThermoelectricBoiler = require('classes.thermoelectric-boiler'),
         ThermoelectricBoilerValve = require('classes.thermoelectric-boiler-valve'),
     },
