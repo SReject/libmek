@@ -82,11 +82,11 @@ function Peripheral:isValid()
     return false;
 end
 
----Entry in the :info() result table specific to Peripheral
+---Peripheral's :info() result
 ---@class LibmekPeripheralInfo
 ---@field peripheral LibmekPeripheralInfoEntry
 
----Peripheral :info() details
+---Peripheral's :info() entry
 ---@class LibmekPeripheralInfoEntry
 ---@field name string The identifying name of the peripheral
 ---@field valid boolean True if the peripheral is valid
@@ -109,11 +109,11 @@ function Peripheral:info(force)
     }
 end
 
----Entry in the :status() result table specific to Peripheral
+---Peripheral's :status() result
 ---@class LibmekPeripheralStatus
 ---@field peripheral LibmekPeripheralStatusEntry
 
----Peripheral :status() details
+---Peripheral's :status() entry
 ---@class LibmekPeripheralStatusEntry
 ---@field valid boolean True if the peripheral is valid
 

@@ -99,11 +99,11 @@ function ThermoelectricBoiler:getTemperature()
     return self:call('getTemperature');
 end
 
----Entry in :info() results table specific to Boiler
+---Thermoelectric Boiler :info() result
 ---@class LibmekThermoelectricBoilerInfo: LibmekMultiblockInfo
 ---@field thermoelectricBoiler LibmekThermoelectricBoilerInfoEntry
 
----Boiler :info() details
+---Thermoelectric Boiler's :info() entry
 ---@class LibmekThermoelectricBoilerInfoEntry
 ---@field superHeaters integer|nil
 ---@field maxBoilRate integer|nil
@@ -142,11 +142,11 @@ function ThermoelectricBoiler:info(force)
     return info;
 end
 
----Entry in :status() results table specific to Boiler
+---Thermoelectric Boiler's :status() result
 ---@class LibmekThermoelectricBoilerStatus : LibmekMultiblockStatus
 ---@field thermoelectricBoiler LibmekThermoelectricBoilerStatusEntry
 
----Boiler :status() details
+---Thermoelectric Boiler's :status() entry
 ---@class LibmekThermoelectricBoilerStatusEntry
 ---@field boilRate integer|nil
 ---@field cooledCoolantTank LibmekTankStatus|nil

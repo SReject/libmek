@@ -34,6 +34,7 @@ function ThermoelectricBoilerValve:incrementValveMode()
     self:call('incrementMode');
 end
 
+---Thermoelectric Boiler Valve's :info() result
 ---@class LibmekThermoelectricBoilerValveInfo : LibmekThermoelectricBoilerInfo
 
 ---Retrieves static information pertaining to the boiler valve from the
@@ -48,9 +49,11 @@ function ThermoelectricBoilerValve:info(force)
     return self.__super.info(self, force)
 end
 
+---Thermoelectric Boiler Valve's :status() result
 ---@class LibmekThermoelectricBoilerValveStatus : LibmekThermoelectricBoilerStatus
 ---@field thermoelectricBoilerValve LibmekThermoelectricBoilerValveEntry
 
+---Thermoelectric Boiler Valve's :status() entry
 ---@class LibmekThermoelectricBoilerValveEntry
 ---@field mode LibmekThermoelectricBoilerValveMode
 
@@ -65,13 +68,9 @@ function ThermoelectricBoilerValve:status(force)
 
     ---@cast status LibmekThermoelectricBoilerValveStatus
 
-    status.thermoelectricBoilerValve = {
-        mode = self:getValveMode()
-    };
+    status.thermoelectricBoilerValve = { mode = self:getValveMode() };
 
     return status;
 end
 
-return {
-    class = ThermoelectricBoilerValve
-}
+return { class = ThermoelectricBoilerValve };

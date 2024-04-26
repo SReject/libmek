@@ -171,11 +171,11 @@ function FissionReactor:setBurnRate(rate)
     return self:call('setBurnRate', rate);
 end
 
----Entry in :info() results table specific to FissionReactor
+---Fission Reactor :info() results
 ---@class LibmekFissionReactorInfo: LibmekMultiblockInfo
 ---@field fissionReactor FissionReactorInfoEntry
 
----FissionReactor :info() details
+---Fission Reactor's :info() entry
 ---@class FissionReactorInfoEntry
 ---@field fuelTank LibmekTankInfo|nil
 ---@field wasteTank LibmekTankInfo|nil
@@ -213,11 +213,11 @@ function FissionReactor:info(force)
     return info;
 end
 
----Entry in the :status() results table specific to FissionReactor
+---Fission Reactor's :status() results
 ---@class LibmekFissionReactorStatus: LibmekMultiblockStatus
 ---@field fissionReactor LibmekFissionReactorStatusEntry
 
----FissionReactor :status() details
+---Fission Reactor's :status() entry
 ---@class LibmekFissionReactorStatusEntry
 ---@field active boolean|nil
 ---@field actualBurnRate integer|nil

@@ -99,11 +99,11 @@ function InductionMatrix:getOutputSlot()
     return self:call('getOutputSlot');
 end
 
----Entry in the :info() results table specific to InductionMatrix information
+---Induction Matrix's :info() results
 ---@class LibmekInductionMatrixInfo: LibmekMultiblockInfo
 ---@field inductionMatrix LibmekInductionMatrixInfoEntry
 
----InductionMatrix :info() details
+---InductionMatrix's :info() entry
 ---@class LibmekInductionMatrixInfoEntry
 ---@field cells integer?
 ---@field providers integer?
@@ -134,11 +134,11 @@ function InductionMatrix:info(force)
     return info;
 end
 
----Entry in the :status() results table specific to InductionMatrix information
+---Induction Matrix's :status() results
 ---@class LibmekInductionMatrixStatus: LibmekMultiblockStatus
 ---@field inductionMatrix LibmekInductionMatrixStatusEntry
 
----InductionMatrix :status() details
+---Induction Matrix's :status() entry
 ---@class LibmekInductionMatrixStatusEntry
 ---@field inputRate number?
 ---@field outputRate number?

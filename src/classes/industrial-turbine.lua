@@ -193,11 +193,11 @@ function IndustrialTurbine:incrementDumpingMode()
     return self:call('incrementDumpingMode')
 end
 
----Entry in the :info() result table specific to Turbine
+---Industrial Turbine's :info() results
 ---@class LibmekIndustrialTurbineInfo: LibmekMultiblockInfo
 ---@field industrialTurbine LibmekIndustrialTurbineInfoEntry
 
----Turbine :info() details
+---Industrial Turbine's :info() entry
 ---@class LibmekIndustrialTurbineInfoEntry
 ---@field blades integer? The number of blades associated with the turbine
 ---@field coils integer? The number of electromagnet coils associated with the turbine
@@ -243,11 +243,11 @@ function IndustrialTurbine:info(force)
     return info;
 end
 
----Entry in the :status() result table specific to Turbine
+---Industrial Turbine's :status() results
 ---@class LibmekIndustrialTurbineStatus: LibmekMultiblockStatus
 ---@field industrialTurbine LibmekIndustrialTurbineStatusEntry
 
----Turbine :status() details
+---Industrial Turbine :status() entry
 ---@class LibmekIndustrialTurbineStatusEntry
 ---@field dumpingMode LibmekGasDumpingMode|nil
 ---@field energy LibmekEnergyBufferStatus|nil

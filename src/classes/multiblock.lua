@@ -96,11 +96,11 @@ function Multiblock:getSize(force)
     };
 end
 
----Entry in the :info() results table specific to multiblock information
+---Multiblock's :info() results
 ---@class LibmekMultiblockInfo: LibmekPeripheralInfo
 ---@field multiblock LibmekMultiblockInfoEntry
 
----Multiblock :info() details
+---Multiblock's :info() entry
 ---@class LibmekMultiblockInfoEntry
 ---@field valid boolean
 ---@field position LibmekMultiblockPosition?
@@ -136,11 +136,11 @@ function Multiblock:isValid()
     return self:call("isFormed") == true;
 end
 
----Entry in the :status() results table specific to multiblock information
+---Multiblock's :status() results
 ---@class LibmekMultiblockStatus: LibmekPeripheralStatus
 ---@field multiblock LibmekMultiblockStatusEntry
 
----Multiblock :status() details
+---Multiblock's :status() entry
 ---@class LibmekMultiblockStatusEntry
 ---@field valid boolean True if the multiblock is valid
 
