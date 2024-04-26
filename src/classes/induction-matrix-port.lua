@@ -73,7 +73,7 @@ end
 ---connecting peripheral.
 ---@param force boolean? When true cached values are forced to update
 ---@return LibmekInductionMatrixPortStatus status
-function InductionMatrixPort:status(force);
+function InductionMatrixPort:status(force)
     local status = self.__super.status(self, force);
 
     ---@cast status LibmekInductionMatrixPortStatus
