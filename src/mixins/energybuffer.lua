@@ -67,7 +67,7 @@ return {
         ---connecting peripheral.
         ---@param self LibmekPeripheral
         ---@param force boolean? When true the cache is forced to update
-        ---@return LibmekEnergyBufferInfo
+        ---@return LibmekEnergyBufferInfo EnergyBufferInfo
         function energy.info(self, force)
             return {
                 capacity = energy.capacity(self, force)
@@ -80,7 +80,7 @@ return {
         ---connecting peripheral.
         ---@param self LibmekPeripheral
         ---@param force boolean? When true the cache is forced to update
-        ---@return LibmekEnergyBufferStatus
+        ---@return LibmekEnergyBufferStatus EnergyBufferStatus
         function energy.status(self, force)
             local maxEnergy = energy.capacity(self, force);
             local curEnergy = self:call('getEnergy');

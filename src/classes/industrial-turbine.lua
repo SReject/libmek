@@ -9,7 +9,7 @@ local tank = require('mixins.tank');
 ---@class LibmekIndustrialTurbine: LibmekMultiblock
 ---@field __super LibmekMultiblock
 ---@field energy LibmekEnergyBuffer
----@field steamTank LibmekTank
+---@field steamTank LibmekDedicatedTankSlot
 local IndustrialTurbine = class.create(
 
     ---Constructor
@@ -26,7 +26,7 @@ local IndustrialTurbine = class.create(
 
     -- Mixins
     energybuffer.factory('turbine'),
-    tank.factory('turbine', 'Steam', 'steam')
+    tank.factory('turbine', 'Steam', 'steamTank')
 );
 
 --- Clears the instance's cache
@@ -220,7 +220,7 @@ end
 ---If the cache does not contain a given value it is retrieved from the
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
----@return LibmekIndustrialTurbineInfo
+---@return LibmekIndustrialTurbineInfo Info
 function IndustrialTurbine:info(force)
     force = force == true;
 
@@ -265,7 +265,7 @@ end
 ---If the cache does not contain a given value it is retrieved from the
 ---connecting peripheral.
 ---@param force boolean? When true the cache is forced to update
----@return LibmekIndustrialTurbineStatus
+---@return LibmekIndustrialTurbineStatus Status
 function IndustrialTurbine:status(force)
     force = force == true;
 

@@ -2,7 +2,7 @@ local class = require('common.class');
 local utils = require('common.utilities');
 
 ---Underlaying peripheral connecting a CC:Tweaked computer to a Mekanism structure or block
----@class LibmekPeripheral: Class
+---@class LibmekPeripheral: LibmekInstantable
 ---@field peripheralName string
 ---@field __cache table<string, table<string, any>>
 local Peripheral = class.create(
@@ -89,7 +89,7 @@ end
 
 ---Returns information regarding the peripheral instance
 ---@param force any? Ignored
----@return LibmekPeripheralInfo
+---@return LibmekPeripheralInfo Info
 function Peripheral:info(force)
     return {
         peripheral = {
@@ -109,7 +109,7 @@ end
 
 ---Returns dynamic information pertaining to the peripheral instance
 ---@param force any? Ignored
----@return LibmekPeripheralStatus
+---@return LibmekPeripheralStatus Status
 function Peripheral:status(force)
     return {
         peripheral = {

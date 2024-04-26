@@ -7,10 +7,10 @@ local tank = require('mixins.tank');
 ---Boiler multiblock structure
 ---@class LibmekThermoelectricBoiler: LibmekMultiblock
 ---@field __super LibmekMultiblock
----@field heatedCoolantTank LibmekTank
----@field waterTank LibmekTank
----@field cooledCoolantTank LibmekTank
----@field steamTank LibmekTank
+---@field heatedCoolantTank LibmekDedicatedTankSlot
+---@field waterTank LibmekDedicatedTankSlot
+---@field cooledCoolantTank LibmekDedicatedTankSlot
+---@field steamTank LibmekDedicatedTankSlot
 local ThermoelectricBoiler = class.create(
 
     ---Constructor
@@ -26,10 +26,10 @@ local ThermoelectricBoiler = class.create(
     Multiblock,
 
     -- Mixins
-    tank.factory('boiler', 'Steam', 'steam'),
-    tank.factory('boiler', 'Water', 'water'),
-    tank.factory('boiler', 'CooledCoolant', 'cooledCoolant'),
-    tank.factory('boiler', 'HeatedCoolant', 'heatedCoolant')
+    tank.factory('boiler', 'Steam', 'steamTank'),
+    tank.factory('boiler', 'Water', 'waterTank'),
+    tank.factory('boiler', 'CooledCoolant', 'cooledCoolantTank'),
+    tank.factory('boiler', 'HeatedCoolant', 'heatedCoolantTank')
 );
 
 --- Clears the instance's cache

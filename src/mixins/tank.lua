@@ -1,40 +1,34 @@
 ---@module 'classes.peripheral'
 
----@class LibmekTankContents
----@field name string The identifying name for the substance in the tank
----@field amount integer the amount of the substance stored in the tank represented in millibuckets
-
----@class LibmekTankInfo
----@field capacity integer|nil The maximum capacity of the tank
-
----@class LibmekTankStatus
----@field capacity integer|nil The maximum capacity of the tanke
----@field current LibmekTankContents|nil The currently stored substance in the anke
----@field needed integer|nil The amount of substance required to finish filling the tank represented in millibuckets
----@field percentage number|nil Ther percentage of the tank's capacity that is filled represented as decimal
-
 return {
-    factory = function (cacheNamespace, realName, propName)
 
-        ---@class LibmekTank
+    ---Creates a new dedicated-tank mixin
+    ---@param cacheNamespace string The key in the instance's cache object to store associated cached values
+    ---@param tankName string The name used to reference the tank: `peripheral.call('get' .. tankName)`
+    ---@param propName string The key to use to house the mixin and associated data
+    ---@return LibmekDedicatedTankSlot
+    factory = function (cacheNamespace, tankName, propName)
+
+        ---@class LibmekDedicatedTankSlot
         local tank = {}
 
+        ---Retrieves the capacity of the tank slot
         ---@param self LibmekPeripheral
         ---@return integer|nil
         function tank.capacity(self, force)
             local cache = self.__cache[cacheNamespace]
             local cacheName = propName .. 'Capacity';
             if (force or cache[cacheName] == nil) then
-                cache[cacheName] = self:call('get' .. realName .. 'Capacity');
+                cache[cacheName] = self:call('get' .. tankName .. 'Capacity');
             end
             return cache[cacheName];
         end
 
-        ---Returns the current contents stored in the tank
+        ---Retrieves the current contents stored in the tank
         ---@param self LibmekPeripheral
-        ---@return LibmekTankContents|nil
+        ---@return LibmekTankContents|nil TankContents
         function tank.contents(self)
-            return self:call('get' .. realName);
+            return self:call('get' .. tankName);
         end
 
         ---Retrieves the amount of the tank's contents required to finish filling the tank
@@ -43,14 +37,14 @@ return {
         ---@param self LibmekPeripheral
         ---@return integer|nil
         function tank.needed(self)
-            return self:call('get' .. realName .. 'Needed');
+            return self:call('get' .. tankName .. 'Needed');
         end
 
         ---Retrieves the current fill percentage of the tank represented as a decimal
         ---@param self LibmekPeripheral
         ---@return number|nil
         function tank.percentage(self)
-            return self:call('get' .. realName .. 'FilledPercentage');
+            return self:call('get' .. tankName .. 'FilledPercentage');
         end
 
         ---Retrieves static information pertaining to the tank from the
@@ -60,7 +54,7 @@ return {
         ---connecting peripheral.
         ---@param self LibmekPeripheral
         ---@param force boolean? When true the cache is forced to update
-        ---@return LibmekTankInfo
+        ---@return LibmekTankInfo TankInfo
         function tank.info(self, force)
             return {
                 capacity = tank.capacity(self, force)
@@ -72,10 +66,10 @@ return {
         ---If the cache does not contain a given value it is retrieved from the
         ---connecting peripheral.
         ---@param self LibmekPeripheral
-        ---@return LibmekTankStatus
+        ---@return LibmekTankStatus TankStatus
         function tank.status(self, force)
             local capacity = tank.capacity(self, force);
-            local contents = self:call('get' .. realName);
+            local contents = tank.contents(self);
             if (capacity == nil or contents == nil) then
                 return {
                     capacity = capacity,
@@ -91,7 +85,7 @@ return {
         end
 
         return {
-            [propName .. 'Tank'] = tank
+            [propName] = tank
         };
     end
 };

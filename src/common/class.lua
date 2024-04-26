@@ -32,7 +32,7 @@ function class.create(constructor, BaseClass, ...)
     local mixins = {...};
 
     ---'meta' table for the class containing Classed specific properties
-    ---@class Super
+    ---@class LibmekInstantableSuper
     ---@field protected __super any
     ---@field private __classed string
     local super = {
@@ -77,7 +77,7 @@ function class.create(constructor, BaseClass, ...)
     end
 
     ---Class definition
-    ---@class Class: Super
+    ---@class LibmekInstantable: LibmekInstantableSuper
     local Class = {};
     setmetatable(Class, { __index = super });
 

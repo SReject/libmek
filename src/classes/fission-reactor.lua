@@ -7,10 +7,10 @@ local tank  = require('mixins.tank');
 ---Fission Reactor multiblock structure
 ---@class LibmekFissionReactor: LibmekMultiblock
 ---@field __super LibmekMultiblock
----@field coolantTank LibmekTank
----@field fuelTank LibmekTank
----@field heatedCoolantTank LibmekTank
----@field wasteTank LibmekTank
+---@field coolantTank LibmekDedicatedTankSlot
+---@field fuelTank LibmekDedicatedTankSlot
+---@field heatedCoolantTank LibmekDedicatedTankSlot
+---@field wasteTank LibmekDedicatedTankSlot
 local FissionReactor = class.create(
 
     ---Constructor
@@ -26,10 +26,10 @@ local FissionReactor = class.create(
     Multiblock,
 
     -- Mixins
-    tank.factory('fissionReactor', 'Coolant', 'coolant'),
-    tank.factory('fissionReactor', 'Fuel', 'fuel'),
-    tank.factory('fissionReactor', 'HeatedCoolant', 'heatedCoolant'),
-    tank.factory('fissionReactor', 'Waste', 'waste')
+    tank.factory('fissionReactor', 'Coolant', 'coolantTank'),
+    tank.factory('fissionReactor', 'Fuel', 'fuelTank'),
+    tank.factory('fissionReactor', 'HeatedCoolant', 'heatedCoolantTank'),
+    tank.factory('fissionReactor', 'Waste', 'wasteTank')
 );
 
 ---Activates the reactor if it is not already running
