@@ -2,6 +2,7 @@ local class = require('common.class');
 
 local ThermoelectricBoiler = require('classes.thermoelectric-boiler');
 
+---Thermoelectric Boiler Valve
 ---@class LibmekThermoelectricBoilerValve: LibmekThermoelectricBoiler
 ---@field __super LibmekThermoelectricBoiler
 local ThermoelectricBoilerValve = class.create(nil, ThermoelectricBoiler);
@@ -70,3 +71,7 @@ function ThermoelectricBoilerValve:status(force)
 
     return status;
 end
+
+return {
+    class = ThermoelectricBoilerValve
+}
