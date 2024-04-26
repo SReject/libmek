@@ -1,6 +1,6 @@
 local class = require('common.class');
 
-local Multiblock = require('classes.multiblock');
+local Multiblock = require('classes.multiblock').class;
 
 local energyBuffer = require('mixins.energybuffer');
 local tank = require('mixins.tank');
@@ -11,7 +11,7 @@ local tank = require('mixins.tank');
 ---@field energy LibmekEnergyBuffer
 ---@field inputTank LibmekDedicatedTankSlot
 ---@field outputTank LibmekDedicatedTankSlot
-local SupercriticalPhaseShifter = class(
+local Sps = class(
     function (super, self, name)
         super(name);
         self.__cache.supercriticalPhaseShifter = {};
@@ -30,7 +30,7 @@ local SupercriticalPhaseShifter = class(
 ---connecting peripheral.
 ---@param force boolean? When true cached values are forced to update
 ---@return number
-function SupercriticalPhaseShifter:getCoils(force)
+function Sps:getCoils(force)
     if (force == true or self.__cache.supercriticalPhaseShifter.coils == nil) then
         self.__cache.supercriticalPhaseShifter.coils = self:call('getCoils');
     end
@@ -41,7 +41,7 @@ end
 ---
 ---Units: millibuckets/tick
 ---@return number
-function SupercriticalPhaseShifter:getProcessingRate()
+function Sps:getProcessingRate()
     return self:call('getProcessRate');
 end
 
@@ -60,7 +60,7 @@ end
 ---connecting peripheral.
 ---@param force boolean? When true cached values are forced to update
 ---@return LibmekSupercriticalPhaseShifterInfo status
-function SupercriticalPhaseShifter:info(force)
+function Sps:info(force)
     local info = self.__super.info(self, force);
 
     ---@cast info LibmekSupercriticalPhaseShifterInfo
@@ -90,7 +90,7 @@ end
 ---retrieved from the connecting peripheral.
 ---@param force boolean? When true cached values are forced to update
 ---@return LibmekSupercriticalPhaseShifterStatus status
-function SupercriticalPhaseShifter:status(force)
+function Sps:status(force)
 
     local status = self.__super.status(self, force);
 
@@ -108,4 +108,4 @@ function SupercriticalPhaseShifter:status(force)
     return status;
 end
 
-return { class = SupercriticalPhaseShifter };
+return { class = Sps };
