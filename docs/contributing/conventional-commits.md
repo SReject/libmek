@@ -11,6 +11,7 @@ The following categories are currently recognized
 
 -`types`: Indicates a change to in-source type annotations
 -`refactor`: Indicates a change in the source that does not introduce new functionality
+-`fix`: Indicates a change is to fix intended behavior
 -`feat`: Indicates a new feature has been implemented
 -`docs`: Indicates a change to the project's documentation has occured
 -`ci`: Indicates a change to CI scripts, build scripts, etc
