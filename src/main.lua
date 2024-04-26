@@ -9,6 +9,7 @@ return {
         FissionReactor = require('classes.fission-reactor'),
         FissionReactorPort = require('classes.fission-reactor-port'),
         InductionMatrix = require('classes.induction-matrix'),
+        InductionMatrixPort = require('classes.induction-matrix-port'),
         IndustrialTurbine = require('classes.industrial-turbine'),
         ThermoelectricBoiler = require('classes.thermoelectric-boiler'),
         ThermoelectricBoilerValve = require('classes.thermoelectric-boiler-valve'),
