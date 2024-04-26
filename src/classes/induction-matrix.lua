@@ -5,13 +5,13 @@ local Multiblock = require('classes.multiblock');
 local energyBuffer = require('mixins.energybuffer');
 
 ---Induction Matrix multiblock structure
----@class InductionMatrix: LibmekMultiblock
+---@class LibmekInductionMatrix: LibmekMultiblock
 ---@field __super LibmekMultiblock
 local InductionMatrix = class.create(
 
     ---Constructor
     ---@param super fun(peripheralName: string):nil
-    ---@param self InductionMatrix
+    ---@param self LibmekInductionMatrix
     ---@param name string
     function (super, self, name)
         super(name);
