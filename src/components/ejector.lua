@@ -1,21 +1,21 @@
----@class LibmekComponentNSEjector
----@field inputColor fun(self: LibmekPeripheral, side: LibmekRelativeSide): LibmekEnumColor
----@field setInputColor fun(self: LibmekPeripheral, side: LibmekRelativeSide, color: LibmekEnumColor): nil
----@field incrementInputColor fun(self: LibmekPeripheral, side: LibmekRelativeSide): nil
----@field decrementInputColor fun(self: LibmekPeripheral, side: LibmekRelativeSide): nil
----@field clearInputColor fun(self: LibmekPeripheral, side: LibmekRelativeSide): nil
----@field outputColor fun(self: LibmekPeripheral): LibmekEnumColor
----@field setOutputColor fun(self: LibmekPeripheral, color: LibmekEnumColor): nil
----@field incrementOutputColor fun(self: LibmekPeripheral): nil
----@field decrementOutputColor fun(self: LibmekPeripheral): nil
----@field clearOutputColor fun(self: LibmekPeripheral): nil
----@field strictInput fun(self: LibmekPeripheral): boolean
----@field setStrictInput fun(self: LibmekPeripheral, mode: boolean): nil
+---@class libmek.component.EjectorNS
+---@field inputColor fun(self: libmek.class.Peripheral, side: libmek.mek.RelativeSide): libmek.mek.EnumColor
+---@field setInputColor fun(self: libmek.class.Peripheral, side: libmek.mek.RelativeSide, color: libmek.mek.EnumColor): nil
+---@field incrementInputColor fun(self: libmek.class.Peripheral, side: libmek.mek.RelativeSide): nil
+---@field decrementInputColor fun(self: libmek.class.Peripheral, side: libmek.mek.RelativeSide): nil
+---@field clearInputColor fun(self: libmek.class.Peripheral, side: libmek.mek.RelativeSide): nil
+---@field outputColor fun(self: libmek.class.Peripheral): libmek.mek.EnumColor
+---@field setOutputColor fun(self: libmek.class.Peripheral, color: libmek.mek.EnumColor): nil
+---@field incrementOutputColor fun(self: libmek.class.Peripheral): nil
+---@field decrementOutputColor fun(self: libmek.class.Peripheral): nil
+---@field clearOutputColor fun(self: libmek.class.Peripheral): nil
+---@field strictInput fun(self: libmek.class.Peripheral): boolean
+---@field setStrictInput fun(self: libmek.class.Peripheral, mode: boolean): nil
 
----@class LibmekComponentEjector
----@field ejector LibmekComponentNSEjector
+---@class libmek.component.Ejector
+---@field ejector libmek.component.EjectorNS
 
----@type LibmekClassFactoryComponent
+---@type libmek.internal.FactoryComponent
 return {
     ["@namespace"] = 'ejector',
     inputColor = { handler = 'getInputColor', returns = true},

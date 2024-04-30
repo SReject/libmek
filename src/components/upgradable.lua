@@ -1,11 +1,11 @@
----@class LibmekComponentNSUpgradeable
----@field supported fun(self: LibmekPeripheral): LibmekUpgrade[]
----@field installed fun(self: LibmekPeripheral): {[LibmekUpgrade]: number}
+---@class libmek.component.UpgradeableNS
+---@field supported fun(self: libmek.class.Peripheral): libmek.mek.Upgrade[]
+---@field installed fun(self: libmek.class.Peripheral): {[libmek.mek.Upgrade]: number}
 
----@class LibmekComponentUpgradeable
----@field upgrades LibmekComponentNSUpgradeable
+---@class libmek.component.Upgradeable
+---@field upgrades libmek.component.UpgradeableNS
 
----@type LibmekClassFactoryComponent
+---@type libmek.internal.FactoryComponent
 return {
     ['@namespace'] = "upgrades",
     supported = {

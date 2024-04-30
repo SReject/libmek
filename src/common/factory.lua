@@ -1,38 +1,38 @@
----@alias LibmekClassFactoryCacheFields {[number]: string, [string]: LibmekClassFactoryCacheFields}
+---@alias libmek.internal.FactoryCacheFields {[number]: string, [string]: libmek.internal.FactoryCacheFields}
 
----@class (exact) LibmekClassFactoryMethodCache
+---@class (exact) libmek.internal.FactoryMethodCache
 ---@field name   nil|string
 ---@field copy   nil|boolean
----@field fields nil|LibmekClassFactoryCacheFields
+---@field fields nil|libmek.internal.FactoryCacheFields
 
----@class (exact) LibmekClassFactoryMethodDefinition
+---@class (exact) libmek.internal.FactoryMethodDefinition
 ---@field returns boolean|nil
 ---@field multi   boolean|nil
 ---@field handler nil|string|fun(self: any, ...):any
----@field cache   nil|false|LibmekClassFactoryMethodCache
+---@field cache   nil|false|libmek.internal.FactoryMethodCache
 ---@field info    boolean|string|nil
 ---@field status  boolean|string|nil
 
----@alias LibmekClassFactoryMethod boolean|string|LibmekClassFactoryMethodDefinition|fun(self, ...):any
+---@alias libmek.internal.FactoryMethod boolean|string|libmek.internal.FactoryMethodDefinition|fun(self, ...):any
 
----@alias LibmekClassFactoryMethodList {[string]: LibmekClassFactoryMethod}
+---@alias libmek.internal.FactoryMethodList {[string]: libmek.internal.FactoryMethod}
 
----@class (exact) LibmekClassFactoryComponent: {[string]: LibmekClassFactoryMethod}
+---@class (exact) libmek.internal.FactoryComponent: {[string]: libmek.internal.FactoryMethod}
 ---@field ["@namespace"] nil|false|string
 
----@alias LibmekClassFactoryComponentList LibmekClassFactoryComponent[]
+---@alias libmek.internal.FactoryComponentList libmek.internal.FactoryComponent[]
 
----@class (exact) LibmekClassFactoryOptions
+---@class (exact) libmek.internal.FactoryOptions
 ---@field name string
 ---@field baseClass nil|table
 ---@field constructor nil|fun(super: (fun(...):nil), self, ...):nil
----@field components nil|LibmekClassFactoryComponentList
----@field methods nil|LibmekClassFactoryMethodList
+---@field components nil|libmek.internal.FactoryComponentList
+---@field methods nil|libmek.internal.FactoryMethodList
 ---@field validate nil|fun(self: any,info: table):boolean
 
----@class LibmekFactoryClass : LibmekClassifyClass
----@field info fun(self: LibmekFactoryClass, force: boolean):table
----@field status fun(self: LibmekFactoryClass, force: boolean):table
+---@class libmek.internal.FactoryClass : libmek.internal.ClassifyClass
+---@field info fun(self: libmek.internal.FactoryClass, force: boolean):table
+---@field status fun(self: libmek.internal.FactoryClass, force: boolean):table
 
 local next,type,error = next,type,error;
 
@@ -75,7 +75,7 @@ end
 
 ---Verify's a cache entry's fields
 ---@param cache table<any,any>
----@param fields LibmekClassFactoryCacheFields
+---@param fields libmek.internal.FactoryCacheFields
 ---@return boolean # true if all fields are present in the cache
 local function verifyFields(cache, fields)
     if (cache == nil) then
@@ -99,7 +99,7 @@ end
 ---@param class table
 ---@param namespace string|nil
 ---@param methodName string
----@param options LibmekClassFactoryMethod
+---@param options libmek.internal.FactoryMethod
 ---@return fun(self: any, ...):any
 local function deduceMethod(class, namespace, methodName, options)
 
@@ -194,7 +194,7 @@ end
 ---@param class table
 ---@param target table|nil
 ---@param namespace string|nil
----@param options LibmekClassFactoryMethod
+---@param options libmek.internal.FactoryMethod
 ---@param infoTracker table<string, any>
 ---@param statusTracker table<string, any>
 local function applyMethod(class, target, namespace, name, options, infoTracker, statusTracker)
@@ -291,15 +291,15 @@ end
 
 local exports = {};
 
----@param options LibmekClassFactoryOptions
----@return LibmekFactoryClass
+---@param options libmek.internal.FactoryOptions
+---@return libmek.internal.FactoryClass
 function exports.factory(options)
 
     local baseIsClass,base,baseProto = extractProto(options.baseClass);
-    ---@cast baseProto LibmekClassifyProtoTable
+    ---@cast baseProto libmek.internal.ClassifyProtoTable
 
     local _,class,proto = extractProto(create(options.baseClass));
-    ---@cast proto LibmekClassifyProtoTable
+    ---@cast proto libmek.internal.ClassifyProtoTable
 
     rawset(proto, 'classname', options.name);
 
@@ -308,7 +308,7 @@ function exports.factory(options)
 
     -- Add components to `proto` table
     if (options.components) then
-        local components = options.components --[[@as LibmekClassFactoryComponentList ]];
+        local components = options.components --[[@as libmek.internal.FactoryComponentList ]];
         for _,component in ipairs(components) do
 
             ---@type table
@@ -343,7 +343,7 @@ function exports.factory(options)
 
     -- Add methods to `class` table
     if (options.methods) then
-        local methods = options.methods --[[@as {[string]: LibmekClassFactoryMethod} ]]
+        local methods = options.methods --[[@as {[string]: libmek.internal.FactoryMethod} ]]
         for methodName, methodOptions in pairs(methods) do
             applyMethod(class, class, nil, methodName, methodOptions, infoEntriesTracker, statusEntriesTracker)
         end

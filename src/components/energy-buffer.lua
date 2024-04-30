@@ -1,13 +1,13 @@
----@class LibmekComponentNSEnergyBuffer
----@field capacity fun(self: LibmekPeripheral): number
----@field amount fun(self: LibmekPeripheral): number
----@field needed fun(self: LibmekPeripheral): number
----@field percentage fun(self: LibmekPeripheral): number
+---@class libmek.component.EnergyBufferNS
+---@field capacity fun(self: libmek.class.Peripheral): number
+---@field amount fun(self: libmek.class.Peripheral): number
+---@field needed fun(self: libmek.class.Peripheral): number
+---@field percentage fun(self: libmek.class.Peripheral): number
 
----@class LibmekComponentEnergyBuffer
----@field energy LibmekComponentNSEnergyBuffer
+---@class libmek.component.EnergyBuffer
+---@field energy libmek.component.EnergyBufferNS
 
----@type LibmekClassFactoryComponent
+---@type libmek.internal.FactoryComponent
 local energyBufferComponenet = {
     ["@namespace"] = "energy",
     capacity = {

@@ -1,12 +1,12 @@
----@class LibmekComponentNSSecurity
----@field name fun(self: LibmekPeripheral): string
----@field uuid fun(self: LibmekPeripheral): string
----@field mode fun(self: LibmekPeripheral): LibmekSecurityMode
+---@class libmek.component.SecurityNS
+---@field name fun(self: libmek.class.Peripheral): string
+---@field uuid fun(self: libmek.class.Peripheral): string
+---@field mode fun(self: libmek.class.Peripheral): libmek.mek.SecurityMode
 
----@class LibmekComponentSecurity
----@field security LibmekComponentNSSecurity
+---@class libmek.component.Security
+---@field security libmek.component.SecurityNS
 
----@type LibmekClassFactoryComponent
+---@type libmek.internal.FactoryComponent
 return {
     ["@namespace"] = 'security',
     name = {

@@ -2,20 +2,20 @@
 General types used by Mekanism's CC interfaces
 
 These types were compiled by hand referencing https://mekanism.github.io/computer_data/10.4.0.html
-If you notice a mistake please open an  issue
+If you notice a mistake please open an issue
 --]]
 
----@alias LibmekBoilerValveMode
+---@alias libmek.mek.BoilerValveMode
 ---| "INPUT"
 ---| "OUTPUT_COOLANT"
 ---| "OUTPUT_STEAM"
 
----@alias LibmekContainerEditMode
+---@alias libmek.mek.ContainerEditMode
 ---| "BOTH"
 ---| "EMPTY"
 ---| "FILL"
 
----@alias LibmekDataType
+---@alias libmek.mek.DataType
 ---| "ENERGY"
 ---| "EXTRA"
 ---| "INPUT"
@@ -27,7 +27,7 @@ If you notice a mistake please open an  issue
 ---| "OUTPUT_1"
 ---| "OUTPUT_2"
 
----@alias LibmekDirection
+---@alias libmek.mek.Direction
 ---| "DOWN"
 ---| "EAST"
 ---| "NORTH"
@@ -35,19 +35,19 @@ If you notice a mistake please open an  issue
 ---| "UP"
 ---| "WEST"
 
----@alias LibmekDiversionControl
+---@alias libmek.mek.DiversionControl
 ---| "DISABLED"
 ---| "HIGH"
 ---| "LOW"
 
----@alias LibmekDriveStatus
+---@alias libmek.mek.DriveStatus
 ---| "FULL"
 ---| "NEAR_FULL"
 ---| "NONE"
 ---| "OFFLINE"
 ---| "READY"
 
----@alias LibmekEnumColor
+---@alias libmek.mek.EnumColor
 ---| "AQUA"
 ---| "BLACK"
 ---| "BRIGHT_GREEN"
@@ -67,7 +67,7 @@ If you notice a mistake please open an  issue
 ---| "WHITE"
 ---| "YELLOW"
 
----@alias LibmekFilterType
+---@alias libmek.mek.FilterType
 ---| "MINER_ITEMSTACK_FILTER"
 ---| "MINER_MODID_FILTER"
 ---| "MINER_TAG_FILTER"
@@ -79,12 +79,12 @@ If you notice a mistake please open an  issue
 ---| "SORTER_MODID_FILTER"
 ---| "SORTER_TAG_FILTER"
 
----@alias LibmekFissionPortMode
+---@alias libmek.mek.FissionPortMode
 ---| "INPUT"
 ---| "OUTPUT_COOLANT"
 ---| "OUTPUT_WASTE"
 
----@alias LibmekFissionReactorLogic
+---@alias libmek.mek.FissionReactorLogic
 ---| "ACTIVATION"
 ---| "DAMAGED"
 ---| "DEPLETED"
@@ -92,34 +92,34 @@ If you notice a mistake please open an  issue
 ---| "EXCESS_WASTE"
 ---| "TEMPERATURE"
 
----@alias LibmekFusionReactorLogic
+---@alias libmek.mek.FusionReactorLogic
 ---| "CAPACITY"
 ---| "DEPLETED"
 ---| "DISABLED"
 ---| "READY"
 
----@alias LibmekGasMode
+---@alias libmek.mek.GasMode
 ---| "DUMPING"
 ---| "DUMPING_EXCESS"
 ---| "IDLE"
 
----@alias LibmekRedstoneControl
+---@alias libmek.mek.RedstoneControl
 ---| "DISABLED"
 ---| "HIGH"
 ---| "LOW"
 ---| "PULSE"
 
----@alias LibmekRedstoneOutput
+---@alias libmek.mek.RedstoneOutput
 ---| "ENERGY_CONTENTS"
 ---| "ENTITY_DETECTION"
 ---| "OFF"
 
----@alias LibmekRedstoneStatus
+---@alias libmek.mek.RedstoneStatus
 ---| "IDLE"
 ---| "OUTPUTTING"
 ---| "POWERED"
 
----@alias LibmekRelativeSide
+---@alias libmek.mek.RelativeSide
 ---| "BACK"
 ---| "BOTTOM"
 ---| "FRONT"
@@ -127,18 +127,18 @@ If you notice a mistake please open an  issue
 ---| "RIGHT"
 ---| "TOP"
 
----@alias LibmekSecurityMode
+---@alias libmek.mek.SecurityMode
 ---| "PRIVATE"
 ---| "PUBLIC"
 ---| "TRUSTED"
 
----@alias LibmekState
+---@alias libmek.mek.State
 ---| "FINISHED"
 ---| "IDLE"
 ---| "PAUSED"
 ---| "SEARCHING"
 
----@alias LibmekTransmissionType
+---@alias libmek.mek.TransmissionType
 ---| "ENERGY"
 ---| "FLUID"
 ---| "GAS"
@@ -148,7 +148,7 @@ If you notice a mistake please open an  issue
 ---| "PIGMENT"
 ---| "SLURRY"
 
----@alias LibmekUpgrade
+---@alias libmek.mek.Upgrade
 ---| "ANCHOR"
 ---| "ENERGY"
 ---| "FILTER"
@@ -158,108 +158,108 @@ If you notice a mistake please open an  issue
 ---| "STONE_GENERATOR"
 
 ---X,Y,Z positional information
----@class LibmekBlockPosition
+---@class libmek.mek.BlockPosition
 ---@field x integer
 ---@field y integer
 ---@field z integer
 
 ---Positional information with a dimensional component
----@class LibmekCoord4D: LibmekBlockPosition
+---@class libmek.mek.Coord4D: libmek.mek.BlockPosition
 ---@field dimension string The dimension component
 
 ---A block's state
----@class LibmekBlockState
+---@class libmek.mek.BlockState
 ---@field block string The block's registered name, e.g. `minecraft:sand`
 ---@field state table<string, any> State informtion regarding the block
 
 ---A chemical and amount information
----@class LibmekChemicalStack
+---@class libmek.mek.ChemicalStack
 ---@field name string The substance's registered name, e.g. `mincraft:stone`, `minecraft:water`, `mekanism:oxygen`
 ---@field amount integer The amount of the chemical given in millibuckets
 
 ---A fluid and amount information
----@class LibmekFluidStack
+---@class libmek.mek.FluidStack
 ---@field name string The fluid's registered name `minecraft:water`
 ---@field amount integer The amount of the given substance given in millibuckets
 ---@field nbt string? NBT information regarding the fluid in JSON format
 
 ---An item and amount information
----@class LibmekItemStack
+---@class libmek.mek.ItemStack
 ---@field name string The item's registered name
 ---@field count integer The amount of items in the stack
 ---@field nbt string? NBT information regarding the item in JSON format
 
 ---A frequency's identity
----@class LibmekFrequency
+---@class libmek.mek.Frequency
 ---@field key string The identifier of the frequency
 ---@field ["public"] boolean Whether the frequency is public or not
 
 ---Base for various mekanism filters
----@class LibmekIFilter
----@field type LibmekFilterType The filter type
+---@class libmek.mek.IFilter
+---@field type libmek.mek.FilterType The filter type
 ---@field enabled boolean Whether the filter is enabled when added to a devide
 
 ---Internal class for filters that have a item-stack component
----@class LibmekIItemStackFilter
+---@class libmek.mek.IItemStackFilter
 ---@field item string The filtered item's registered name
 ---@field itemNBT string? The NBT data of the filtered item in JSON format
 
 ---Internal class for filters that have a Fuzzy component to their ItemStack component
----@class LibmekIFuzzyItemStackFilter: LibmekIItemStackFilter
+---@class libmek.mek.IFuzzyItemStackFilter: libmek.mek.IItemStackFilter
 ---@field fuzzy boolean Whether to check only the item name and/or type
 
 ---Internal class for filters that have a mod-id component
----@class LibmekIModIdFilter
+---@class libmek.mek.IModIdFilter
 ---@field modid string The mod id to filter. e.g. `mekanism`
 
 ---Internal class for filters that have a tag component
----@class LibmekITagFilter
+---@class libmek.mek.ITagFilter
 ---@field tag string The tag to filter. e.g. `forge:ores`
 
 ---A Digital Miner Filter
----@class LibmekMinerFilter: LibmekIFilter
+---@class libmek.mek.MinerFilter: libmek.mek.IFilter
 ---@field replaceTarget string the registered name of the item block to replace mined blocks with
 ---@field requiresReplacement boolean Whether the filter requires a replacement to be done before it will allow mining
 
 ---A digital miner filter with item-related filter properties
----@class LibmekMinerItemStackFilter: LibmekMinerFilter, LibmekIItemStackFilter
+---@class libmek.mek.MinerItemStackFilter: libmek.mek.MinerFilter, libmek.mek.IItemStackFilter
 
 ---A digital miner filter with mod-related filter properties
----@class LibmekMinerModIdFilter: LibmekMinerFilter, LibmekIModIdFilter
+---@class libmek.mek.MinerModIdFilter: libmek.mek.MinerFilter, libmek.mek.IModIdFilter
 
 ---A digital miner filter with tag-related filter properties
----@class LibmekMinerTagFilter: LibmekMinerFilter, LibmekITagFilter
+---@class libmek.mek.MinerTagFilter: libmek.mek.MinerFilter, libmek.mek.ITagFilter
 
 ---An Oredictionificator filter
----@class LibmekOredictionificatorItemFilter : LibmekIFilter
+---@class libmek.mek.OredictionificatorItemFilter : libmek.mek.IFilter
 ---@field selected string? The select output item's registered name. e.g. `minecraft:stone`
 ---@field target string The input's target tag to match. e.g. `forge:stone`
 
 ---A Quantum Item Orchestration filter
----@class LibmekQIOFilter: LibmekIFilter
+---@class libmek.mek.QIOFilter: libmek.mek.IFilter
 
 ---A QIO filter with item filter properties
----@class LibmekQIOItemStackFilter: LibmekQIOFilter, LibmekIFuzzyItemStackFilter
+---@class libmek.mek.QIOItemStackFilter: libmek.mek.QIOFilter, libmek.mek.IFuzzyItemStackFilter
 
 ---A QIO filter with mod-related filter properties
----@class LibmekQIOModIdFilter: LibmekQIOFilter, LibmekIModIdFilter
+---@class libmek.mek.QIOModIdFilter: libmek.mek.QIOFilter, libmek.mek.IModIdFilter
 
 ---A QIO filter with tag-related filter properties
----@class LibmekQIOTagFilter: LibmekQIOFilter, LibmekITagFilter
+---@class libmek.mek.QIOTagFilter: libmek.mek.QIOFilter, libmek.mek.ITagFilter
 
 ---A logistical sorter filter
----@class LibmekSorterFilter: LibmekIFilter
+---@class libmek.mek.SorterFilter: libmek.mek.IFilter
 ---@field allowDefault boolean Allows the filtered item to travel to the default color destination
----@field color LibmekEnumColor? The color configured
+---@field color libmek.mek.EnumColor? The color configured
 ---@field max integer In "Size Mode" the maximum to send
 ---@field min integer In "Size Mode" the minimum that can be sent
 ---@field size boolean Whether size mode is enabled
 
 ---A logistical sorter filter with item-related filter properties
----@class LibmekSorterItemStackFilter: LibmekSorterFilter, LibmekIItemStackFilter
+---@class libmek.mek.SorterItemStackFilter: libmek.mek.SorterFilter, libmek.mek.IItemStackFilter
 
 ---A logistical sorter filter with mod-related properties
----@class LibmekSorterModIdFilter: LibmekSorterFilter, LibmekIModIdFilter
+---@class libmek.mek.SorterModIdFilter: libmek.mek.SorterFilter, libmek.mek.IModIdFilter
 
 ---A logistical sorter filter with tag-related properties
----@class LibmekSorterTagFilter: LibmekSorterFilter, LibmekITagFilter
+---@class libmek.mek.SorterTagFilter: libmek.mek.SorterFilter, libmek.mek.ITagFilter

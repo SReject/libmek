@@ -1,7 +1,7 @@
----@class LibmekMultiblock: LibmekPeripheral
----@field getPosition fun(self: LibmekMultiblock, force: boolean?): {min: LibmekBlockPosition, max: LibmekBlockPosition} Retrieves the block positions of opposing corners forming the multiblock
----@field getSize fun(self: LibmekMultiblock, force: boolean?): {length: number, width: number, height: number} Retrieves the size of the multiblock
----@field isValid fun(self: LibmekMultiblock):boolean Returns true if the multiblock is formed
+---@class libmek.class.Multiblock: libmek.class.Peripheral
+---@field getPosition fun(self: libmek.class.Multiblock, force: boolean?): {min: libmek.mek.BlockPosition, max: libmek.mek.BlockPosition} Retrieves the block positions of opposing corners forming the multiblock
+---@field getSize fun(self: libmek.class.Multiblock, force: boolean?): {length: number, width: number, height: number} Retrieves the size of the multiblock
+---@field isValid fun(self: libmek.class.Multiblock):boolean Returns true if the multiblock is formed
 
 local classFactory = require('common.factory').factory;
 local Peripheral = require('internal.peripheral').class;
@@ -14,7 +14,7 @@ exports.class = classFactory({
 
     methods = {
         isValid = {
-            ---@param self LibmekMultiblock
+            ---@param self libmek.class.Multiblock
             handler = function(self)
                 return self.super.isValid() and self:call('isFormed') == true;
             end,
@@ -27,7 +27,7 @@ exports.class = classFactory({
                 fields = { "min", "max" },
                 copy = true
             },
-            ---@param self LibmekMultiblock
+            ---@param self libmek.class.Multiblock
             handler = function (self)
                 return {
                     min = self:call('getMinPos'),
@@ -42,7 +42,7 @@ exports.class = classFactory({
                 fields = {"length", "width", "height"},
                 copy = true
             },
-            ---@param self LibmekMultiblock
+            ---@param self libmek.class.Multiblock
             handler = function (self)
                 return {
                     length = self:call('getLength'),
@@ -54,7 +54,7 @@ exports.class = classFactory({
         }
     },
 
-    ---@param self LibmekMultiblock
+    ---@param self libmek.class.Multiblock
     validate = function (self, info)
         if (info == nil and peripheral.isPresent(self.peripheralName) ~= true) then
             return false;
@@ -63,6 +63,6 @@ exports.class = classFactory({
         end
         return self:call('isFormed') == true;
     end
-}) --[[@as LibmekMultiblock ]];
+}) --[[@as libmek.class.Multiblock ]];
 
 return exports;

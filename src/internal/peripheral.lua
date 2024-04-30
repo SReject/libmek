@@ -1,11 +1,11 @@
 ---Peripheral class
----@class LibmekPeripheral : LibmekFactoryClass
----@field call fun(self: LibmekPeripheral, method, ...):unknown Calls the method on the underlaying peripheral
----@field getMethods fun(self: LibmekPeripheral, force: boolean):table Returns a list of available methods on the peripheral
----@field getTypes fun(self: LibmekPeripheral, force: boolean):table Returns a list of peripheral types associated with the peripheral
----@field hasType fun(self: LibmekPeripheral, type: string):boolean Returns true if the peripheral has the given type
----@field help fun(self: LibmekPeripheral, method:string?):{[string]:any} Class the underlaying peripheral's 'help()' method and returns the result
----@field isValid fun(self: LibmekPeripheral):boolean Returns true if the peripheral is present
+---@class libmek.class.Peripheral : libmek.internal.FactoryClass
+---@field call fun(self: libmek.class.Peripheral, method, ...):unknown Calls the method on the underlaying peripheral
+---@field getMethods fun(self: libmek.class.Peripheral, force: boolean):table Returns a list of available methods on the peripheral
+---@field getTypes fun(self: libmek.class.Peripheral, force: boolean):table Returns a list of peripheral types associated with the peripheral
+---@field hasType fun(self: libmek.class.Peripheral, type: string):boolean Returns true if the peripheral has the given type
+---@field help fun(self: libmek.class.Peripheral, method:string?):{[string]:any} Class the underlaying peripheral's 'help()' method and returns the result
+---@field isValid fun(self: libmek.class.Peripheral):boolean Returns true if the peripheral is present
 ---@field peripheralName string The underlaying peripheral name
 
 local table, peripheral = table, peripheral;
@@ -66,6 +66,6 @@ exports.class = classFactory({
     validate = function (self)
         return peripheral.isPresent(self.peripheralName) or false
     end
-}) --[[@as LibmekPeripheral ]];
+}) --[[@as libmek.class.Peripheral ]];
 
 return exports;

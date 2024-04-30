@@ -1,7 +1,7 @@
----@class LibmekDirectionalComponent
----@field direction fun(self: LibmekPeripheral): LibmekDirection
+---@class libmek.component.Directional
+---@field direction fun(self: libmek.class.Peripheral): libmek.mek.Direction
 
----@type LibmekClassFactoryComponent
+---@type libmek.internal.FactoryComponent
 return {
     direction = true
 }

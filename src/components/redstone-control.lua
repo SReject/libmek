@@ -1,8 +1,8 @@
----@class LibmekComponentRedstoneControl
----@field getRedstoneMode fun(self: LibmekPeripheral): LibmekRedstoneControl
----@field setRedstoneMode fun(self: LibmekPeripheral, mode: LibmekRedstoneControl): nil
+---@class libmek.component.RedstoneControl
+---@field getRedstoneMode fun(self: libmek.class.Peripheral): libmek.mek.RedstoneControl
+---@field setRedstoneMode fun(self: libmek.class.Peripheral, mode: libmek.mek.RedstoneControl): nil
 
----@type LibmekClassFactoryComponent
+---@type libmek.internal.FactoryComponent
 return {
     getRedstoneMode = {
         info = 'redstoneControlMode'

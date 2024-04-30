@@ -1,10 +1,10 @@
----@class LibmekClassifyProtoTable
+---@class libmek.internal.ClassifyProtoTable
 ---@field package __isClassifyClass boolean
 ---@field package constructor fun(self, ...):nil
 ---@field super any
 ---@field new fun(...):nil
 
----@class LibmekClassifyClass : LibmekClassifyProtoTable
+---@class libmek.internal.ClassifyClass : libmek.internal.ClassifyProtoTable
 
 local type,getmetatable,rawget,setmetatable = type,getmetatable,rawget,setmetatable;
 
@@ -38,7 +38,7 @@ end
 ---Exacts a Classify class or Classify class instance's intermediate `__index` metatable value
 ---@generic T
 ---@param subject `T`,
----@return boolean,T,(nil|LibmekClassifyProtoTable) # isClassed, class, proto
+---@return boolean,T,(nil|libmek.internal.ClassifyProtoTable) # isClassed, class, proto
 local function extract(subject)
     if (isClassed(subject)) then
         return true, subject, getmetatable(subject).__index;
@@ -49,11 +49,11 @@ end
 ---Creates an instancable class
 ---@param superclass any
 ---@param constructor nil|fun(super, self, ...):nil
----@return LibmekClassifyClass
+---@return libmek.internal.ClassifyClass
 local function create(superclass, constructor)
     local superIsClass, _, superProto = isClassed(superclass);
 
-    ---@cast superProto LibmekClassifyProtoTable
+    ---@cast superProto libmek.internal.ClassifyProtoTable
 
     local __constructor;
     if (constructor == nil) then

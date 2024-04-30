@@ -1,11 +1,11 @@
----@class LibmekComponentNSRecipeProgress
----@field progress fun(self: LibmekPeripheral, process: number):number
----@field ticksLeft fun(self: LibmekPeripheral, process: number):number
+---@class libmek.component.RecipeProgressNS
+---@field progress fun(self: libmek.class.Peripheral, process: number):number
+---@field ticksLeft fun(self: libmek.class.Peripheral, process: number):number
 
----@class LibmekComponentRecipeProgress
----@field recipe LibmekComponentNSRecipeProgress
+---@class libmek.component.RecipeProgress
+---@field recipe libmek.component.RecipeProgressNS
 
----@type LibmekClassFactoryComponent
+---@type libmek.internal.FactoryComponent
 return {
     ["@namespace"] = "recipe",
     progress = {

@@ -1,18 +1,18 @@
----@class LibmekComponentNSConfigurableSides
----@field canEject fun(self: LibmekPeripheral, transmissionType: LibmekTransmissionType): boolean
----@field isEjecting fun(self: LibmekPeripheral, transmissionType: LibmekTransmissionType): boolean
----@field setEjecting fun(self: LibmekPeripheral, transmissionType: LibmekTransmissionType, eject): boolean
----@field mode fun(self: LibmekPeripheral, transmissionType: LibmekTransmissionType, side: LibmekRelativeSide): LibmekDataType
----@field setMode fun(self: LibmekPeripheral, transmissionType: LibmekTransmissionType, side: LibmekRelativeSide, mode: LibmekDataType): nil
----@field incrementMode fun(self: LibmekPeripheral, transmissionType: LibmekTransmissionType, side: LibmekRelativeSide): nil
----@field decrementMode fun(self: LibmekPeripheral, transmissionType: LibmekTransmissionType, side: LibmekRelativeSide): nil
----@field configurableTypes fun(self: LibmekPeripheral): LibmekTransmissionType[]
----@field supportedModes fun(self: LibmekPeripheral, transmissionType: LibmekTransmissionType): LibmekDataType[]
+---@class libmek.component.ConfigurableSidesNS
+---@field canEject fun(self: libmek.class.Peripheral, transmissionType: libmek.mek.TransmissionType): boolean
+---@field isEjecting fun(self: libmek.class.Peripheral, transmissionType: libmek.mek.TransmissionType): boolean
+---@field setEjecting fun(self: libmek.class.Peripheral, transmissionType: libmek.mek.TransmissionType, eject): boolean
+---@field mode fun(self: libmek.class.Peripheral, transmissionType: libmek.mek.TransmissionType, side: libmek.mek.RelativeSide): libmek.mek.DataType
+---@field setMode fun(self: libmek.class.Peripheral, transmissionType: libmek.mek.TransmissionType, side: libmek.mek.RelativeSide, mode: libmek.mek.DataType): nil
+---@field incrementMode fun(self: libmek.class.Peripheral, transmissionType: libmek.mek.TransmissionType, side: libmek.mek.RelativeSide): nil
+---@field decrementMode fun(self: libmek.class.Peripheral, transmissionType: libmek.mek.TransmissionType, side: libmek.mek.RelativeSide): nil
+---@field configurableTypes fun(self: libmek.class.Peripheral): libmek.mek.TransmissionType[]
+---@field supportedModes fun(self: libmek.class.Peripheral, transmissionType: libmek.mek.TransmissionType): libmek.mek.DataType[]
 
----@class LibmekComponentConfigurableSides
----@field sides LibmekComponentNSConfigurableSides
+---@class libmek.component.ConfigurableSides
+---@field sides libmek.component.ConfigurableSidesNS
 
----@type LibmekClassFactoryComponent
+---@type libmek.internal.FactoryComponent
 return {
     ["@namespace"] = 'sides',
     canEject = true,
