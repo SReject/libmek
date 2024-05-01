@@ -13,7 +13,7 @@ const inputdir = resolve(join(rootdir, relInputDir));
 const outputdir = resolve(join(rootdir, relOutputDir));
 
 
-rmSync(outputdir, { recursive: true });
+rmSync(outputdir, { force: true, recursive: true });
 mkdirSync(outputdir, { recursive: true });
 
 let classes = [];
