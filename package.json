@@ -2,7 +2,8 @@
     "private": true,
     "version": "0.3.0",
     "scripts": {
-        "generate": "node ./.scripts/generator/index.cjs"
+        "prebuild": "node ./.scripts/generator/index.cjs",
+        "build": "node ./.scripts/build/index.cjs"
     },
     "devDependencies": {
         "luaparse": "^0.3.1"
