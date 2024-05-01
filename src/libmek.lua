@@ -1,5 +1,5 @@
 ---@module 'types.mekanism'
 
 return {
-    pushEvent = require('peripherals.internal.peripheral').processEvent
+    pushEvent = require('internal.peripheral').processEvent
 };
