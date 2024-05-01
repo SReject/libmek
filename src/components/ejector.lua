@@ -1,11 +1,11 @@
 ---@class libmek.component.EjectorNS
----@field inputColor fun(self: libmek.class.Peripheral, side: libmek.mek.RelativeSide): libmek.mek.EnumColor
----@field setInputColor fun(self: libmek.class.Peripheral, side: libmek.mek.RelativeSide, color: libmek.mek.EnumColor): nil
+---@field inputColor fun(self: libmek.class.Peripheral, side: libmek.mek.RelativeSide): libmek.mek.Color
+---@field setInputColor fun(self: libmek.class.Peripheral, side: libmek.mek.RelativeSide, color: libmek.mek.Color): nil
 ---@field incrementInputColor fun(self: libmek.class.Peripheral, side: libmek.mek.RelativeSide): nil
 ---@field decrementInputColor fun(self: libmek.class.Peripheral, side: libmek.mek.RelativeSide): nil
 ---@field clearInputColor fun(self: libmek.class.Peripheral, side: libmek.mek.RelativeSide): nil
----@field outputColor fun(self: libmek.class.Peripheral): libmek.mek.EnumColor
----@field setOutputColor fun(self: libmek.class.Peripheral, color: libmek.mek.EnumColor): nil
+---@field outputColor fun(self: libmek.class.Peripheral): libmek.mek.Color
+---@field setOutputColor fun(self: libmek.class.Peripheral, color: libmek.mek.Color): nil
 ---@field incrementOutputColor fun(self: libmek.class.Peripheral): nil
 ---@field decrementOutputColor fun(self: libmek.class.Peripheral): nil
 ---@field clearOutputColor fun(self: libmek.class.Peripheral): nil
