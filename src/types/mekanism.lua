@@ -47,7 +47,8 @@ If you notice a mistake please open an issue
 ---| "OFFLINE"
 ---| "READY"
 
----@alias libmek.mek.EnumColor
+--Renamed from EnumColor
+---@alias libmek.mek.Color
 ---| "AQUA"
 ---| "BLACK"
 ---| "BRIGHT_GREEN"
@@ -157,6 +158,16 @@ If you notice a mistake please open an issue
 ---| "SPEED"
 ---| "STONE_GENERATOR"
 
+
+---@alias libmek.mek.Item string
+---@alias libmek.mek.ResourceLocation string;
+
+---@alias libmek.mek.Double number
+---@alias libmek.mek.Float number
+---@alias libmek.mek.FloatingLong number
+---@alias libmek.mek.Integer number
+---@alias libmek.mek.Long number
+
 ---X,Y,Z positional information
 ---@class libmek.mek.BlockPosition
 ---@field x integer
@@ -193,6 +204,10 @@ If you notice a mistake please open an issue
 ---@class libmek.mek.Frequency
 ---@field key string The identifier of the frequency
 ---@field ["public"] boolean Whether the frequency is public or not
+
+---@alias libmek.mek.InventoryFrequency libmek.mek.Frequency
+---@alias libmek.mek.QIOFrequency libmek.mek.Frequency
+---@alias libmek.mek.TeleporterFrequency libmek.mek.Frequency
 
 ---Base for various mekanism filters
 ---@class libmek.mek.IFilter
@@ -250,7 +265,7 @@ If you notice a mistake please open an issue
 ---A logistical sorter filter
 ---@class libmek.mek.SorterFilter: libmek.mek.IFilter
 ---@field allowDefault boolean Allows the filtered item to travel to the default color destination
----@field color libmek.mek.EnumColor? The color configured
+---@field color libmek.mek.Color? The color configured
 ---@field max integer In "Size Mode" the maximum to send
 ---@field min integer In "Size Mode" the minimum that can be sent
 ---@field size boolean Whether size mode is enabled
