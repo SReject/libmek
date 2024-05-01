@@ -2,7 +2,7 @@
     "private": true,
     "version": "0.3.0",
     "scripts": {
-        "build": "node .scripts/build.cjs"
+        "generate": "node ./.scripts/generator/generate-classes.cjs"
     },
     "devDependencies": {
         "luaparse": "^0.3.1"
