@@ -1,8 +1,9 @@
 {
     "private": true,
-    "version": "0.2.0",
+    "version": "0.3.0",
     "scripts": {
-        "build": "node .scripts/build.cjs"
+        "prebuild": "node ./.scripts/generator/index.cjs",
+        "build": "node ./.scripts/build/index.cjs"
     },
     "devDependencies": {
         "luaparse": "^0.3.1"

@@ -1,0 +1,3 @@
+[submodule ".scripts/cc-api"]
+	path = .scripts/generator/cc-api
+	url = https://github.com/Sharparam/cc-api.git

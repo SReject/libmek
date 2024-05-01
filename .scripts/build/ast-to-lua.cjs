@@ -1,6 +1,10 @@
-//TODO: Rename local singleton functions
+/*
+TODO:
+- Minify local functions
+- Remove needless ()'s
+*/
 
-const luaparse = require('luaparse');
+let modularMap,modularIndex;
 
 class Scope {
     constructor(parent) {
@@ -77,12 +81,11 @@ const handlers = {
         return entity.name;
     },
     'TableKey': (scope, entity) => {
-        const table = scope.getEntity(entity.value);
         const key = scope.getEntity(entity.key);
-        return `${table}[${key}]`;
+        const value = scope.getEntity(entity.value);
+        return `[${key}]=${value}`;
     },
     'TableKeyString': (scope, entity) => {
-        const key = scope.getEntity(entity.key);
         const value = scope.getEntity(entity.value);
         return `${entity.key.name}=${value}`;
     },
@@ -93,8 +96,8 @@ const handlers = {
 
     // General Statement Tokens
     'AssignmentStatement': (scope, entity) => {
-        const variables = processEntityList(scope, entity.variables, (scope, entity) => scope.getEntity(entity));
         const init = processEntityList(scope, entity.init, (scope, entity) => scope.getEntity(entity));
+        const variables = processEntityList(scope, entity.variables, (scope, entity) => scope.getEntity(entity));
         return `${variables.join(',')}=${init.join(',')}`
     },
     'BreakStatement': (scope, entity) => {
@@ -112,11 +115,14 @@ const handlers = {
         return `::${label}::`
     },
     'LocalStatement': (scope, entity) => {
+        let init;
+        if (entity.init && entity.init.length) {
+            init = processEntityList(scope, entity.init, (scope, entity) => scope.getEntity(entity));
+        }
         const variables = processEntityList(scope, entity.variables, (scope, entity) => scope.rename(entity.name));
         if (!entity.init || !entity.init.length) {
             return `local ${variables.join(',')}`
         }
-        const init = processEntityList(scope, entity.init, (scope, entity) => scope.getEntity(entity));
         return `local ${variables.join(',')}=${init.join(',')}`
     },
     'ReturnStatement': (scope, entity) => {
@@ -200,7 +206,11 @@ const handlers = {
     'FunctionDeclaration': (scope, entity, wrap) => {
         let name = '';
         if (entity.identifier) {
-            name = scope.getEntity(entity.identifier);
+            if (entity.identifier.type === 'Identifier' && entity.isLocal) {
+                name = scope.rename(entity.identifier.name);
+            } else {
+                name = scope.getEntity(entity.identifier);
+            }
         }
         scope = scope.createChild();
         const params = processEntityList(
@@ -272,9 +282,16 @@ const handlers = {
         return `${expression}(${parameters.join(',')})`;
     },
     'IndexExpression': (scope, entity) => {
-        const name = scope.getEntity(entity.base);
         const value = scope.getEntity(entity.index);
-        return `${name}[${value}]`
+        const name = scope.getEntity(entity.base);
+        if (name === '_') {
+            let key = value.replace(/["']/g, '');
+            let idx = modularMap.findIndex(mod => mod.name == value.replace(/["']/g, ''));
+            if (idx > -1) {
+                return `_[${idx}]`;
+            }
+        }
+        return `${name}[${value}]`;
     },
     'LogicalExpression': (scope, entity) => {
         const left = scope.getEntity(entity.left);
@@ -297,6 +314,15 @@ const handlers = {
     },
     'UnaryExpression': (scope, entity) => {
         return `${entity.operator}${scope.getEntity(entity.argument)}`;
+    },
+
+    // Custom
+    'CustomRequireTransform': (scope, entity) => {
+        let idx = modularMap.findIndex(mod => mod.name === entity.module);
+        if (idx > -1) {
+            return `_[${idx}]`;
+        }
+        return `_['${entity.module}']`
     }
 };
 
@@ -318,4 +344,11 @@ const processEntityList = (scope, entities, cb, ...args) => {
     return entities.map(entity => cb(scope, entity, ...args));
 }
 
-module.exports = (content) => processEntityList(new Scope(), luaparse.parse(content).body).join('\n');
+module.exports = (content, modMap, index) => {
+    modularMap = modMap;
+    modularIndex = index;
+    const result = processEntityList(new Scope(), content).join('\n');
+    modularMap = undefined;
+    modularIndex = undefined;
+    return result;
+};
