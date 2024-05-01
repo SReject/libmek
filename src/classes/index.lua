@@ -1,4 +1,4 @@
-local classes = require('class.generated.index');
+local classes = require('classes.generated.index');
 
 -- include/overwrite entries as needed
 classes.Peripheral = require('internal.peripheral');
