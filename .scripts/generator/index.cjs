@@ -1,5 +1,5 @@
 const { join, resolve } = require('path');
-const { mkdirSync, readdirSync, readFileSync, writeFileSync } = require('fs');
+const { mkdirSync, rmSync, readdirSync, readFileSync, writeFileSync } = require('fs');
 
 const deduceComponents = require('./components.cjs');
 
@@ -12,6 +12,8 @@ const rootdir = resolve(join(__dirname, '../../'));
 const inputdir = resolve(join(rootdir, relInputDir));
 const outputdir = resolve(join(rootdir, relOutputDir));
 
+
+rmSync(outputdir, { recursive: true });
 mkdirSync(outputdir, { recursive: true });
 
 let classes = [];
