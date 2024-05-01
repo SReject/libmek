@@ -2,7 +2,7 @@
 ---@field supported fun(self: libmek.class.Peripheral): libmek.mek.Upgrade[]
 ---@field installed fun(self: libmek.class.Peripheral): {[libmek.mek.Upgrade]: number}
 
----@class libmek.component.Upgradeable
+---@class libmek.component.Upgradable
 ---@field upgrades libmek.component.UpgradeableNS
 
 ---@type libmek.internal.FactoryComponent
