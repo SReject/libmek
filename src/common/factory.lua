@@ -40,7 +40,6 @@ local next,type,error = next,type,error;
 local classify = require('common.classify');
 local create = classify.create;
 local extractProto = classify.extract;
-local isClassed = classify.isClassed;
 
 local helpers = require('common.helpers');
 local copyTable = helpers.copyTable;
@@ -141,7 +140,7 @@ local function deduceMethod(class, namespace, methodName, options)
         return method;
     end
 
-    local className = class.super.name;
+    local className = class.className;
 
     local cacheOptions = options.cache;
     local cacheName = className;
@@ -248,9 +247,12 @@ local function applyMethod(class, target, namespace, name, options, infoTracker,
         -- When applicable add handler to status tracker
         if (options.status == true) then
             statusTracker[name] = handler;
+
         elseif (type(options.status) == 'string') then
             statusTracker[options.status] = handler;
-        elseif (options.info ~= nil) then
+
+        elseif (options.status ~= nil) then
+            print(options.status);
             error('invalid `status` property');
         end
 
