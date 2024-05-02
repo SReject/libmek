@@ -1,6 +1,6 @@
 {
     "private": true,
-    "version": "0.3.0",
+    "version": "0.3.1",
     "scripts": {
         "prebuild": "node ./.scripts/generator/index.cjs",
         "build": "node ./.scripts/build/index.cjs"
